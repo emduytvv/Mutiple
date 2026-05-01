@@ -1,0 +1,80 @@
+SOLID Review — PlayerAnimation, PlayerCtrl, PlayerMovement
+Date: 2026-04-30
+Reviewed by: unity-solid-check skill
+════════════════════════════════════════
+
+[PRINCIPLE]  SRP
+[SEVERITY]   High
+[FILE]       PlayerAnimation.cs
+[LOCATION]   OnChangeState():93, 97, 101, 105, 110
+[VẤN ĐỀ]    OnChangeState() vừa play animation VỪA gọi RPC sync network
+             ngay bên trong cùng switch. Animation class đang làm 2 việc:
+             "tao tự play animation" + "tao sync cho người khác qua mạng".
+             Thêm state mới phải nghĩ cả 2 concern cùng lúc.
+[FIX]        RPC call nên nằm ở PlayerCtrl (nơi đã có toàn bộ [PunRPC]).
+             PlayerAnimation chỉ play local. PlayerCtrl gọi RPC khi nhận
+             event từ PlayerAnimation (hoặc qua GameEvents).
+Status: [ ] Chưa fix
+
+────────────────────────────────────────
+
+[PRINCIPLE]  OCP
+[SEVERITY]   Medium
+[FILE]       PlayerAnimation.cs
+[LOCATION]   CheckState():117, OnChangeState():82
+[VẤN ĐỀ]    Giờ đã có 7 state (Idle/Run/Jump/Drop/Land/Aim/Shoot), 2 switch
+             statement. Từ lần review trước đã là 5 state — vừa thêm Aim +
+             Shoot vào đã phải sửa cả 2 switch. Trend này tiếp tục khi làm
+             combat (Attack, Hurt, Die sắp tới).
+[FIX]        State pattern như đã demo. Mỗi state 1 class, không switch.
+             Thêm state mới = thêm file mới, không sửa PlayerAnimation.
+Status: [ ] Chưa fix
+
+────────────────────────────────────────
+
+[PRINCIPLE]  DIP
+[SEVERITY]   Medium
+[FILE]       PlayerAnimation.cs
+[LOCATION]   TryAim():131, HandleAim():179, UpdateAimAngle():197, UpdateFlip():209
+[VẤN ĐỀ]    InputManager.Instance gọi thẳng trong 4 chỗ khác nhau.
+             PlayerAnimation đang phụ thuộc trực tiếp vào 1 singleton cụ thể.
+             Nếu InputManager chưa init hoặc đổi cách đọc input → 4 chỗ cần
+             sửa. UpdateAimAngle() còn null-check thủ công vì biết nó có thể
+             chưa có.
+[FIX]        PlayerAnimation không nên đọc input trực tiếp. Tách aim data
+             ra: PlayerMovement hoặc 1 PlayerAimController riêng đọc input
+             rồi expose property AimAngle, IsAiming. PlayerAnimation chỉ đọc
+             từ đó.
+Status: [ ] Chưa fix
+
+────────────────────────────────────────
+
+[PRINCIPLE]  SRP
+[SEVERITY]   Medium
+[FILE]       PlayerCtrl.cs
+[LOCATION]   FixedUpdate():86, LoadOwnerNickName():90
+[VẤN ĐỀ]    LoadOwnerNickName() chạy MỌI FixedUpdate (50 lần/giây) chỉ để
+             cập nhật text nickname. PlayerCtrl đang làm 2 việc: quản lý
+             player + cập nhật UI. Photon nickname không đổi sau khi join —
+             không cần poll mỗi frame.
+[FIX]        Gọi 1 lần khi player join xong. Trong PhotonPlaying hoặc
+             PlayerCtrl.Start(), gọi LoadOwnerNickName() 1 lần. Hoặc dùng
+             event: GameEvents.OnPlayerNickNameSet += UpdateNickNameUI và
+             tách logic UI ra PlayerNameDisplay component riêng.
+Status: [ ] Chưa fix
+
+════════════════════════════════════════
+
+SUMMARY — PlayerAnimation, PlayerCtrl, PlayerMovement
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+S ❌   O ❌   L ✅   I ✅   D ❌
+
+Điểm SOLID: 2/5 (PlayerMovement riêng: 5/5)
+
+Priority fix:
+1. [HIGH]   RPC calls nằm trong PlayerAnimation.OnChangeState() —
+            animation class đang làm việc của networking layer.
+2. [MEDIUM] LoadOwnerNickName() chạy 50 lần/giây trong FixedUpdate —
+            đây là bug hiệu năng thực sự, không chỉ là code smell.
+3. [MEDIUM] InputManager.Instance trong 4 chỗ của PlayerAnimation —
+            tách ra PlayerAimController hoặc expose qua property.

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a55d522cb250bb605dd70bb4f3909cb, type: 3}
+  m_Name: EffectStackConfigCollection
+  m_EditorClassIdentifier:
+  _effectStackConfigs:
+  - _damageElementType: 6
+    _spriteRef:
+      m_AssetGUID: 95c40a4c5a87243468ecc4fbbe5402e0
+      m_SubObjectName: Burn
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0.9960785, g: 0.53333336, b: 0.14117648, a: 1}
+  - _damageElementType: 2
+    _spriteRef:
+      m_AssetGUID: 183bc162910fe504eac8fa82327c95e4
+      m_SubObjectName: Bleed
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0.8941177, g: 0.058823533, b: 0.25882354, a: 1}
+  - _damageElementType: 5
+    _spriteRef:
+      m_AssetGUID: e2c22a35730180e49b04e910baee85ba
+      m_SubObjectName: Poison
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0.30588236, g: 0.9294118, b: 0.23137257, a: 1}
+  - _damageElementType: 10
+    _spriteRef:
+      m_AssetGUID: 70181f157d67b4bcc826335ca7b89687
+      m_SubObjectName: Slow
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0.96470594, g: 0.25490198, b: 0.13333334, a: 1}
+  - _damageElementType: 115
+    _spriteRef:
+      m_AssetGUID: 0c8a7fdefc4df48a48a22dd24ff82667
+      m_SubObjectName: attackPowerUp
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0, g: 0.8645787, b: 0.9528302, a: 1}
+  - _damageElementType: 106
+    _spriteRef:
+      m_AssetGUID: eebc307b1dbfc468b893f498f67d7b6a
+      m_SubObjectName: AtkSpeed
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0, g: 1, b: 0.9394505, a: 1}
+  - _damageElementType: 118
+    _spriteRef:
+      m_AssetGUID: 61a1dee23cfcf4046929969827af3b53
+      m_SubObjectName: Icon_Vulnerable
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _textColor: {r: 0.5754717, g: 0.27964857, b: 0.019001435, a: 1}

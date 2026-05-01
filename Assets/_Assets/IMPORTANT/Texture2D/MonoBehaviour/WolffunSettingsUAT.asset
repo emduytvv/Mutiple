@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a2924679068bca66e25bb95b52da2d, type: 3}
+  m_Name: WolffunSettingsUAT
+  m_EditorClassIdentifier:
+  environmentName: UAT
+  remoteServiceURL: https://thetan-support.uat.thetanarena.com/api/remote-config/view
+  authServiceURL: https://auth.uat.thetanarena.com/auth/v1
+  authServiceWsURL: wss://thetan-auth.uat.thetanarena.com/ws
+  dataServiceURL: https://data.uat.thetanarena.com/theta/v1
+  verifyServiceURL: https://verify.uat.thetanarena.com/verify/v1
+  analyticServiceURL: https://analytic.uat.thetanarena.com/analytic/v1
+  leaderBoardServiceURL: https://leaderboard.uat.thetanarena.com/v1
+  storageServiceURL: https://storage.googleapis.com/uat-thetanarena-asset
+  thetanRivalsServiceURL: https://data-rivals.uat.thetanarena.com/api/v1
+  immortalServiceURL: https://immortal.uat.thetanarena.com/api/v1
+  thetanCreatorServiceURL: https://ugc.uat.thetanarena.com/api/v1/
+  thetanSupportServiceURL: https://thetan-support.uat.thetanarena.com/api
+  thetanNewsServiceURL: https://tr-news.uat.thetanarena.com
+  thetanMatchServiceURL: https://match-rivals.uat.thetanarena.com/api/v1
+  ipLobby: thetan-rival-build-server.uat.thetanarena.com
+  portLobby: 7770
+  webSocketURL: wss://thetan-rivals-multiplayer.uat.thetanarena.com/api/v1/ws
+  restApiWSURL: https://thetan-rivals-multiplayer.uat.thetanarena.com/api/v1
+  matchRivals: https://storage.googleapis.com/thetan-uat-thetan-match-input
+  immortalWebSocketURL: wss://thetan-immortal-multiplayer.uat.thetanarena.com/ws
+  thetanWorldURL: https://data.staging.thetanworld.com/api/v1
+  marketplaceURL: https://marketplace.thetanworld.com
+  findmatchVersion: 17
+  adminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKV1RfQVBJUyIsImNhbl9taW50IjpmYWxzZSwiZXhwIjoxODM1MTY1MzQ4LCJpc3MiOiJodHRwczovL2FwaS5tYXJrZXRwbGFjZS5hcHAiLCJuYmYiOjE2Nzc0ODUzNDgsInJvbGUiOjEsInNpZCI6IiIsInN1YiI6IkFETUlOIiwidXNlcl9pZCI6IjYzZmM2NTI0NDU5MDhlYzk5ZDU1OGUwYiJ9.WKuEZbKC_1DaLeWgDR6n-BA3gbeKaezPrDx669C4Jgo

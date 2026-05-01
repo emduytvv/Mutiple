@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1402392ea6a7985aa8b73e7e872c81, type: 3}
+  m_Name: InternalSettings
+  m_EditorClassIdentifier:
+  m_standardDrawers:
+  - {fileID: 114709867586078768, guid: cd8ddea5c4b96ca47a2a0d167ac02b6a, type: 2}
+  - {fileID: 114709867586078768, guid: 03526e40b59756f45b89830e3316ab60, type: 2}
+  - {fileID: 114061268324235159, guid: 1e823254c9ff8cd47a891331b11181b7, type: 2}
+  - {fileID: 114243736805655561, guid: 8330d0c2d689a83468b114833b8702a6, type: 2}
+  - {fileID: 114044625135789424, guid: b179559ce11ecbb48bcef0909a165277, type: 2}
+  - {fileID: 114243736805655561, guid: c37a22990d2fa714b901f525d0ffed9c, type: 2}
+  - {fileID: 114044625135789424, guid: 706a7f038e1272c43b779eb549f17a08, type: 2}
+  - {fileID: 114025901758691103, guid: a59a395e28223764a9137e895e2e720a, type: 2}
+  - {fileID: 114977153420339851, guid: a86e4393e9e8a58458696ae6d3fecc25, type: 2}
+  - {fileID: 114061268324235159, guid: 3f32624f53115bf46ba10002b6c60e1d, type: 2}
+  - {fileID: 114977153420339851, guid: 4cb9645f5116e1a449b6b0c0d61787f3, type: 2}
+  - {fileID: 114642988549198181, guid: 04fa87d559059524f9fb81b945e31de9, type: 2}
+  - {fileID: 114336590748365959, guid: 1bfdfc223affd8d4d984b6747b0d9126, type: 2}
+  - {fileID: 114372920208702427, guid: ddcd81652d5bcb944aed0ca614707ad4, type: 2}
+  - {fileID: 114061268324235159, guid: 045a18dae40fde547958518cecda55d3, type: 2}
+  - {fileID: 114884547391421755, guid: c93de5180c4ef3a4e9d0346d1dd600ea, type: 2}
+  m_referenceDrawers:
+  - {fileID: 114587765826080250, guid: 45c988fdcb6a153409dcffff742b7daa, type: 2}
+  - {fileID: 114061268324235159, guid: a73dad25488160c4295b09dbcf20856d, type: 2}
+  m_hiddenVariables:
+  - m_type: Object
+    m_variables:
+    - hideFlags
+    - useGUILayout
+    - runInEditMode
+    - m_CachedPtr
+    - m_InstanceID
+    - m_UnityRuntimeErrorString
+  - m_type: Renderer
+    m_variables:
+    - material
+    - materials
+  - m_type: MeshFilter
+    m_variables:
+    - mesh
+  - m_type: Transform
+    m_variables:
+    - '*'
+  - m_type: Component
+    m_variables:
+    - name
+    - tag
+  - m_type: Collider
+    m_variables:
+    - material
+  - m_type: Collider2D
+    m_variables:
+    - material
+  - m_type: CanvasRenderer
+    m_variables:
+    - '*'
+  - m_type: Animator
+    m_variables:
+    - bodyPosition
+    - bodyRotation
+    - playbackTime
+  m_exposedVariables:
+  - m_type: Transform
+    m_variables:
+    - localPosition
+    - localEulerAngles
+    - localScale

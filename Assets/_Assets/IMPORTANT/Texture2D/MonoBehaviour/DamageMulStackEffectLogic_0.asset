@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b73fcbfab579649cdfaa10513827ce9d, type: 3}
+  m_Name: DamageMulStackEffectLogic
+  m_EditorClassIdentifier:
+  _id: 1056449652
+  Interval: 0
+  Type: 115
+  EffectBuffType: 1
+  DispelType: 0
+  EffectBreakThroughType: 0
+  _counterEffects:
+  _startType: 16
+  _statModType: 0

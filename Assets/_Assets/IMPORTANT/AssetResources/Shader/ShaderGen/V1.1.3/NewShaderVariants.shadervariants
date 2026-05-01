@@ -1,0 +1,416 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NewShaderVariants
+  m_Shaders:
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: PIXELSNAP_ON
+        passType: 0
+  - first: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: UNITY_UI_ALPHACLIP
+        passType: 0
+      - keywords: UNITY_UI_ALPHACLIP UNITY_UI_CLIP_RECT
+        passType: 0
+      - keywords: UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: b81761a1e5fa4e14b864e210493104bd, type: 3}
+    second:
+      variants:
+      - keywords: SOFTMASK_EDITOR
+        passType: 0
+      - keywords: SOFTMASK_EDITOR UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: 96e01ccbd80a1c94dae148394b67560f, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: c5ad21ed850ee674ebc8288691a0e9ed, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 8
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 10512, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: _SUNDISK_SIMPLE
+        passType: 0
+  - first: {fileID: 207, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON _ALPHABLEND_ON
+        passType: 0
+      - keywords: _ALPHABLEND_ON
+        passType: 0
+      - keywords: PROCEDURAL_INSTANCING_ON _ALPHABLEND_ON
+        passType: 8
+      - keywords:
+        passType: 13
+  - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9001, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9002, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9003, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9004, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9007, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9101, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 9103, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 10701, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: INSTANCING_ON SHADOWS_DEPTH
+        passType: 8
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 10707, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+  - first: {fileID: 10708, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 1
+  - first: {fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 10722, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 1
+  - first: {fileID: 10723, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 10751, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: d7868345bde18e8419524de6c2a2ffac, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 9ad46c34e69eec44fa54b492eaf4ff3d, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 2ba679ab45257914db9cb1f06608b519, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_ALPHAPREMULTIPLY_ON _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_ALPHAPREMULTIPLY_ON _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X _USE_TWO_FACE
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_ALPHAPREMULTIPLY_ON _BUILTIN_SURFACE_TYPE_TRANSPARENT _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X _USE_TWO_FACE
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_Y _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_SURFACE_TYPE_TRANSPARENT _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 4
+      - keywords: DIRECTIONAL LIGHTPROBE_SH _BUILTIN_SURFACE_TYPE_TRANSPARENT _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_Y _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 4
+      - keywords: SHADOWS_DEPTH _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X _USE_TWO_FACE
+        passType: 8
+      - keywords: SHADOWS_DEPTH _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_Y _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 8
+      - keywords: SHADOWS_DEPTH _BUILTIN_SURFACE_TYPE_TRANSPARENT _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_Y _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 8
+      - keywords: SHADOWS_DEPTH _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X _USE_TWO_FACE
+        passType: 8
+      - keywords: SHADOWS_DEPTH _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_Y _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 8
+      - keywords: SHADOWS_DEPTH _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_Y _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 8
+      - keywords: _BUILTIN_SURFACE_TYPE_TRANSPARENT _MAINTEX_ALPHA_ASSET _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 8
+      - keywords: _BUILTIN_SURFACE_TYPE_TRANSPARENT _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+        passType: 8
+  - first: {fileID: 4800000, guid: 4126686539c893244a1e76cd0a97a38f, type: 3}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 413e1047eedb95946a4b7d0fa9f9aad6, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+      - keywords:
+        passType: 8
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 4800000, guid: 240dc4302a4d31f448f47c01064c0bd5, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: cdd9b89ecea650541a3a1876afac74bb, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: dcb9099aa3af2104b9e56a7eb758fe07, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 7de636fb8fe073a478a623efaa39645f, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 1d5c88903fdef0a4f802cdb929ed327f, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: UNDERLAY_ON
+        passType: 0
+      - keywords: UNDERLAY_ON UNITY_UI_CLIP_RECT
+        passType: 0
+      - keywords: UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: dffdcb3b56a153447bc7fd85e79fd62e, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: eb33b0bbc5c68b04f833cfdfaa0420ce, type: 3}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: bda6e7b1ce20b8e4ea3ffdcdf630a2f9, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON
+        passType: 4
+  - first: {fileID: 4800000, guid: 69ee5308d32b12446beb51d2ba8e9adc, type: 3}
+    second:
+      variants:
+      - keywords: GLOWTEX_ON INSTANCING_ON OUTDIST_ON OVERLAYMULT_ON RADIALGRADIENT_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 929af60927678f74f8ca7ac459ed09ef, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 7ad49643b2dff6c4b8c5944b45faadd4, type: 3}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: ba6fd689a717ea4468126e36af99a5d7, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 71eeff897971a61498bc4c79c3d4aab2, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: ea4a6f9543344f8499bcbae3883f4315, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 432a1b7f0d1d50d4886c1f6d75bb48d3, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 192ab055755467142a4d9003c31373dd, type: 3}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 59be7f058b5e3c347a3a6254a7d58742, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: 5fd502b51a1cdaa4ba6e5caf126f3970, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 9e290a4b1e750894bb190320bc07b5b6, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 06b039c6c2f744448b26bfae5ef7a202, type: 3}
+    second:
+      variants:
+      - keywords: GREYSCALE_ON
+        passType: 0
+      - keywords: GREYSCALE_ON UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: 0c53e7d0741483b48aa64c46492d6ad0, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: d7cb32fb19caa8c4ea83dc9a0618eb02, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: ab320a1fa6e78f74f8f804fbae9ba503, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 7953943f869d1164291278525301a7a4, type: 3}
+    second:
+      variants:
+      - keywords: UNITY_UI_ALPHACLIP
+        passType: 0
+      - keywords: UNITY_UI_ALPHACLIP UNITY_UI_CLIP_RECT
+        passType: 0
+  - first: {fileID: 4800000, guid: 3f840f64d4672be4c83a50c797f81dd9, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 61d63acf6080984479461548aceff061, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: 1eb48e37bdb7c5842a0c964264fe7a8a, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: fc920ca498f58e5419ee5f79a41e4059, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: e65aa3e3ec19a5d4b946d36156236847, type: 3}
+    second:
+      variants:
+      - keywords: SOFTPARTICLES_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 974f093ea5f63e541bb53f89e8bfe19e, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0
+  - first: {fileID: 4800000, guid: cbdd8c786fd95c245b3f5cb9c32271b0, type: 3}
+    second:
+      variants:
+      - keywords: DIRECTIONAL LIGHTPROBE_SH
+        passType: 4
+      - keywords:
+        passType: 8
+  - first: {fileID: 4800000, guid: 22554e280adadd04fbf021f1fcf823c9, type: 3}
+    second:
+      variants:
+      - keywords: GRAYSCALE
+        passType: 0
+  - first: {fileID: 4800000, guid: 1a4e3f114d142694da718c3352bdf687, type: 3}
+    second:
+      variants:
+      - keywords:
+        passType: 0

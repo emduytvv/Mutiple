@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Fx_skill_laser_dissolve_offsetNoise_mul
+  m_Shader: {fileID: 4800000, guid: ea4a6f9543344f8499bcbae3883f4315, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _DISSOLVEBYR_ON
+  - _ISGSTEP_ON
+  - _USEMIDCOLOR_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _Blend: 1.12
+      _BlendDst: 10
+      _BlendSrc: 5
+      _Blend_top_bot: 0.42
+      _Blendthreshold: 0.4
+      _Borderwidth: 0.25
+      _BumpScale: 1
+      _Culling: 0
+      _Cutoff: 0.5
+      _DetailNormalMapScale: 1
+      _DissolvebyR: 1
+      _DstBlend: 0
+      _Fresnelpower: 0
+      _Fresnelscale: 0
+      _GlossMapScale: 1
+      _Glossiness: 0.5
+      _GlossyReflections: 1
+      _Innerrange: 0.42
+      _Innerwidth: 0.41
+      _InvFade: 1
+      _IsGstep: 1
+      _Metallic: 0
+      _Mode: 0
+      _Noisedirection: 0
+      _OcclusionStrength: 1
+      _Parallax: 0.02
+      _SmoothnessTextureChannel: 0
+      _SpecularHighlights: 1
+      _SrcBlend: 1
+      _Step: 0.01
+      _Tilingbignoise: 0.8
+      _Tilingsmallnoise: 0.5
+      _UVSec: 0
+      _Usemidcolor: 1
+      _ZTest: 4
+      _ZWrite: 0
+    m_Colors:
+      _Bignoisespeed: {r: 0, g: 0, b: 0, a: 0}
+      _Bordercolor: {r: 0, g: 0, b: 0, a: 0}
+      _Color: {r: 1, g: 1, b: 1, a: 1}
+      _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+      _Finishcolor: {r: 0, g: 0, b: 0, a: 0}
+      _Fresnelcolor: {r: 0, g: 0, b: 0, a: 0}
+      _Highlightcolor: {r: 1, g: 1, b: 1, a: 1}
+      _Maintexspeed: {r: 0, g: -2, b: 0, a: 0}
+      _Midcolor: {r: 0, g: 0, b: 0, a: 0}
+      _Smallnoisespeed: {r: 0, g: -1, b: 0, a: 0}
+      _Startcolor: {r: 4, g: 4, b: 4, a: 0}
+      _bot_color: {r: 1, g: 1, b: 1, a: 0}
+      _in_color: {r: 2, g: 0, b: 0.12505722, a: 1}
+      _top_color: {r: 0.8632076, g: 1, b: 0.98593277, a: 0}
+  m_BuildTextureStacks: []

@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Trail
+  m_Shader: {fileID: 4800000, guid: 2ba679ab45257914db9cb1f06608b519, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BUILTIN_ALPHAPREMULTIPLY_ON
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
+  - _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+  - _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+  m_InvalidKeywords:
+  - _BLENDING_MODE_ADP
+  - _SURFACE_TYPE_TRANSPARENT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - SHADOWCASTER
+  - DepthOnly
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _DissovleTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Distorsion_Tex_Main_Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Gradient_Map_Fill_Color:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _MainTex:
+        m_Texture: {fileID: 2800000, guid: 67065d6935021744d9b9c6c1f14817ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0.25}
+      _MaskTex:
+        m_Texture: {fileID: 2800000, guid: 7956a584db959d24da441d3de800c8bb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 1}
+      _Mask_for_Dissovle_Trail:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _NoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _AlphaClip: 0
+      _AlphaToMask: 0
+      _BLENDING_MODE: 1
+      _BUILTIN_AlphaClip: 0
+      _BUILTIN_Blend: 1
+      _BUILTIN_CullMode: 2
+      _BUILTIN_DstBlend: 10
+      _BUILTIN_QueueControl: 0
+      _BUILTIN_QueueOffset: 0
+      _BUILTIN_SrcBlend: 1
+      _BUILTIN_Surface: 1
+      _BUILTIN_ZTest: 4
+      _BUILTIN_ZWrite: 0
+      _BUILTIN_ZWriteControl: 0
+      _Blend: 1
+      _CastShadows: 0
+      _Cull: 2
+      _Dissovle_Edge_Smooth: 0
+      _Distorsion_Value: 0
+      _DstBlend: 10
+      _Edge_Color_HDR: 1
+      _Edge_Scale: 0
+      _Flipbook_Speed: 0
+      _MAINTEX_ALPHA_ASSET: 0
+      _MAINTEX_ASSET: 0
+      _MainTex_Asset: 0
+      _MainTex_FlipBook: 0
+      _Maintex_HDR: 1
+      _PAN_MAIN_TEX_X_OR_Y: 0
+      _PAN_MASK_TEX_X_OR_Y: 0
+      _Polar_UV_Dissovle_Tex: 0
+      _Polar_UV_Maintex: 1
+      _Polar_UV_Mask_Tex: 1
+      _Polar_UV_Noise_Tex: 0
+      _QueueControl: 0
+      _QueueOffset: 0
+      _SrcBlend: 1
+      _Surface: 1
+      _Twist_UV_Main_Tex: 0
+      _USE_GRADIENT_MAP_FILL_COLOR: 0
+      _USE_TWO_FACE: 0
+      _Use_Custom_Data_HDR_Edge_Color: 0
+      _Use_Custom_Data_HDR_Main_Tex: 0
+      _Use_Custom_Data_Pan_Main_Tex: 0
+      _Use_Custom_Data_Pan_Mask: 0
+      _Use_Gradient_Map_Fill_Color: 0
+      _X: 1
+      _Y: 1
+      _ZTest: 4
+      _ZWrite: 0
+      _ZWriteControl: 0
+    m_Colors:
+      _ColorB: {r: 0, g: 0, b: 0, a: 1}
+      _ColorW: {r: 1, g: 1, b: 1, a: 1}
+      _Color_BackFace: {r: 1, g: 1, b: 1, a: 0}
+      _Edge_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

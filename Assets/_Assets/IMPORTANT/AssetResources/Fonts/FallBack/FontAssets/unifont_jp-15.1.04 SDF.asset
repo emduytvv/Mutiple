@@ -1,0 +1,258 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef129d5e40c07af534a8e24da6b5c16, type: 3}
+  m_Name: unifont_jp-15.1.04 SDF
+  m_EditorClassIdentifier:
+  hashCode: -929223031
+  material: {fileID: 2100000, guid: 4bd033ca8f0efc64db3dff948edd5aa9, type: 2}
+  materialHashCode: 134557577
+  m_Version: 1.1.0
+  m_SourceFontFileGUID: ae91dfdb2d6efeb41ba57a37ba33044e
+  m_SourceFontFile: {fileID: 12800000, guid: de526b350df6c194a9501d7c4b13531c, type: 3}
+  m_AtlasPopulationMode: 1
+  m_FaceInfo:
+    m_FaceIndex: 0
+    m_FamilyName: Unifont-JP
+    m_StyleName: Regular
+    m_PointSize: 90
+    m_Scale: 1
+    m_UnitsPerEM: 64
+    m_LineHeight: 90
+    m_AscentLine: 78.75
+    m_CapLine: 57
+    m_MeanLine: 45
+    m_Baseline: 0
+    m_DescentLine: -11.25
+    m_SuperscriptOffset: 78.75
+    m_SuperscriptSize: 0.5
+    m_SubscriptOffset: -11.25
+    m_SubscriptSize: 0.5
+    m_UnderlineOffset: 0
+    m_UnderlineThickness: 1.40625
+    m_StrikethroughOffset: 18
+    m_StrikethroughThickness: 1.40625
+    m_TabWidth: 45
+  m_GlyphTable:
+  - m_Index: 8256
+    m_Metrics:
+      m_Width: 33.75
+      m_Height: 11.25
+      m_HorizontalBearingX: 5.625
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 45
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 10
+      m_Width: 35
+      m_Height: 12
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 596
+    m_Metrics:
+      m_Width: 33.75
+      m_Height: 61.875
+      m_HorizontalBearingX: 5.625
+      m_HorizontalBearingY: 61.875
+      m_HorizontalAdvance: 45
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 41
+      m_Width: 35
+      m_Height: 62
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 639
+    m_Metrics:
+      m_Width: 33.75
+      m_Height: 45
+      m_HorizontalBearingX: 5.625
+      m_HorizontalBearingY: 45
+      m_HorizontalAdvance: 45
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 122
+      m_Width: 35
+      m_Height: 45
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 409
+    m_Metrics:
+      m_Width: 33.75
+      m_Height: 56.25
+      m_HorizontalBearingX: 5.625
+      m_HorizontalBearingY: 56.25
+      m_HorizontalAdvance: 45
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 186
+      m_Width: 35
+      m_Height: 57
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 43459
+    m_Metrics:
+      m_Width: 78.75
+      m_Height: 84.375
+      m_HorizontalBearingX: 5.625
+      m_HorizontalBearingY: 73.125
+      m_HorizontalAdvance: 90
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 262
+      m_Width: 80
+      m_Height: 86
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  m_CharacterTable:
+  - m_ElementType: 1
+    m_Unicode: 8255
+    m_GlyphIndex: 8256
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 595
+    m_GlyphIndex: 596
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 638
+    m_GlyphIndex: 639
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 408
+    m_GlyphIndex: 409
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 43458
+    m_GlyphIndex: 43459
+    m_Scale: 1
+  m_AtlasTextures:
+  - {fileID: 2800000, guid: 12dcffa6a0b48ae4c82ccc59d32ac046, type: 3}
+  m_AtlasTextureIndex: 0
+  m_IsMultiAtlasTexturesEnabled: 0
+  m_ClearDynamicDataOnBuild: 1
+  m_UsedGlyphRects:
+  - m_X: 0
+    m_Y: 0
+    m_Width: 54
+    m_Height: 31
+  - m_X: 0
+    m_Y: 31
+    m_Width: 54
+    m_Height: 81
+  - m_X: 0
+    m_Y: 112
+    m_Width: 54
+    m_Height: 64
+  - m_X: 0
+    m_Y: 176
+    m_Width: 54
+    m_Height: 76
+  - m_X: 0
+    m_Y: 252
+    m_Width: 99
+    m_Height: 105
+  m_FreeGlyphRects:
+  - m_X: 54
+    m_Y: 0
+    m_Width: 4041
+    m_Height: 252
+  - m_X: 99
+    m_Y: 0
+    m_Width: 3996
+    m_Height: 4095
+  - m_X: 0
+    m_Y: 357
+    m_Width: 4095
+    m_Height: 3738
+  m_fontInfo:
+    Name:
+    PointSize: 0
+    Scale: 0
+    CharacterCount: 0
+    LineHeight: 0
+    Baseline: 0
+    Ascender: 0
+    CapHeight: 0
+    Descender: 0
+    CenterLine: 0
+    SuperscriptOffset: 0
+    SubscriptOffset: 0
+    SubSize: 0
+    Underline: 0
+    UnderlineThickness: 0
+    strikethrough: 0
+    strikethroughThickness: 0
+    TabWidth: 0
+    Padding: 0
+    AtlasWidth: 0
+    AtlasHeight: 0
+  atlas: {fileID: 0}
+  m_AtlasWidth: 4096
+  m_AtlasHeight: 4096
+  m_AtlasPadding: 9
+  m_AtlasRenderMode: 4165
+  m_glyphInfoList: []
+  m_KerningTable:
+    kerningPairs: []
+  m_FontFeatureTable:
+    m_GlyphPairAdjustmentRecords: []
+  fallbackFontAssets: []
+  m_FallbackFontAssetTable: []
+  m_CreationSettings:
+    sourceFontFileName:
+    sourceFontFileGUID: ae91dfdb2d6efeb41ba57a37ba33044e
+    pointSizeSamplingMode: 0
+    pointSize: 90
+    padding: 9
+    packingMode: 0
+    atlasWidth: 4096
+    atlasHeight: 4096
+    characterSetSelectionMode: 7
+    characterSequence:
+    referencedFontAssetGUID:
+    referencedTextAssetGUID:
+    fontStyle: 0
+    fontStyleModifier: 0
+    renderMode: 4165
+    includeFontFeatures: 0
+  m_FontWeightTable:
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  fontWeights: []
+  normalStyle: 0
+  normalSpacingOffset: 0
+  boldStyle: 0.75
+  boldSpacing: 7
+  italicStyle: 35
+  tabSize: 10

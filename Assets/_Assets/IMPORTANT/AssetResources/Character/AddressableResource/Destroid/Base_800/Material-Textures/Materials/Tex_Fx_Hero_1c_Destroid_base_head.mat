@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Tex_Fx_Hero_1c_Destroid_base_head
+  m_Shader: {fileID: 4800000, guid: 413e1047eedb95946a4b7d0fa9f9aad6, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _ESMmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _MainTex:
+        m_Texture: {fileID: 2800000, guid: 003395950efbc4b4f8a32ba6e695ce13, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Normalmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _WFFmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _ClipOffsetY: 0
+      _Emissionvalue: 1
+      _Fresnalmaskpower: 0.2
+      _Fresnalmaskscale: 0.085
+      _Fresnelpower: 0.8
+      _Fresnelscale: 0.2
+      _Rimlight1power: 3
+      _Rimlight2power: 3
+      _Specularbrightness: 0.4
+      _Specularcutoff: 0.5
+      _Specularhighlightarea: 0.3
+      _Specularhighlightvalue: 0.1
+      _Specularsmoothness: 0.05
+      _SpeedU: 0
+      _SpeedV: 0
+      __dirty: 1
+    m_Colors:
+      _Ambientcolor: {r: 0, g: 0, b: 0, a: 1}
+      _Emissivecolor: {r: 0, g: 0, b: 0, a: 0}
+      _Finaltint: {r: 1, g: 1, b: 1, a: 0}
+      _Fresnelcolor: {r: 1, g: 1, b: 1, a: 1}
+      _Fresnelcolormask: {r: 0, g: 0, b: 0, a: 0}
+      _Lightcolor: {r: 1, g: 1, b: 1, a: 0}
+      _Rimlight1color: {r: 1, g: 1, b: 1, a: 0}
+      _Rimlight1dir: {r: 0, g: 0, b: 0, a: 0}
+      _Rimlight2color: {r: 1, g: 1, b: 1, a: 0}
+      _Rimlight2dir: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

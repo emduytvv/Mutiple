@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a2924679068bca66e25bb95b52da2d, type: 3}
+  m_Name: WolffunSettingsPROD
+  m_EditorClassIdentifier:
+  environmentName: PRODUCTION
+  remoteServiceURL: https://thetan-support.thetanarena.com/api/remote-config/view
+  authServiceURL: https://thetan-auth.thetanarena.com/api/v1
+  authServiceWsURL: wss://thetan-auth.thetanarena.com/ws
+  dataServiceURL: https://data.thetanarena.com/thetan/v1
+  verifyServiceURL: https://verify.thetanarena.com/verify/v1
+  analyticServiceURL: https://analytic.thetanarena.com/analytic/v1
+  leaderBoardServiceURL: https://leaderboard.thetanarena.com/v1
+  storageServiceURL: https://assets.thetanarena.com
+  thetanRivalsServiceURL: https://data-rivals.thetanarena.com/api/v1
+  immortalServiceURL: https://immortal.thetanarena.com/api/v1
+  thetanCreatorServiceURL: https://ugc.thetanarena.com/api/v1/
+  thetanSupportServiceURL: https://thetan-support.thetanarena.com/api
+  thetanNewsServiceURL: https://ingame-news.thetanrivals.com
+  thetanMatchServiceURL: https://match-rivals.thetanarena.com/api/v1
+  ipLobby: thetan-rival-build-server.thetanarena.com
+  portLobby: 7770
+  webSocketURL: wss://thetan-rivals-multiplayer.thetanarena.com/api/v1/ws
+  restApiWSURL: https://thetan-rivals-multiplayer.thetanarena.com/api/v1
+  matchRivals: https://match-input-data.thetanarena.com
+  immortalWebSocketURL: wss://thetan-immortal-multiplayer.thetanarena.com/ws
+  thetanWorldURL: https://data.thetanworld.com/api/v1
+  marketplaceURL: https://marketplace.thetanworld.com
+  findmatchVersion: 17
+  adminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKV1RfQVBJUyIsImNhbl9taW50IjpmYWxzZSwiZXhwIjoxNjY0MjAwNTk5LCJpc3MiOiJodHRwczovL2FwaS5tYXJrZXRwbGFjZS5hcHAiLCJuYmYiOjE2NjM1OTU3OTksInJvbGUiOjEsInNpZCI6IjB4MjJkY2M5NDRmMGJmNjA0YTFjNWRhMDZiMzdkMjFiZDM0ZjAyODRmZiIsInN1YiI6IlRoYW5nTGVlMCIsInVzZXJfaWQiOiI2MTk5ZmM1OGZlNzc1YzkyY2NhMzk1NmMifQ.GvlEukD5zWOSalIxnOUPpDoAJobSwy9wc05Zcm_eC44

@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Fx_skill_common_offsetNoise
+  m_Shader: {fileID: 4800000, guid: d7868345bde18e8419524de6c2a2ffac, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _NORMALMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Noisemap:
+        m_Texture: {fileID: 2800000, guid: 8e47dffdcffd46c40813bfef1ecd61b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _A: 0
+      _AlphaCutoff: 0.5
+      _B: 0
+      _BUILTIN_QueueControl: 0
+      _BUILTIN_QueueOffset: 0
+      _BlendDst: 1
+      _BlendSrc: 5
+      _BumpScale: 1
+      _Culling: 0
+      _Cutoff: 0.5
+      _DetailNormalMapScale: 1
+      _Direction: 0
+      _Distance_mask: 1.401
+      _DstBlend: 0
+      _Emissive: 2
+      _Falloff: 0.5
+      _Float0: 0.8
+      _Float1: 0.6
+      _Float2: 2
+      _Float3: 1
+      _FogDistance: 15
+      _FogFalloff: 200
+      _Freq: 0.75
+      _Freq1: 6
+      _Frequence: 0
+      _Fresnelpower: 2.55
+      _Fresnelscale: 0.25
+      _Fresnelscale1: 0
+      _GlossMapScale: 1
+      _Glossiness: 0.5
+      _Glossness: 0
+      _GlossyReflections: 1
+      _Hardness: 0.07
+      _Intensity: 0
+      _InvFade: 0.4
+      _IsAlphaGradient: 0
+      _Isadd: 0
+      _Jitter: 0.91
+      _MaskUspeed: 0
+      _MaskVspeed: -0.4
+      _Max: 1
+      _Metallic: 0
+      _Min: 0
+      _Mode: 0
+      _Noise1value: 0.5
+      _Noise2value: 0.5
+      _OcclusionStrength: 1
+      _Parallax: 0.02
+      _Preadd: 0
+      _Scale: 70
+      _Scale1: 0.1
+      _SmoothnessTextureChannel: 0
+      _SpecularHighlights: 1
+      _SrcBlend: 1
+      _Strength: 0.07
+      _Strength1: 0.2
+      _Tilingbignoise: 3
+      _Tilingsmallnoise: 2
+      _UVSec: 0
+      _Uspeed: 0
+      _Vertexadd: 0
+      _Vspeed: -0.2
+      _ZTest: 4
+      _ZWrite: 0
+      __dirty: 0
+    m_Colors:
+      _Ambientcolor: {r: 0, g: 0, b: 0, a: 1}
+      _Color: {r: 1, g: 1, b: 1, a: 1}
+      _Color0: {r: 0.7169812, g: 0, b: 0.5839595, a: 0}
+      _Color1: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 0}
+      _Color_inside: {r: 0.9150943, g: 0.116545, b: 0.116545, a: 0}
+      _Coloradd: {r: 0, g: 0, b: 0, a: 1}
+      _Coloradd1: {r: 1, g: 1, b: 1, a: 1}
+      _Colormul: {r: 1, g: 1, b: 1, a: 1}
+      _Colormul1: {r: 1, g: 1, b: 1, a: 1}
+      _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+      _Emissioncolor1: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 0}
+      _Finaltint: {r: 1, g: 1, b: 1, a: 0}
+      _Fogcolor: {r: 0.6823117, g: 0.5304824, b: 0.8584906, a: 0}
+      _Fresnelcolor: {r: 1, g: 1, b: 1, a: 0}
+      _Noisecolor: {r: 1, g: 1, b: 1, a: 0}
+      _Offsetmask: {r: 1, g: 0, b: 0, a: 0}
+      _Preadd: {r: 0, g: 0, b: 0, a: 0}
+      _Speedbignoise: {r: 0, g: -0.5, b: 0, a: 0}
+      _Speedsmallnoise: {r: 0, g: -0.2, b: 0, a: 0}
+      _Tint1: {r: 1, g: 1, b: 1, a: 0}
+      _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+      _Vector0: {r: 0, g: 0, b: 1, a: 0}
+      _Vector1: {r: 0, g: 0, b: 1, a: 0}
+      _WindDirection: {r: 0, g: 0, b: 1, a: 0}
+      _Windcolor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
+      _Winddirection: {r: 1, g: 0, b: 1, a: 0}
+      _Winddirection2: {r: 2, g: 3, b: 0, a: 0}
+  m_BuildTextureStacks: []

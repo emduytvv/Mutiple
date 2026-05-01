@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a2924679068bca66e25bb95b52da2d, type: 3}
+  m_Name: WolffunSettingsBPF
+  m_EditorClassIdentifier:
+  environmentName: STAGING
+  remoteServiceURL: https://thetan-support.staging.thetanarena.com/api/remote-config/view
+  authServiceURL: https://thetan-auth.staging.thetanarena.com/api/v1
+  authServiceWsURL: wss://thetan-auth.staging.thetanarena.com/ws
+  dataServiceURL: https://data.staging.thetanarena.com/theta/v1
+  verifyServiceURL: https://verify.staging.thetanarena.com/verify/v1
+  analyticServiceURL: https://analytic.staging.thetanarena.com/analytic/v1
+  leaderBoardServiceURL: https://leaderboard.staging.thetanarena.com/v1
+  storageServiceURL: https://storage.googleapis.com/thetan-staging-asset
+  thetanRivalsServiceURL: https://data-rivals.staging.thetanarena.com/api/v1
+  immortalServiceURL: https://thetan-immortal-service-preview-pr-487.staging.thetanarena.com/api/v1
+  thetanCreatorServiceURL: https://ugc.staging.thetanarena.com/api/v1/
+  thetanSupportServiceURL: https://thetan-support.staging.thetanarena.com/api
+  thetanNewsServiceURL: https://tr-news.staging.thetanarena.com
+  thetanMatchServiceURL: https://match-rivals.staging.thetanarena.com/api/v1
+  ipLobby: thetan-rival-build-server.staging.thetanarena.com
+  portLobby: 7770
+  webSocketURL: wss://thetan-rivals-multiplayer.staging.thetanarena.com/api/v1/ws
+  restApiWSURL: https://thetan-rivals-multiplayer.staging.thetanarena.com/api/v1
+  matchRivals: https://storage.googleapis.com/thetan-match-input
+  immortalWebSocketURL: wss://thetan-immortal-multiplayer.staging.thetanarena.com/ws
+  thetanWorldURL: https://data.staging.thetanworld.com/api/v1
+  marketplaceURL: https://marketplace.staging.thetanworld.com
+  findmatchVersion: 17
+  adminAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKV1RfQVBJUyIsImNhbl9taW50IjpmYWxzZSwiZXhwIjoxODM1MTY1MjUzLCJpc3MiOiJodHRwczovL2FwaS5tYXJrZXRwbGFjZS5hcHAiLCJuYmYiOjE2Nzc0ODUyNTMsInJvbGUiOjEsInNpZCI6IiIsInN1YiI6IkFETUlOIiwidXNlcl9pZCI6IjYzZmM2NGM1NjQ5NzBjMmYwNmRjZmIzOSJ9.5WEx4bnrED9EehG2hhbHVCjI2nhp1y6xRv2-LOG1T48

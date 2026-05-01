@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ef4aa6869fb634fde44e27c39af593, type: 3}
+  m_Name: BaseLucyCustomKeyAnimClipSO
+  m_EditorClassIdentifier:
+  _animClips:
+  - Name: Idle
+    Clip: {fileID: 0}
+    Key: 0
+    Transition: {fileID: 11400000, guid: cdd6832d95def3a44898f4a4fe35e07d, type: 2}
+    AvatarType: 0
+  - Name: Run
+    Clip: {fileID: 0}
+    Key: 1
+    Transition: {fileID: 11400000, guid: 3dbfe19bc7af869409289e723e965dd1, type: 2}
+    AvatarType: 0
+  - Name: Aim Default Arc
+    Clip: {fileID: 0}
+    Key: 5
+    Transition: {fileID: 11400000, guid: 6b3c69e294d1a4046b56390d876f7608, type: 2}
+    AvatarType: 0
+  - Name: Shot Default Arc
+    Clip: {fileID: 0}
+    Key: 6
+    Transition: {fileID: 11400000, guid: 3e9c712de6a8b0f43a7825be95f57cc1, type: 2}
+    AvatarType: 0
+  - Name: Skill Arc Aim
+    Clip: {fileID: 0}
+    Key: 7
+    Transition: {fileID: 11400000, guid: 8455fd09f6720cf4da9902f47be37f25, type: 2}
+    AvatarType: 0
+  - Name: Skill Shot Arc
+    Clip: {fileID: 0}
+    Key: 8
+    Transition: {fileID: 11400000, guid: 5da1d7c37b0b76a4b966ec28f308135b, type: 2}
+    AvatarType: 0
+  - Name: HighShot_Prepare
+    Clip: {fileID: 0}
+    Key: 11
+    Transition: {fileID: 11400000, guid: 060150e04055e474badc5759f16eca92, type: 2}
+    AvatarType: 0
+  - Name: HighShot_End
+    Clip: {fileID: 0}
+    Key: 12
+    Transition: {fileID: 11400000, guid: b45e15a348c8a5645aec683a260cadff, type: 2}
+    AvatarType: 0
+  - Name: StraightShotPrepare
+    Clip: {fileID: 0}
+    Key: 9
+    Transition: {fileID: 11400000, guid: 27bde8323d4103c4fb3ebbc5f143cc4b, type: 2}
+    AvatarType: 0
+  - Name: StraightShotEnd
+    Clip: {fileID: 0}
+    Key: 10
+    Transition: {fileID: 11400000, guid: aa35eb1446039cf419dca952f95a69e7, type: 2}
+    AvatarType: 0
+  - Name: JumpShot_JumpPrepare
+    Clip: {fileID: 0}
+    Key: 20
+    Transition: {fileID: 11400000, guid: c52283ec9f17ede44a26b2cc277b225e, type: 2}
+    AvatarType: 0
+  - Name: Jump Shot Shot Aim
+    Clip: {fileID: 0}
+    Key: 21
+    Transition: {fileID: 11400000, guid: 4b74c0a10f706304f9d52779aec5c574, type: 2}
+    AvatarType: 0
+  - Name: JumpShot_Shot
+    Clip: {fileID: 0}
+    Key: 22
+    Transition: {fileID: 11400000, guid: c2304021b8af51f4a80c71127074df88, type: 2}
+    AvatarType: 0
+  - Name: DashForward_Prepare
+    Clip: {fileID: 0}
+    Key: 13
+    Transition: {fileID: 11400000, guid: ad5d1fdc88c72c34182da37abe33568c, type: 2}
+    AvatarType: 0
+  - Name: DashForwardShot_End
+    Clip: {fileID: 0}
+    Key: 15
+    Transition: {fileID: 11400000, guid: 1eb4613ce08e8f0499ed374a18325504, type: 2}
+    AvatarType: 0
+  - Name: DashBackWard_Prepare
+    Clip: {fileID: 0}
+    Key: 17
+    Transition: {fileID: 11400000, guid: 8e362f6cb9e06a94391c3b5e910a48fd, type: 2}
+    AvatarType: 0
+  - Name: DashBackWardShot_End
+    Clip: {fileID: 0}
+    Key: 18
+    Transition: {fileID: 11400000, guid: aab12d6b43e10b84b8476fe137f7ad9e, type: 2}
+    AvatarType: 0
+  - Name: Victory
+    Clip: {fileID: 0}
+    Key: 101
+    Transition: {fileID: 11400000, guid: 66ab0d4272588254ba975099978b1e43, type: 2}
+    AvatarType: 0
+  - Name: Defeat
+    Clip: {fileID: 0}
+    Key: 100
+    Transition: {fileID: 11400000, guid: 739a42a523a23a746aef7900a639e82a, type: 2}
+    AvatarType: 0
+  - Name: Rapid First Aim
+    Clip: {fileID: 0}
+    Key: 64
+    Transition: {fileID: 11400000, guid: ce2a88ee3f00c9748b39fb1d6b400ac4, type: 2}
+    AvatarType: 0
+  - Name: Rapid Aim
+    Clip: {fileID: 0}
+    Key: 62
+    Transition: {fileID: 11400000, guid: 1e80781da1094724b950bed474c54ddc, type: 2}
+    AvatarType: 0
+  - Name: Rapid Shot
+    Clip: {fileID: 0}
+    Key: 63
+    Transition: {fileID: 11400000, guid: 727d5ae7c246a4c4ebae76e7a2a91f78, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 65
+    Transition: {fileID: 11400000, guid: 8b62d462d70ba174484885e788b16a8d, type: 2}
+    AvatarType: 0
+  - Name: Intro
+    Clip: {fileID: 0}
+    Key: 200
+    Transition: {fileID: 11400000, guid: ab4b6c782a05e494489a54a4cca9030e, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 23
+    Transition: {fileID: 11400000, guid: c6f0344559b4590499eb0db5f2e2521b, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 71
+    Transition: {fileID: 11400000, guid: 0fc93ec5f402db140a00eafd87f0b3a2, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 102
+    Transition: {fileID: 11400000, guid: 04a0cd9a39a6efc4b82af341441a42f4, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 103
+    Transition: {fileID: 11400000, guid: 87225cfffc0685a43b4f7ddbb3da71dd, type: 2}
+    AvatarType: 0
+  - Name: MenuIdle
+    Clip: {fileID: 0}
+    Key: 2
+    Transition: {fileID: 11400000, guid: ed0f97720e4b8a64b8d53b1adf324a00, type: 2}
+    AvatarType: 0
+  - Name: JumpFall
+    Clip: {fileID: 0}
+    Key: 27
+    Transition: {fileID: 11400000, guid: 810f63fab8019ca40acc16904b9e5d81, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 29
+    Transition: {fileID: 11400000, guid: 16a26b21f45e06148bd9ee43267cd659, type: 2}
+    AvatarType: 0
+  - Name:
+    Clip: {fileID: 0}
+    Key: 28
+    Transition: {fileID: 11400000, guid: 7f09ff3b872c3eb46ba13c8e80733fd4, type: 2}
+    AvatarType: 0
+  - Name: 1100_Tor_Drop
+    Clip: {fileID: 0}
+    Key: 33
+    Transition: {fileID: 11400000, guid: 1ac7897d32fef2f47bff4fe2202fea26, type: 2}
+    AvatarType: 0
+  - Name: 1100_Tor_Hover
+    Clip: {fileID: 0}
+    Key: 31
+    Transition: {fileID: 11400000, guid: a31106d3a060fb84681ba1ec433635ff, type: 2}
+    AvatarType: 0
+  - Name: 1100_Tor_Jump
+    Clip: {fileID: 0}
+    Key: 30
+    Transition: {fileID: 11400000, guid: 58ec917e22edc52468e563aa73af2d9b, type: 2}
+    AvatarType: 0
+  - Name: 1100_Tor_Land
+    Clip: {fileID: 0}
+    Key: 34
+    Transition: {fileID: 11400000, guid: 57adadcea6a7b6a4484562565e010f5f, type: 2}
+    AvatarType: 0
+  - Name: 1100_Tor_Shot
+    Clip: {fileID: 0}
+    Key: 32
+    Transition: {fileID: 11400000, guid: cb10133c35f9f2540b57cd7707c07f09, type: 2}
+    AvatarType: 0

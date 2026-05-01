@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34412cb0fd98b7f2c1c467ff22ff3d94, type: 3}
+  m_Name: TimeBasedCondition(10s)
+  m_EditorClassIdentifier:
+  isEnabled: 1
+  invertResult: 0
+  _delayAfterGameStart: 10
+  _maxSpawnTime: 1000
+  _useGameTime: 1
+  _usePerBotDelay: 1
+  _perBotDelayTime: 10

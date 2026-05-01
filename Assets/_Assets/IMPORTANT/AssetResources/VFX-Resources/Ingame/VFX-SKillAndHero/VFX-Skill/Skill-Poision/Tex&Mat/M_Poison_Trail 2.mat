@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Poison_Trail 2
+  m_Shader: {fileID: 4800000, guid: ea4a6f9543344f8499bcbae3883f4315, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
+  - _PAN_MAIN_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+  - _PAN_MASK_TEX_X_OR_Y_CUSTOMDATA_PAN_X
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - SHADOWCASTER
+  - DepthOnly
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _MainTex:
+        m_Texture: {fileID: 2800000, guid: 1666f610e34d4d243a2225a1d590b774, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _AlphaClip: 0
+      _AlphaToMask: 0
+      _BLENDING_MODE: 1
+      _BUILTIN_AlphaClip: 0
+      _BUILTIN_Blend: 0
+      _BUILTIN_CullMode: 0
+      _BUILTIN_DstBlend: 10
+      _BUILTIN_QueueControl: 0
+      _BUILTIN_QueueOffset: 0
+      _BUILTIN_SrcBlend: 5
+      _BUILTIN_Surface: 1
+      _BUILTIN_ZTest: 8
+      _BUILTIN_ZWrite: 0
+      _BUILTIN_ZWriteControl: 0
+      _Blend: 1
+      _BlendDst: 10
+      _BlendSrc: 5
+      _Blend_top_bot: 0.323
+      _Blendthreshold: 0.5
+      _Borderwidth: 0
+      _CastShadows: 0
+      _Cull: 0
+      _Culling: 0
+      _DissolvebyR: 0
+      _Dissovle_Edge_Smooth: 0
+      _Distorsion_Value: 0
+      _DstBlend: 10
+      _Edge_Color_HDR: 1
+      _Edge_Scale: 0
+      _Flipbook_Speed: 0
+      _Innerwidth: 0
+      _InvFade: 1
+      _IsGstep: 0
+      _MAINTEX_ALPHA_ASSET: 0
+      _MainTex_Asset: 0
+      _MainTex_FlipBook: 0
+      _Maintex_HDR: 1.25
+      _Noisedirection: 1
+      _PAN_MAIN_TEX_X_OR_Y: 0
+      _PAN_MASK_TEX_X_OR_Y: 0
+      _Polar_UV_Dissovle_Tex: 0
+      _Polar_UV_Maintex: 0
+      _Polar_UV_Mask_Tex: 0
+      _Polar_UV_Noise_Tex: 0
+      _QueueControl: 0
+      _QueueOffset: 0
+      _SrcBlend: 1
+      _Step: 0
+      _Surface: 1
+      _Tilingbignoise: 1
+      _Tilingsmallnoise: 1
+      _Twist_UV_Main_Tex: 0
+      _USE_TWO_FACE: 0
+      _Use_Custom_Data_HDR_Edge_Color: 0
+      _Use_Custom_Data_HDR_Main_Tex: 0
+      _Use_Custom_Data_Pan_Main_Tex: 1
+      _Use_Custom_Data_Pan_Mask: 0
+      _Use_Gradient_Map_Fill_Color: 0
+      _X: 1
+      _Y: 1
+      _ZTest: 4
+      _ZWrite: 0
+      _ZWriteControl: 0
+    m_Colors:
+      _Bignoisespeed: {r: 1, g: 0, b: 0, a: 0}
+      _Bordercolor: {r: 1, g: 1, b: 1, a: 0}
+      _ColorB: {r: 0, g: 0, b: 0, a: 1}
+      _ColorHDR: {r: 16, g: 16, b: 16, a: 1}
+      _ColorW: {r: 1, g: 1, b: 1, a: 1}
+      _Color_BackFace: {r: 1, g: 1, b: 1, a: 0}
+      _Edge_Color: {r: 1, g: 1, b: 1, a: 1}
+      _Maintexspeed: {r: 1, g: 0, b: 0, a: 0}
+      _Smallnoisespeed: {r: 1, g: 0, b: 0, a: 0}
+      _bot_color: {r: 0, g: 0.7921569, b: 0.7426244, a: 0}
+      _in_color: {r: 0.01557495, g: 0.3432865, b: 0.4716981, a: 1}
+      _top_color: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

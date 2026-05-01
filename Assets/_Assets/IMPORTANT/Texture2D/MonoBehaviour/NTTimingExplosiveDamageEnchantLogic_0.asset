@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9382d7e88c80ad4c5726a1e8b653c8, type: 3}
+  m_Name: NTTimingExplosiveDamageEnchantLogic
+  m_EditorClassIdentifier:
+  _id: -891177631
+  _type: 98
+  LayersInterests:
+    serializedVersion: 2
+    m_Bits: 2240
+  _enchantObject: {fileID: 114703437598541787, guid: d7134bb2ce24adf45bb92d93b87c489f, type: 2}
+  _layerSpawnObjects:
+    serializedVersion: 2
+    m_Bits: 2240
+  _rayCastVector: {x: 0, y: -1}
+  _rayCastDistance: 20
+  _mirrorHorizontalRayCast: 0
+  _spawnAtHitPoint: 0
+  _explosiveRange: 0.5
+  _timeRemain: 1
+  _dmgUpPerLevel: 3
+  _dmgBase: 30

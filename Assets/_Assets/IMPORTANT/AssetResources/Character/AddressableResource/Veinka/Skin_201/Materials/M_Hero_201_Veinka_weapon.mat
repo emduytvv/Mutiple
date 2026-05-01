@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Hero_201_Veinka_weapon
+  m_Shader: {fileID: 4800000, guid: 413e1047eedb95946a4b7d0fa9f9aad6, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _NORMALMAP
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _ESMmap:
+        m_Texture: {fileID: 2800000, guid: 99bdc04d5598a6c4ba33030227dc201b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _MainTex:
+        m_Texture: {fileID: 2800000, guid: 3b1ad9cf85c45b645888ea42af8e2107, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Normalmap:
+        m_Texture: {fileID: 2800000, guid: 71b9047fc5dd45743bc2c6ff5b0e6832, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _WFFmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _ASEOutlineWidth: 0.08
+      _BumpScale: 1
+      _ClipOffsetY: 0
+      _Cutoff: 0.5
+      _DetailNormalMapScale: 1
+      _DstBlend: 0
+      _Emissionvalue: 1
+      _Float1: 0.64
+      _Float2: 0.38
+      _FogDistance: 15
+      _FogFalloff: 200
+      _Fresnalmaskpower: 0.2
+      _Fresnalmaskscale: 0.085
+      _Fresnelpower: 0.8
+      _Fresnelscale: 0.2
+      _GlossMapScale: 1
+      _Glossiness: 0
+      _GlossyReflections: 1
+      _Metallic: 0
+      _Mode: 0
+      _OcclusionStrength: 1
+      _Parallax: 0.02
+      _Rimlight1power: 3
+      _Rimlight2power: 3
+      _Rimlightpower: 4
+      _Rimlightscale: 0
+      _Rimlightthreshold: 1
+      _SmoothnessTextureChannel: 0
+      _SpecularHighlights: 1
+      _Specularbrightness: 0.4
+      _Specularcutoff: 0.5
+      _Specularhighlightarea: 0.3
+      _Specularhighlightvalue: 0.1
+      _Specularsmoothness: 0.05
+      _SpeedU: 0
+      _SpeedV: 0
+      _SrcBlend: 1
+      _Step: 1.48
+      _Transpaency: 1
+      _UVSec: 0
+      _WindFreqtime: 15
+      _WindJitter: 0.03
+      _WindStrength: 0.2
+      _ZWrite: 1
+      __dirty: 0
+    m_Colors:
+      _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 0}
+      _Ambientcolor: {r: 0.010799995, g: 0.0059999996, b: 0.03, a: 1}
+      _Color: {r: 1, g: 1, b: 1, a: 1}
+      _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+      _Emissivecolor: {r: 0, g: 0, b: 0, a: 0}
+      _Finaltint: {r: 1, g: 1, b: 1, a: 0}
+      _Fogcolor: {r: 0.6823117, g: 0.53048235, b: 0.8584906, a: 0}
+      _Fresnelcolor: {r: 1, g: 1, b: 1, a: 1}
+      _Fresnelcolormask: {r: 0, g: 0, b: 0, a: 0}
+      _Lightcolor: {r: 1, g: 1, b: 1, a: 0}
+      _Minmax: {r: -0.84, g: -0.65, b: 0, a: 1}
+      _Remap: {r: -0.22, g: 0.06, b: 0.5, a: 1}
+      _Remapshadow: {r: -0.22, g: 0.06, b: 0.5, a: 1}
+      _Rimlight1color: {r: 0, g: 0, b: 0, a: 0}
+      _Rimlight1dir: {r: 0, g: 0, b: 0, a: 0}
+      _Rimlight2color: {r: 1, g: 1, b: 1, a: 0}
+      _Rimlight2dir: {r: 0, g: 0, b: 0, a: 0}
+      _Rimlightcolor: {r: 0.87843144, g: 2.8235295, b: 2.9960785, a: 0}
+      _Shadowcolor: {r: 0, g: 0, b: 0, a: 0}
+      _Vector0: {r: 0.37, g: 0.2, b: 0, a: 0}
+      _Vector1: {r: 0.1, g: 0.21, b: 0.1, a: 0.2}
+      _Vector2: {r: -0.22, g: 0.06, b: 0.5, a: 1}
+      _Windcolor: {r: 0.3867925, g: 0.3867925, b: 0.3867925, a: 1}
+      _Winddirection: {r: -1, g: 0, b: -1, a: 0}
+  m_BuildTextureStacks: []

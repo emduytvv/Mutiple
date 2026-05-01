@@ -1,0 +1,88 @@
+Shader "TI-Shader/UI-Mesh-Particle/UIParticle_dissolve_pannerR&BProperty" {
+	Properties {
+		_InvFade ("Soft Particles Factor", Float) = 1
+		[Enum(Off,0,On,1)] _ZWrite ("ZWrite", Float) = 0
+		[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("ZTest", Float) = 4
+		[Enum(UnityEngine.Rendering.CullMode)] _Culling ("Culling", Float) = 0
+		[Enum(UnityEngine.Rendering.BlendMode)] _BlendSrc ("Blend mode Source", Float) = 5
+		[Enum(UnityEngine.Rendering.BlendMode)] _BlendDst ("Blend mode Destination", Float) = 10
+		_MainTex ("Main Tex", 2D) = "white" {}
+		_Blend_top_bot ("Blend_top_bot", Range(-0.5, 1.5)) = 0.5646124
+		_Blendthreshold ("Blend threshold", Float) = 0.5
+		[HDR] _top_color ("top_color", Vector) = (0,0.2019179,0.9794025,0)
+		[HDR] _bot_color ("bot_color", Vector) = (0,0.7921569,0.7426244,0)
+		[HDR] _in_color ("in_color", Vector) = (0.01557495,0.3432865,0.4716981,1)
+		[HDR] _Bordercolor ("Border color", Vector) = (1,1,1,0)
+		_Borderwidth ("Border width", Float) = 0
+		_Innerwidth ("Inner width", Float) = 0
+		_Step ("Step", Float) = 0.01
+		[Header(NOISE PANNER (B channel))] [Space(10)] _Tilingsmallnoise ("Tiling small noise", Float) = 0.5
+		_Tilingbignoise ("Tiling big noise", Float) = 1
+		_Smallnoisespeed ("Small noise speed", Vector) = (0,0,0,0)
+		_Bignoisespeed ("Big noise speed", Vector) = (0,0,0,0)
+		_Maintexspeed ("Maintex speed", Vector) = (0,0,0,0)
+		_Noisedirection ("Noise direction", Float) = 0
+		[Toggle] _IsGstep ("Is G step?", Float) = 1
+		[Toggle] _DissolvebyR ("Dissolve by R?", Float) = 1
+		[HideInInspector] _texcoord ("", 2D) = "white" {}
+		_StencilComp ("Stencil Comparison", Float) = 8
+		_Stencil ("Stencil ID", Float) = 0
+		_StencilOp ("Stencil Operation", Float) = 0
+		_StencilWriteMask ("Stencil Write Mask", Float) = 255
+		_StencilReadMask ("Stencil Read Mask", Float) = 255
+		_ColorMask ("Color Mask", Float) = 15
+		[Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
+	}
+	//DummyShaderTextExporter
+	SubShader{
+		Tags { "RenderType"="Opaque" }
+		LOD 200
+
+		Pass
+		{
+			HLSLPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+
+			float4x4 unity_ObjectToWorld;
+			float4x4 unity_MatrixVP;
+			float4 _MainTex_ST;
+
+			struct Vertex_Stage_Input
+			{
+				float4 pos : POSITION;
+				float2 uv : TEXCOORD0;
+			};
+
+			struct Vertex_Stage_Output
+			{
+				float2 uv : TEXCOORD0;
+				float4 pos : SV_POSITION;
+			};
+
+			Vertex_Stage_Output vert(Vertex_Stage_Input input)
+			{
+				Vertex_Stage_Output output;
+				output.uv = (input.uv.xy * _MainTex_ST.xy) + _MainTex_ST.zw;
+				output.pos = mul(unity_MatrixVP, mul(unity_ObjectToWorld, input.pos));
+				return output;
+			}
+
+			Texture2D<float4> _MainTex;
+			SamplerState sampler_MainTex;
+
+			struct Fragment_Stage_Input
+			{
+				float2 uv : TEXCOORD0;
+			};
+
+			float4 frag(Fragment_Stage_Input input) : SV_TARGET
+			{
+				return _MainTex.Sample(sampler_MainTex, input.uv.xy);
+			}
+
+			ENDHLSL
+		}
+	}
+	//CustomEditor "ASEMaterialInspector"
+}
