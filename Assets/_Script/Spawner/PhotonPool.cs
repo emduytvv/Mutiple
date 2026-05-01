@@ -17,13 +17,16 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
         base.Start();
         spawners.Add(EnemySpawner.Instance.GetComponent<Spawner>());
         spawners.Add(PlayerSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(ArrowSpawner.Instance.GetComponent<Spawner>());
     }
     public GameObject Instantiate(string prefabId, Vector3 pos, Quaternion rot)
     {
         foreach (Spawner spawner in spawners)
         {
             if (!spawner.HasPrefab(prefabId)) continue;
-            return spawner.SpawnByName(prefabId, pos, Quaternion.identity).gameObject;
+            Transform spawned = spawner.SpawnByName(prefabId, pos, rot);
+            if (spawned == null) continue;
+            return spawned.gameObject;
         }
         Debug.LogWarning("PhotonPool: không tìm thấy prefab: " + prefabId);
         return null;

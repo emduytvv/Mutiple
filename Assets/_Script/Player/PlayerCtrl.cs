@@ -79,6 +79,9 @@ public class PlayerCtrl : SaiMonoBehaviour
             case PlayerState.Shoot:
                 _photonView.RPC("RpcShoot", RpcTarget.Others);
                 break;
+            case PlayerState.Dash:
+                _photonView.RPC("RpcSetTrigger", RpcTarget.Others, "dash");
+                break;
         }
     }
     [PunRPC]
