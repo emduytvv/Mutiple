@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerAbilityDash : SaiMonoBehaviour
 {
     [SerializeField] protected PhotonView _photonView;
+    [SerializeField] protected PlayerAnimation _playerAnimation;
     [SerializeField] protected InputAction _dashAction;
     [SerializeField] protected float _cooldown = 1f;
     [SerializeField] protected float _dashForce = 15f;
@@ -17,6 +18,7 @@ public class PlayerAbilityDash : SaiMonoBehaviour
     {
         base.LoadComponents();
         this.LoadPhotonView();
+        this.LoadPlayerAnimation();
     }
 
     private void LoadPhotonView()
@@ -24,6 +26,13 @@ public class PlayerAbilityDash : SaiMonoBehaviour
         if (_photonView != null) return;
         _photonView = GetComponentInParent<PhotonView>();
         Debug.Log(transform.name + ": Load PhotonView", gameObject);
+    }
+
+    private void LoadPlayerAnimation()
+    {
+        if (_playerAnimation != null) return;
+        _playerAnimation = transform.parent.parent.GetComponentInChildren<PlayerAnimation>();
+        Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
     }
 
     protected override void ResetValue()
@@ -56,6 +65,7 @@ public class PlayerAbilityDash : SaiMonoBehaviour
     private void OnDash()
     {
         if (!_photonView.IsMine) return;
+        if (_playerAnimation.CurrentState == PlayerState.Die) return;
         if (_cooldownTimer > 0f) return;
         _cooldownTimer = _cooldown;
         _isDashing = true;

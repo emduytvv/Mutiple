@@ -1,23 +1,26 @@
 using Photon.Pun;
 using UnityEngine;
 
-// Player đánh Enemy
-// Gửi RpcTarget.All vì tất cả máy cần thấy HP enemy giảm
-//
-// MayA (IsMine=true)          MayB (IsMine=false)
-// Send() chạy ──────────────► nhận RpcReceive
-//                              EnemyDamageReceiver.Receiver() chạy
-// nhận RpcReceive
-// EnemyDamageReceiver.Receiver() chạy
-// → cả 2 máy giảm HP enemy đồng thời ✓
-
 public class ArrowDamageSender : DamageSender
 {
+    [SerializeField] protected ArrowDespawn _arrowDespawn;
+
+    protected override void LoadComponents()
+    {
+        base.LoadComponents();
+        if (_arrowDespawn != null) return;
+        _arrowDespawn = transform.parent.GetComponentInChildren<ArrowDespawn>();
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyDamageReceiver enemy = collision.GetComponent<EnemyDamageReceiver>();
+        Debug.Log(transform.name + ": OnTriggerEnter2D", gameObject);
+        EnemyCtrl enemy = collision.GetComponentInParent<EnemyCtrl>();
+
         if (enemy == null) return;
         if (!_photonView.IsMine) return;
+
         enemy.PhotonView.RPC("RpcReceive", RpcTarget.All, maxDamage);
+        _arrowDespawn.DespawnObject();
     }
 }

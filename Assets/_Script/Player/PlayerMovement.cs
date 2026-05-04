@@ -14,6 +14,8 @@ public class PlayerMovement : SaiMonoBehaviour
     [SerializeField] protected Rigidbody2D _rigidbody2D;
     public PlayerCtrl PlayerCtrl => _playerCtrl;
     [SerializeField] protected PlayerCtrl _playerCtrl;
+    public PlayerAnimation PlayerAnimation => _playerAnimation;
+    [SerializeField] protected PlayerAnimation _playerAnimation;
     private Vector2 direction;
     public Vector2 Direction => direction;
     public float VerticalVelocity => _rigidbody2D.linearVelocity.y;
@@ -24,7 +26,7 @@ public class PlayerMovement : SaiMonoBehaviour
 
     [Header("Jump")]
     [SerializeField] protected InputAction _jumpAction;
-    [SerializeField] protected float jumpForce = 6f;
+    [SerializeField] protected float jumpForce = 6.2f;
     [SerializeField] protected Transform pointGroundCheck;
     [SerializeField] protected Vector2 groundCheckSize = new Vector2(0.5f, 0.2f);
     [SerializeField] protected LayerMask groundLayer;
@@ -41,6 +43,7 @@ public class PlayerMovement : SaiMonoBehaviour
         this.LoadPhotonView();
         this.LoadPointGroundCheck();
         this.LoadGroundLayer();
+        this.LoadPlayerAnimation();
     }
 
     private void LoadPhotonView()
@@ -60,6 +63,13 @@ public class PlayerMovement : SaiMonoBehaviour
         if (this._playerCtrl != null) return;
         this._playerCtrl = GetComponentInParent<PlayerCtrl>();
         Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
+    }
+
+    private void LoadPlayerAnimation()
+    {
+        if (this._playerAnimation != null) return;
+        this._playerAnimation = transform.parent.GetComponentInChildren<PlayerAnimation>();
+        Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
     }
     private void LoadPointGroundCheck()
     {
@@ -108,6 +118,7 @@ public class PlayerMovement : SaiMonoBehaviour
     private void Move()
     {
         if (!_photonView.IsMine) return;
+        if (_playerAnimation.CurrentState == PlayerState.Die) return;
         SetDirection();
         SetLastFacingX();
         if (_isDashing) return;
@@ -149,6 +160,7 @@ public class PlayerMovement : SaiMonoBehaviour
     private void TryJump()
     {
         if (!_photonView.IsMine) return;
+        if (_playerAnimation.CurrentState == PlayerState.Die) return;
         if (!_isGrounded && _jumpCount >= maxJumpCount) return;
 
         _jumpCount++;

@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash }
+public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash, Die }
 
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : SaiMonoBehaviour
@@ -21,8 +21,11 @@ public class PlayerAnimation : SaiMonoBehaviour
     static readonly int HashAimAngle = Animator.StringToHash("aimAngle");
     static readonly int HashShoot = Animator.StringToHash("shoot");
     static readonly int HashDash = Animator.StringToHash("dash");
+    static readonly int HashDie = Animator.StringToHash("die");
+    static readonly int HashRevive = Animator.StringToHash("revive");
 
     [SerializeField] protected PlayerState _currentState;
+    public PlayerState CurrentState => _currentState;
 
     protected override void LoadComponents()
     {
@@ -61,6 +64,8 @@ public class PlayerAnimation : SaiMonoBehaviour
         GameEvents.OnPlayerStartAim += OnStartAim;
         GameEvents.OnPlayerShoot += OnShoot;
         GameEvents.OnPlayerAimAngleChanged += OnAimAngleChanged;
+        GameEvents.OnPlayerRevived += OnRevived;
+        GameEvents.OnPlayerDied += OnDied;
     }
 
     private void OnDestroy()
@@ -71,6 +76,8 @@ public class PlayerAnimation : SaiMonoBehaviour
         GameEvents.OnPlayerStartAim -= OnStartAim;
         GameEvents.OnPlayerShoot -= OnShoot;
         GameEvents.OnPlayerAimAngleChanged -= OnAimAngleChanged;
+        GameEvents.OnPlayerRevived -= OnRevived;
+        GameEvents.OnPlayerDied -= OnDied;
     }
 
     protected void Update()
@@ -78,6 +85,11 @@ public class PlayerAnimation : SaiMonoBehaviour
         if (!_photonView.IsMine) return;
         CheckState();
         UpdateFlip();
+
+    }
+    private void FixedUpdate()
+    {
+        //  Debug.Log(transform.name + ": Current State: " + _currentState);
     }
 
     private void OnChangeState(PlayerState newState)
@@ -112,6 +124,9 @@ public class PlayerAnimation : SaiMonoBehaviour
             case PlayerState.Dash:
                 _animator.SetTrigger(HashDash);
                 break;
+            case PlayerState.Die:
+                _animator.SetTrigger(HashDie);
+                break;
         }
 
         GameEvents.OnAnimStateChanged?.Invoke(newState);
@@ -129,6 +144,7 @@ public class PlayerAnimation : SaiMonoBehaviour
             case PlayerState.Aim: HandleAim(); break;
             case PlayerState.Shoot: HandleShoot(); break;
             case PlayerState.Dash: HandleDash(); break;
+            case PlayerState.Die: HandleDie(); break;
         }
     }
 
@@ -143,10 +159,13 @@ public class PlayerAnimation : SaiMonoBehaviour
         if (Mathf.Abs(_playerMovement.Direction.x) <= 0.01f)
             OnChangeState(PlayerState.Idle);
     }
+    private void HandleDie()
+    {
+    }
 
     private void HandleJump()
     {
-        if (_playerMovement.VerticalVelocity < -0.1f)
+        if (_playerMovement.VerticalVelocity < 0.01f)
             OnChangeState(PlayerState.Drop);
     }
 
@@ -170,6 +189,7 @@ public class PlayerAnimation : SaiMonoBehaviour
     private void OnStartAim()
     {
         if (!_photonView.IsMine) return;
+        if (_currentState == PlayerState.Die) return;
         if (_currentState == PlayerState.Dash || _currentState == PlayerState.Shoot) return;
         OnChangeState(PlayerState.Aim);
     }
@@ -265,6 +285,7 @@ public class PlayerAnimation : SaiMonoBehaviour
     public void OnJump()
     {
         if (!_photonView.IsMine) return;
+        if (_currentState == PlayerState.Die) return;
         if (_currentState == PlayerState.Aim || _currentState == PlayerState.Shoot) return;
         OnChangeState(PlayerState.Jump);
     }
@@ -272,7 +293,22 @@ public class PlayerAnimation : SaiMonoBehaviour
     public void OnLand()
     {
         if (!_photonView.IsMine) return;
+        if (_currentState == PlayerState.Die) return;
         if (_currentState == PlayerState.Aim || _currentState == PlayerState.Shoot) return;
+        if (_currentState == PlayerState.Jump) return;
         OnChangeState(PlayerState.Land);
     }
+    private void OnDied(int viewId)
+    {
+        if (_photonView.ViewID != viewId) return;
+        OnChangeState(PlayerState.Die);
+    }
+
+    private void OnRevived(int viewId)
+    {
+        if (_photonView.ViewID != viewId) return;
+        _animator.SetTrigger(HashRevive);
+        OnChangeState(PlayerState.Idle);
+    }
+
 }

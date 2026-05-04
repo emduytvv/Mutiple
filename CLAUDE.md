@@ -10,10 +10,12 @@
 
 ## Đường dẫn Projects
 
-| Project | Đường dẫn | Unity Version |
-| ------- | --------- | ------------- |
-| **Multiple** (project hiện tại) | `C:\Users\Windows\Music\Học code\Unity Project\Multiple` | Unity 6 |
-| **Surival** (project cũ) | `C:\Users\Windows\Music\Học code\Project 1\Surival` | 2022.3.62f3 |
+| Project                         | Đường dẫn                                                | Unity Version |
+| ------------------------------- | -------------------------------------------------------- | ------------- |
+| **Multiple** (project hiện tại) | `C:\Users\Windows\Music\Học code\Unity Project\Multiple` | Unity 6       |
+| **Surival** (project cũ)        | `C:\Users\Windows\Music\Học code\Project 1\Surival`      | 2022.3.62f3   |
+
+**GitHub:** https://github.com/emduytvv/Mutiple
 
 ## Core Loop
 
@@ -31,17 +33,22 @@ Không có: save system · checkpoint · minimap
 Assets/
 ├── _Script/                    ← tất cả C# scripts custom
 │   ├── SaiMonoBehaviour.cs     ← base class
+│   ├── Arrow/                  ← projectile: movement, damage sender, spawner
+│   ├── Enemy/                  ← enemy damage receiver/sender
 │   ├── Menu/                   ← Photon lobby/room scripts
-│   ├── Player/                 ← gameplay: movement, animation, input, events
-│   └── Spawner/                ← object pool, enemy/player spawner
+│   ├── Parents/                ← base classes dùng chung (DamageReceiver, DamageSender, Movement, Despawn, GameEvents, InputManager)
+│   ├── Player/                 ← gameplay: movement, animation, input, combat
+│   ├── Spawner/                ← object pool, enemy/player/arrow spawner
+│   └── UI/                     ← HP bar, follow player, base UI components
+│       └── Parents/            ← BaseBtn, BaseSlider, BaseText
 ├── _Assets/
 │   ├── Avatar/
 │   ├── Editor/                 ← FixAnimations.cs, AudioMixerPostprocessor.cs
 │   ├── IMPORTANT/
 │   │   ├── AssetResources/
 │   │   │   └── Character/AddressableResource/
-│   │   │       ├── _Velvet/    ← Archer character (DPS)
-│   │   │       ├── _Raidon/    ← character asset
+│   │   │       ├── _Velvet/    ← Cung Thủ 1 (DPS)
+│   │   │       ├── _Raidon/    ← Cung Thủ 2
 │   │   │       ├── Bathos/ Cala/ Lucy/ Mary/ Morrod/ Mortal/ Serp/ Veinka/
 │   │   │       ├── Fonts/ HeroBackground/ HeroIcons/ Maps/
 │   │   │       ├── Material/ Shader/ SkillsIcon/ Sounds/
@@ -75,138 +82,78 @@ protected virtual void LoadComponents() // GetComponent ở đây
 protected virtual void ResetValue()     // set default values ở đây
 ```
 
-**Quy tắc:** Không dùng `GetComponent` trong `Update`. Luôn cache trong `LoadComponents`.
+**Quy tac GetComponent:**
 
-## Coding Conventions (Unity C#)
+- Khong dung GetComponent trong Update. Luon cache trong LoadComponents.
+- Component tren chinh object: `GetComponent<T>()`
+- Component tren cha: `GetComponentInParent<T>()`
+- Component tren con: `GetComponentInChildren<T>()`
+- Component cung cap (sibling — vi du: Movement, Despawn, DamageSender cung nam duoi 1 parent): `transform.parent.GetComponentInChildren<T>()`
+- Runtime trigger (OnTriggerEnter2D,...): dung `TryGetComponent` thay cho `GetComponent` — khong allocate khi khong tim thay.
 
-- Class: `PascalCase` (ví dụ: `EnemyStateMachine`, `PhotonRoom`)
-- Method: `PascalCase` (ví dụ: `LoadComponents`, `TakeDamage`)
-- Field public: `CamelCase` (ví dụ: `PhotonPlayerName`, `InputAction`)
-- Field private: `camelCase` (ví dụ: `currentHP`, `isDashing`)
-- Constant: `UPPER_SNAKE_CASE`
-- Interface: prefix `I` (ví dụ: `INetworkService`, `IBossBehavior`)
-- ScriptableObject class: suffix `SO` (ví dụ: `CharacterStatsSO`, `EnemyDataSO`)
-- Không hardcode số liệu — dùng ScriptableObject
+**Quy tac Update/FixedUpdate:**
 
-## Scripts Đã Có (Giai đoạn 1 & 2)
+- Update chi chua guard check + goi 1 ham duy nhat — khong viet logic truc tiep.
+- Moi hanh dong tach thanh ham rieng co ten ro vai tro: `HandleAimInput()`, `StartAim()`, `ReleaseAim()`, ...
+- Tinh toan phuc tap tach thanh ham rieng: `GetArrowSpawnPos()`, `UpdateAimAngle180()`, ...
 
-### Base
-| File | Class | Ghi chú |
-| ---- | ----- | ------- |
-| `SaiMonoBehaviour.cs` | `SaiMonoBehaviour : MonoBehaviour` | Base class toàn project |
+```csharp
+// DUNG
+private void Update()
+{
+    if (!_photonView.IsMine) return;
+    HandleAimInput();
+}
+private void HandleAimInput() { ... }
 
-### Menu / Lobby
-| File | Class | Chức năng |
-| ---- | ----- | --------- |
-| `PhotonLogin.cs` | `: MonoBehaviourPunCallbacks` | Login, connect, join lobby |
-| `PhotonLogout.cs` | `: MonoBehaviour` | Disconnect |
-| `PhotonRoom.cs` | `: MonoBehaviourPunCallbacks` | Tạo/join/leave phòng, list UI |
-| `PhotonRoomAuto.cs` | `: MonoBehaviourPunCallbacks` | Auto create/join room |
-| `PhotonStatus.cs` | `: MonoBehaviourPunCallbacks` | Hiển thị trạng thái mạng |
-| `RoomProfile.cs` | `[Serializable]` | Data: `string name` |
-| `UIRoomProfile.cs` | `: MonoBehaviour` | Room item UI, click handler |
-| `PlayerProfile.cs` | `[Serializable]` | Data: `string nickName` |
-
-### Player / Gameplay
-| File | Class | Chức năng |
-| ---- | ----- | --------- |
-| `PhotonPlaying.cs` | `: MonoBehaviourPunCallbacks` | Spawn player theo actor number, static instance |
-| `PlayerCtrl.cs` | `: SaiMonoBehaviour` | Controller chính; load PlayerMovement, PhotonView, PlayerAnimation; RPC sync anim |
-| `PlayerMovement.cs` | `: SaiMonoBehaviour` | Move, jump, ground check; `moveSpeed=4f`, `jumpForce=6f`, `maxJumpCount=1` |
-| `PlayerAnimation.cs` | `: SaiMonoBehaviour` | State machine: Idle/Run/Jump/Drop/Land/Aim/Shoot/Dash; fire GameEvents |
-| `PlayerAbilityDash.cs` | `: SaiMonoBehaviour` | Dash: `cooldown=1f`, `dashForce=15f`, `dashDuration=0.2f` |
-| `InputManager.cs` | `: MonoBehaviour` (Singleton) | Mouse position, right mouse states |
-| `GameEvents.cs` | `static class` | Event bus (xem bên dưới) |
-
-### Spawner / Pool
-| File | Class | Chức năng |
-| ---- | ----- | --------- |
-| `Spawner.cs` | `: SaiMonoBehaviour` | Object pool cơ bản: load từ folder, pool/despawn |
-| `PlayerSpawner.cs` | `: Spawner` (Singleton) | Extend Spawner cho player |
-| `EnemySpawner.cs` | `: Spawner` (Singleton) | Extend Spawner cho enemy; chỉ MasterClient spawn |
-| `PhotonPool.cs` | `: SaiMonoBehaviour, IPunPrefabPool` | Tích hợp Photon với pool system |
+// SAI
+private void Update()
+{
+    if (Input.GetMouseButtonDown(1)) { _isAiming = true; GameEvents... }
+}
+```
 
 ## GameEvents (Event Bus)
 
-```csharp
-public static class GameEvents
-{
-    public static Action OnPlayerJumped;
-    public static Action OnPlayerLanded;
-    public static Action<float> OnPlayerDashed;     // float = dashForce
-    public static Action OnPlayerDashEnded;
-    public static Action<PlayerState> OnAnimStateChanged;
-    public static Action<bool> OnPlayerFacingChanged;
-}
-```
+File: `Assets/_Script/Parents/GameEvents.cs`
 
 ## PlayerAnimation States
 
 ```csharp
-public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash }
-```
-
-State handlers: `HandleIdle()`, `HandleRun()`, `HandleJump()`, `HandleDrop()`, `HandleLand()`, `HandleAim()`, `HandleShoot()`, `HandleDash()` — mỗi handler check điều kiện, đổi state, fire GameEvents.
-
-## PlayerCtrl RPC Methods
-
-```csharp
-[PunRPC] void SyncAnimState(PlayerState state)
-[PunRPC] void RpcSetTrigger(string triggerName)
-[PunRPC] void RpcSetFacing(bool facingRight)
-[PunRPC] void RpcSetIsAiming(bool isAiming)
-[PunRPC] void RpcShoot(...)
-```
-
-## Chưa Có (Giai đoạn tiếp theo)
-
-- `INetworkService` / `PhotonNetworkAdapter` (Adapter pattern)
-- `CharacterStatsSO`, `EnemyDataSO` (ScriptableObject data)
-- `CharacterRuntimeStats` (clone SO khi spawn)
-- `GameManager`, `WaveManager`, `BossManager` (Singleton managers)
-- Full `StateMachine` (PlayerStateMachine, EnemyStateMachine, BossStateMachine)
-- Combat system (damage, HP, death, revive)
-- Enemy AI & scripts
-- Boss system
-
-## Architecture Decisions
-
-### Data
-- Stats dùng `ScriptableObject` (CharacterStatsSO, EnemyDataSO, ItemProfileSO)
-- **Không ghi trực tiếp vào SO** — SO là shared asset. Clone ra `CharacterRuntimeStats` khi spawn
+public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash, Die }
 
 ### Managers
+
 - Singleton pattern cho GameManager, WaveManager, BossManager
 - `PhotonRoom.instance`, `PhotonPlaying.instance` — hiện dùng pattern này (ghi chú "Dont do this in your game" trong code là reminder để refactor sau)
 
 ### Events
+
 - `GameEvents` static class làm event bus trung tâm (Observer pattern) — **ĐÃ CÓ**
 - UI chỉ subscribe event, không biết logic game
 
-### Networking
-- **Vertical Slice:** mỗi system: local hoạt động → add Photon → test 2 máy → sang tiếp
-- Photon được bọc trong `INetworkService` / `PhotonNetworkAdapter` (Adapter pattern) — **CHƯA CÓ**
-- Không gọi Photon API trực tiếp trong game logic
 - Chỉ Host (IsMasterClient) spawn enemy và control boss
 
 ### Object Pool
+
 - Dùng cho: enemy, projectile (Archer), item drop, VFX
 - `Spawner.cs` → `PlayerSpawner`, `EnemySpawner` đã có
 - `PhotonPool.cs` tích hợp với Photon's IPunPrefabPool
 
-## Design Patterns áp dụng
+## Photon RPC Rules
 
-| Pattern   | Áp dụng                                                            | Trạng thái |
-| --------- | ------------------------------------------------------------------ | ---------- |
-| State     | PlayerAnimation (đã có), PlayerStateMachine, EnemyStateMachine, BossStateMachine | Một phần |
-| Command   | Input → Command → Execute local + gửi qua INetworkService         | Chưa có |
-| Strategy  | IAttackStrategy (Melee/Ranged), IBossBehavior (Phase1/Phase2)     | Chưa có |
-| Observer  | GameEvents static class — tất cả system publish/subscribe         | Đã có |
-| Factory   | EnemyFactory.Spawn(), ItemDropFactory.CreateDrop()                | Chưa có |
-| Adapter   | INetworkService ← PhotonNetworkAdapter                            | Chưa có |
-| Singleton | InputManager, PhotonPlaying, PlayerSpawner, EnemySpawner          | Đã có |
-| Pool      | Spawner → PlayerSpawner, EnemySpawner, PhotonPool                 | Đã có |
-| Template  | SaiMonoBehaviour (LoadComponents → ResetValue)                    | Đã có |
+**RPC phai nam tren cung GameObject voi PhotonView** — Photon khong tim xuong children.
+
+```
+
+Root (PhotonView + EnemyCtrl) ← [PunRPC] dat o day ✓
+└── EnemyDamageReceiver ← [PunRPC] o day = KHONG HOAT DONG ❌
+
+```
+
+Pattern chuan: tao Ctrl class tren root nhan RPC → goi xuong child component.
+Vi du: PlayerCtrl (root, co PhotonView) nhan RpcReceive → goi PlayerDamageReceiver.Receiver()
+Vi du: EnemyCtrl (root, co PhotonView) nhan RpcReceive → goi EnemyDamageReceiver.Receiver()
 
 ## Photon Sync Rules
 
@@ -222,40 +169,12 @@ State handlers: `HandleIdle()`, `HandleRun()`, `HandleJump()`, `HandleDrop()`, `
 | Gold, XP, Level | RPC                                      |
 | Ping marker     | RPC                                      |
 | Anim state      | RPC (SyncAnimState, RpcSetTrigger, ...)  |
+   |
 
-**Sync movement đúng cách:**
-```
-Owner → execute locally → PhotonTransformView gửi position + velocity
-Remote → Lerp/Extrapolate để mượt (KHÔNG sync raw position từng frame)
-```
-
-## 2 Nhân vật
-
-|          | Chiến Binh                                  | Cung Thủ (_Velvet)           |
-| -------- | ------------------------------------------- | ---------------------------- |
-| Vai trò  | Tank                                        | DPS                          |
-| Tấn công | Melee (hitbox Collider2D + Animation Event) | Ranged (projectile từ pool)  |
-| Đặc biệt | Đứng yên → giảm 50% damage nhận             | Bắn/skill được khi airborne  |
-| Skill    | Phải đứng yên (velocity ≈ 0)                | Activate được khi nhảy       |
-
-Character assets có sẵn trong `_Assets/IMPORTANT/AssetResources/Character/AddressableResource/`:
-`_Velvet`, `_Raidon`, `Bathos`, `Cala`, `Lucy`, `Mary`, `Morrod`, `Mortal`, `Serp`, `Veinka`
+Character assets: `_Velvet` (Cung Thủ 1) · `_Raidon` (Cung Thủ 2)
 
 ## Packages
 
-| Package | Version | Ghi chú |
-| ------- | ------- | ------- |
-| `com.unity.render-pipelines.universal` | 17.3.0 | URP (Unity 6) |
-| `com.unity.inputsystem` | 1.19.0 | New Input System |
-| `com.unity.2d.animation` | 13.0.4 | 2D Skeleton animation |
-| `com.unity.2d.aseprite` | 3.0.1 | Import Aseprite |
-| `com.unity.2d.psdimporter` | 12.0.1 | PSD import |
-| `com.unity.2d.spriteshape` | 13.0.0 | Sprite shapes |
-| `com.unity.2d.tilemap` | 1.0.0 | Tilemap |
-| `com.unity.2d.tilemap.extras` | 6.0.1 | Tilemap extras |
-| `com.unity.timeline` | 1.8.12 | Timeline |
-| `com.unity.ugui` | 2.0.0 | uGUI + TextMeshPro |
-| `com.unity.visualscripting` | 1.9.11 | Visual scripting |
 | **Photon PUN2** | — | In `_Assets/Photon/` (KHÔNG sửa) |
 
 ## Build Order (Task Order)
@@ -263,8 +182,8 @@ Character assets có sẵn trong `_Assets/IMPORTANT/AssetResources/Character/Add
 9 giai đoạn, **không bỏ qua thứ tự**:
 
 1. Nền tảng + Photon cơ bản ✅ (xong: login, room, pool)
-2. Nhân vật + Di chuyển ✅ (xong: movement, animation, dash, input) ← **đang ở đây**
-3. Chiến đấu + Hồi sinh
+2. Nhân vật + Di chuyển ✅ (xong: movement, animation, dash, input, shoot)
+3. Chiến đấu + Hồi sinh 🔄 (đang làm: DamageSender/Receiver ✅, HP bar ✅, arrow ✅ — còn: kết nối damage, downed/revive, sync) ← **đang ở đây**
 4. Enemy + Wave
 5. Boss
 6. Inventory + Shop + Level
@@ -278,13 +197,4 @@ Character assets có sẵn trong `_Assets/IMPORTANT/AssetResources/Character/Add
 
 - `_Scenes/SampleScene.unity` — lobby/menu (PhotonLogin, PhotonRoom)
 - `_Scenes/Duy.unity` — game scene (PhotonPlaying, PhotonPlayer spawn)
-- `_Recovery/` — scene backup cũ, không dùng
-
-## Điều cần xác định sau
-
-- Chi tiết 3 skill của Chiến Binh + Cung Thủ
-- Loại và số lượng enemy cụ thể
-- Visual theme / art style (character nào dùng: _Velvet cho Archer?)
-- Balance: HP, damage, speed, gold drop, item price, XP curve
-- SFX & Music
-- Tutorial map design
+```

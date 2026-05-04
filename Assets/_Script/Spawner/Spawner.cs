@@ -34,6 +34,7 @@ public class Spawner : SaiMonoBehaviour
         Debug.LogWarning(transform.name + ": LoadHolder()", gameObject);
     }
 
+
     protected virtual void Loadprefabs()
     {
         if (this.prefabs.Count > 0) return;

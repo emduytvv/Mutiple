@@ -11,4 +11,9 @@ public class PlayerSpawner : Spawner
         base.Awake();
         _instance = this;
     }
+
+    protected override void Loadprefabs()
+    {
+        return;
+    }
 }

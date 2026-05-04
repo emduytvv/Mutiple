@@ -11,4 +11,6 @@ public static class GameEvents
     public static Action OnPlayerStartAim;
     public static Action OnPlayerShoot;
     public static Action<float> OnPlayerAimAngleChanged;
+    public static Action<int> OnPlayerRevived;
+    public static Action<int> OnPlayerDied;
 }

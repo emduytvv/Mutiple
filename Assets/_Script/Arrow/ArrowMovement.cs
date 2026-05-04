@@ -12,6 +12,6 @@ public class ArrowMovement : Movement
     protected override void ResetValue()
     {
         base.ResetValue();
-        baseMaxSpeed = 20f;
+        baseMaxSpeed = 50f;
     }
 }

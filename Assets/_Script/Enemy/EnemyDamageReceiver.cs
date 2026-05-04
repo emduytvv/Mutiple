@@ -12,9 +12,28 @@ using UnityEngine;
 
 public class EnemyDamageReceiver : DamageReceiver
 {
-    protected override void OnDead()
+    public EnemyAnimation EnemyAnimation => _enemyAnimation;
+    [SerializeField] protected EnemyAnimation _enemyAnimation;
+
+    protected override void LoadComponents()
     {
-        // Không cần RPC vì tất cả máy đã chạy đến đây rồi
-        gameObject.SetActive(false);
+        base.LoadComponents();
+        this.LoadEnemyAnimation();
+    }
+
+    private void LoadEnemyAnimation()
+    {
+        if (this._enemyAnimation != null) return;
+        this._enemyAnimation = GetComponentInParent<EnemyAnimation>();
+        Debug.Log(transform.name + ": Load EnemyAnimation", gameObject);
+    }
+
+    protected override void OnDead() { }
+    public override void Receiver(float damage)
+    {
+        if (isDead) return;
+        _enemyAnimation.OnHurt();
+        // FXSpawner.Instance.SpawnTextReduce("TextReduce", transform.position, damage.ToString());
+        Reduce(damage);
     }
 }

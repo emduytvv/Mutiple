@@ -20,8 +20,21 @@ public class PlayerCtrl : SaiMonoBehaviour
     public PlayerAnimation PlayerAnimation => _playerAnimation;
     [SerializeField] protected PlayerAnimation _playerAnimation;
 
+    public PlayerDamageReceiver PlayerDamageReceiver => _playerDamageReceiver;
+    [SerializeField] protected PlayerDamageReceiver _playerDamageReceiver;
+    private static List<PlayerCtrl> _allPlayers = new();
+    public static List<PlayerCtrl> AllPlayers => _allPlayers;
+
     public string photonNickName = "offline";
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _allPlayers.Add(this);
+        //     PlayerCtrl target = PlayerCtrl.allPlayers
+        // .OrderBy(p => Vector2.Distance(transform.position, p.transform.position))
+        // .FirstOrDefault();
+    }
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -29,6 +42,7 @@ public class PlayerCtrl : SaiMonoBehaviour
         this.LoadTextMeshPro();
         this.LoadPhotonView();
         this.LoadPlayerAnimation();
+        this.LoadPlayerDamageReceiver();
     }
 
     private void LoadPlayerMovement()
@@ -59,6 +73,19 @@ public class PlayerCtrl : SaiMonoBehaviour
         Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
     }
 
+    private void LoadPlayerDamageReceiver()
+    {
+        if (this._playerDamageReceiver != null) return;
+        this._playerDamageReceiver = GetComponentInChildren<PlayerDamageReceiver>();
+        Debug.Log(transform.name + ": Load PlayerDamageReceiver", gameObject);
+    }
+
+    [PunRPC]
+    public void RpcReceive(float damage)
+    {
+        _playerDamageReceiver.Receiver(damage);
+    }
+
     [PunRPC]
     private void SyncAnimState(PlayerState state)
     {
@@ -81,6 +108,9 @@ public class PlayerCtrl : SaiMonoBehaviour
                 break;
             case PlayerState.Dash:
                 _photonView.RPC("RpcSetTrigger", RpcTarget.Others, "dash");
+                break;
+            case PlayerState.Die:
+                _photonView.RPC("RpcSetTrigger", RpcTarget.Others, "die");
                 break;
         }
     }
@@ -118,6 +148,7 @@ public class PlayerCtrl : SaiMonoBehaviour
 
     private void OnDestroy()
     {
+        _allPlayers.Remove(this);
         GameEvents.OnAnimStateChanged -= SyncAnimState;
         GameEvents.OnPlayerFacingChanged -= SyncFacing;
     }
@@ -133,6 +164,11 @@ public class PlayerCtrl : SaiMonoBehaviour
         if (_photonView.ViewID == 0) return;
         this.photonNickName = _photonView.Owner.NickName;
         this._textMeshPro.text = photonNickName;
+    }
+    [PunRPC]
+    public void RpcRevive()
+    {
+        GameEvents.OnPlayerRevived?.Invoke(_photonView.ViewID);
     }
 }
 

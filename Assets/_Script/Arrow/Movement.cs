@@ -5,8 +5,8 @@ using UnityEngine;
 
 public abstract class Movement : SaiMonoBehaviour
 {
-    protected float maxSpeed = 2f;
-    protected float baseMaxSpeed = 2f;
+    [SerializeField] protected float maxSpeed = 2f;
+    [SerializeField] protected float baseMaxSpeed = 2f;
     protected void FixedUpdate()
     {
         Move();

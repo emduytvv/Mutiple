@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
-    protected static InputManager instance;
-    public static InputManager Instance => instance;
     protected Vector2 mousePosition;
     public Vector2 MousePosition => mousePosition;
     protected bool rightMouseDown;
@@ -14,16 +12,11 @@ public class InputManager : MonoBehaviour
     public bool RightMouse => rightMouse;
     protected bool rightMouseUp;
     public bool RightMouseUp => rightMouseUp;
-
-    protected void Start()
-    {
-        InputManager.instance = this;
-    }
-
     void Update()
     {
         GetMousePosition();
         GetMouseButtons();
+        GetMouseReviveHelper();
     }
 
     private void GetMousePosition()
@@ -34,7 +27,11 @@ public class InputManager : MonoBehaviour
     private void GetMouseButtons()
     {
         rightMouseDown = Input.GetMouseButtonDown(1);
-        rightMouse     = Input.GetMouseButton(1);
-        rightMouseUp   = Input.GetMouseButtonUp(1);
+        rightMouse = Input.GetMouseButton(1);
+        rightMouseUp = Input.GetMouseButtonUp(1);
+    }
+    public bool GetMouseReviveHelper()
+    {
+        return Input.GetKey(KeyCode.F);
     }
 }

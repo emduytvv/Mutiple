@@ -27,13 +27,6 @@ public abstract class DamageReceiver : SaiMonoBehaviour
         currentHp = maxHP;
         isDead = false;
     }
-
-    [PunRPC]
-    public void RpcReceive(float damage)
-    {
-        Receiver(damage);
-    }
-
     public virtual void Receiver(float damage)
     {
         if (isDead) return;
@@ -73,8 +66,6 @@ public abstract class DamageReceiver : SaiMonoBehaviour
     public virtual void Buff(float buff)
     {
         if (currentHp == maxHP) return;
-        // FXSpawner.Instance.SpawnFXHealing("Healing", transform.position, transform.parent.transform);
-        // FXSpawner.Instance.SpawnTextBuff("TextBuff", transform.position, buff.ToString());
         currentHp += buff;
         CheckHp();
     }
@@ -92,8 +83,4 @@ public abstract class DamageReceiver : SaiMonoBehaviour
         if (currentHp < 0f) currentHp = 0f;
     }
     protected abstract void OnDead();
-
-    // override ở subclass để xử lý death effects phía remote
-    [PunRPC]
-    protected virtual void RpcOnDead() { }
 }

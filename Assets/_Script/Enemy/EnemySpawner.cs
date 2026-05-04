@@ -19,6 +19,7 @@ public class EnemySpawner : Spawner
     protected void SpawnerTest()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        PhotonNetwork.Instantiate("Enemy_1", Vector3.zero, Quaternion.identity);
+        // PhotonNetwork.Instantiate("Enemy_1", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("BatOrange", Vector3.zero, Quaternion.identity);
     }
 }
