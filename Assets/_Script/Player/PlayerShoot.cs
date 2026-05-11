@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class PlayerShoot : SaiMonoBehaviour
 {
-    [SerializeField] protected PhotonView _photonView;
-    [SerializeField] protected PlayerAnimation _playerAnimation;
+    [SerializeField] protected PlayerCtrl _playerCtrl;
     [SerializeField] private float _aimAngle90;
     [SerializeField] protected float _aimAngle180;
     private bool _isAiming;
@@ -13,29 +12,21 @@ public class PlayerShoot : SaiMonoBehaviour
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPhotonView();
-        this.LoadPlayerAnimation();
+        this.LoadPlayerCtrl();
     }
 
-    private void LoadPhotonView()
+    private void LoadPlayerCtrl()
     {
-        if (_photonView != null) return;
-        _photonView = GetComponentInParent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
-    }
-
-    private void LoadPlayerAnimation()
-    {
-        if (_playerAnimation != null) return;
-        _playerAnimation = transform.parent.GetComponentInChildren<PlayerAnimation>();
-        Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
+        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void Update()
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         if (InputManager.Instance == null) return;
-        if (_playerAnimation.CurrentState == PlayerState.Die)
+        if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die)
         {
             _isAiming = false;
             return;
@@ -81,7 +72,7 @@ public class PlayerShoot : SaiMonoBehaviour
 
     private void UpdateAimAngle180()
     {
-        bool facingRight = _playerAnimation.transform.localScale.x > 0;
+        bool facingRight = _playerCtrl.PlayerAnimation.transform.localScale.x > 0;
         _aimAngle180 = facingRight ? _aimAngle90 : 180f - _aimAngle90;
     }
 

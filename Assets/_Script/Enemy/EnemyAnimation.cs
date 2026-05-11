@@ -1,33 +1,28 @@
-using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAnimation : SaiMonoBehaviour
 {
-    [SerializeField] protected PhotonView _photonView;
+    [SerializeField] protected EnemyCtrl _enemyCtrl;
     [SerializeField] protected Animator _animator;
-    [SerializeField] protected EnemyDamageReceiver _damageReceiver;
-    [SerializeField] protected Rigidbody2D _rigidbody2D;
 
-    static readonly int HashDie = Animator.StringToHash("die");
+    static readonly int HashDie = Animator.StringToHash("isDead");
     static readonly int HashHurt = Animator.StringToHash("isHurt");
-    private bool _dieTriggered;
+    static readonly int HashAttack = Animator.StringToHash("attack");
+    [SerializeField] private bool _dieTriggered;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPhotonView();
+        this.LoadEnemyCtrl();
         this.LoadAnimator();
-        this.LoadDamageReceiver();
-        this.LoadRigidbody2D();
     }
 
-    private void LoadPhotonView()
+    private void LoadEnemyCtrl()
     {
-        if (_photonView != null) return;
-        _photonView = GetComponentInParent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
+        if (_enemyCtrl != null) return;
+        _enemyCtrl = GetComponentInParent<EnemyCtrl>();
+        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
     private void LoadAnimator()
@@ -37,53 +32,38 @@ public class EnemyAnimation : SaiMonoBehaviour
         Debug.Log(transform.name + ": Load Animator", gameObject);
     }
 
-    private void LoadDamageReceiver()
+    protected void OnEnable()
     {
-        if (_damageReceiver != null) return;
-        _damageReceiver = GetComponentInChildren<EnemyDamageReceiver>();
-        Debug.Log(transform.name + ": Load DamageReceiver", gameObject);
-    }
-
-    private void LoadRigidbody2D()
-    {
-        if (_rigidbody2D != null) return;
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        Debug.Log(transform.name + ": Load Rigidbody2D", gameObject);
+        _dieTriggered = false;
     }
 
     private void Update()
     {
-        if (!_photonView.IsMine) return;
-
+        if (!_enemyCtrl.PhotonView.IsMine) return;
         HandleDeadAnim();
-        UpdateFlip();
+    }
+
+    public void SetAttackTrigger()
+    {
+        _animator.SetTrigger(HashAttack);
     }
 
     public void OnHurt()
     {
-        if (!_photonView.IsMine) return;
-        Debug.Log(transform.name + ": OnHurt");
+        if (!_enemyCtrl.PhotonView.IsMine) return;
         _animator.SetTrigger(HashHurt);
     }
 
     private void HandleDeadAnim()
     {
-        if (_dieTriggered || !_damageReceiver.isDead) return;
+        if (_dieTriggered || !_enemyCtrl.DamageReceiver.isDead) return;
         _dieTriggered = true;
+        _animator.ResetTrigger(HashHurt);
         _animator.SetTrigger(HashDie);
     }
 
-    private void UpdateFlip()
+    public void DespawnByEvent()
     {
-        float velX = _rigidbody2D.linearVelocity.x;
-        if (velX > 0.01f) SetFacing(true);
-        else if (velX < -0.01f) SetFacing(false);
-    }
-
-    private void SetFacing(bool facingRight)
-    {
-        Vector3 scale = transform.localScale;
-        scale.x = facingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-        transform.localScale = scale;
+        _enemyCtrl.EnemyDespawn.DespawnObject();
     }
 }

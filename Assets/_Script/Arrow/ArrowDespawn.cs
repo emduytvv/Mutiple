@@ -3,13 +3,19 @@ using UnityEngine;
 
 public class ArrowDespawn : DespawnByTime
 {
-    [SerializeField] private PhotonView _photonView;
+    [SerializeField] private ArrowCtrl _arrowCtrl;
 
+    private bool _isDespawning;
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        if (_photonView != null) return;
-        _photonView = GetComponentInParent<PhotonView>();
+        this.LoadArrowCtrl();
+    }
+
+    private void LoadArrowCtrl()
+    {
+        if (_arrowCtrl != null) return;
+        _arrowCtrl = GetComponentInParent<ArrowCtrl>();
     }
 
     protected override void ResetValue()
@@ -18,9 +24,17 @@ public class ArrowDespawn : DespawnByTime
         timeDespawn = 3f;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _isDespawning = false;
+    }
+
     public override void DespawnObject()
     {
-        if (!_photonView.IsMine) return;
-        PhotonNetwork.Destroy(_photonView.gameObject);
+        if (_isDespawning) return;
+        if (!_arrowCtrl.PhotonView.IsMine) return;
+        _isDespawning = true;
+        PhotonNetwork.Destroy(_arrowCtrl.PhotonView.gameObject);
     }
 }

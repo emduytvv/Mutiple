@@ -1,11 +1,9 @@
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAbilityDash : SaiMonoBehaviour
 {
-    [SerializeField] protected PhotonView _photonView;
-    [SerializeField] protected PlayerAnimation _playerAnimation;
+    [SerializeField] protected PlayerCtrl _playerCtrl;
     [SerializeField] protected InputAction _dashAction;
     [SerializeField] protected float _cooldown = 1f;
     [SerializeField] protected float _dashForce = 15f;
@@ -17,22 +15,14 @@ public class PlayerAbilityDash : SaiMonoBehaviour
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPhotonView();
-        this.LoadPlayerAnimation();
+        this.LoadPlayerCtrl();
     }
 
-    private void LoadPhotonView()
+    private void LoadPlayerCtrl()
     {
-        if (_photonView != null) return;
-        _photonView = GetComponentInParent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
-    }
-
-    private void LoadPlayerAnimation()
-    {
-        if (_playerAnimation != null) return;
-        _playerAnimation = transform.parent.parent.GetComponentInChildren<PlayerAnimation>();
-        Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
+        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     protected override void ResetValue()
@@ -64,8 +54,8 @@ public class PlayerAbilityDash : SaiMonoBehaviour
 
     private void OnDash()
     {
-        if (!_photonView.IsMine) return;
-        if (_playerAnimation.CurrentState == PlayerState.Die) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
+        if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         if (_cooldownTimer > 0f) return;
         _cooldownTimer = _cooldown;
         _isDashing = true;

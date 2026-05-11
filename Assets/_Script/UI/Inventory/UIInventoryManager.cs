@@ -8,6 +8,7 @@ public class UIInventoryManager : SaiMonoBehaviour
     [SerializeField] private List<UIInventorySlot> _slotItems = new List<UIInventorySlot>();
     [SerializeField] private int _totalSlot = 9;
     private InventoryManager _inventory;
+    public InventoryManager Inventory => _inventory;
 
     protected override void Start()
     {
@@ -18,12 +19,13 @@ public class UIInventoryManager : SaiMonoBehaviour
         if (_slotItems.Count > 0) return;
         foreach (Transform slot in transform)
         {
-            _slotItems.Add(slot.GetComponent<UIInventorySlot>());
+            UIInventorySlot ui = slot.GetComponent<UIInventorySlot>();
+            if (ui == null) continue;
+            _slotItems.Add(ui);
         }
     }
     protected void OnEnable()
     {
-        Debug.Log(transform.name + ": ShowUI");
         ShowUI();
 
     }
@@ -46,20 +48,25 @@ public class UIInventoryManager : SaiMonoBehaviour
 
     private void ShowUI()
     {
+        if (_inventory == null)
+        {
+            var local = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);
+            _inventory = local.GetComponentInChildren<InventoryManager>();
+        }
 
-        var local = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);
-        _inventory = local.GetComponentInChildren<InventoryManager>();
-        Debug.Log(transform.name + ": InventoryManager: " + _inventory.Items.Count);
+        for (int i = 0; i < _slotItems.Count; i++)
+        {
+            _slotItems[i].SlotIndex = i;
+        }
+
+        Refresh();
+    }
+    public void Refresh()
+    {
         for (int i = 0; i < _totalSlot; i++)
         {
-            if (i < _inventory.Items.Count)
-            {
-                _slotItems[i].SetItem(_inventory?.Items[i]);
-            }
-            else
-            {
-                _slotItems[i].SetItem(null);
-            }
+            ItemInventoryBase item = i < _inventory.Items.Count ? _inventory.Items[i] : null;
+            _slotItems[i].SetItem(item);
         }
     }
 

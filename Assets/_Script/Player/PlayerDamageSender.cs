@@ -13,9 +13,23 @@ using UnityEngine;
 
 public class PlayerDamageSender : DamageSender
 {
+    [SerializeField] private PlayerCtrl _playerCtrl;
+
+    protected override void LoadComponents()
+    {
+        base.LoadComponents();
+        this.LoadPlayerCtrl();
+    }
+
+    private void LoadPlayerCtrl()
+    {
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
+    }
+
     public void Send(EnemyDamageReceiver enemy, float damage)
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         enemy.PhotonView.RPC("RpcReceive", RpcTarget.All, damage);
     }
 }

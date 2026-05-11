@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c52ba9b9a526c9a479f70936bca1f49a, type: 3}
+  m_Name: BowMagicEpic
+  m_EditorClassIdentifier:
+  _id: 7
+  _icon: {fileID: 21300000, guid: be9f4a07bf323d148899e468a46f0875, type: 3}
+  _typeItem: 0
+  _equipmentRarity: 2
+  _levels:
+  - _armorPenetration: 0.120
+    _criticalRate: 0.120
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 26
+    _upgradeCost: 200
+  - _armorPenetration: 0.132
+    _criticalRate: 0.132
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 29
+    _upgradeCost: 200
+  - _armorPenetration: 0.145
+    _criticalRate: 0.145
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 31
+    _upgradeCost: 200
+  - _armorPenetration: 0.160
+    _criticalRate: 0.160
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 35
+    _upgradeCost: 200
+  - _armorPenetration: 0.176
+    _criticalRate: 0.176
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 38
+    _upgradeCost: 200
+  - _armorPenetration: 0.193
+    _criticalRate: 0.193
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 42
+    _upgradeCost: 200
+  - _armorPenetration: 0.213
+    _criticalRate: 0.213
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 46
+    _upgradeCost: 200
+  - _armorPenetration: 0.234
+    _criticalRate: 0.234
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 51
+    _upgradeCost: 200
+  - _armorPenetration: 0.257
+    _criticalRate: 0.257
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 56
+    _upgradeCost: 200
+  - _armorPenetration: 0.283
+    _criticalRate: 0.283
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 61
+    _upgradeCost: 200
+  _skills: []

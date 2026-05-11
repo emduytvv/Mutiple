@@ -39,7 +39,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     public virtual void StartGame()
     {
         Debug.Log(transform.name + ": Start Game");
-        if (PhotonNetwork.IsMasterClient) PhotonNetwork.LoadLevel("Duy");
+        if (PhotonNetwork.IsMasterClient) PhotonNetwork.LoadLevel("Level1_Map1");
         else Debug.Log("Not Master Client");
     }
     public override void OnJoinedRoom()

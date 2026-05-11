@@ -1,0 +1,57 @@
+Scene Load
+  └─ InventoryNPC.Start()
+       └─ random 6 ItemDataSO từ ShopItemPoolSO
+       └─ lưu ItemDataSO[6] + bool[6] isLocked = false
+
+Player đến gần NPC
+  └─ NPCInteract (OnTriggerEnter2D) → đánh dấu _playerInRange = true
+  └─ NPCInteract.Update() → press E + _playerInRange
+       └─ UIShopManager.Instance.Open(_inventoryNPC)
+
+UIShopManager.Open(InventoryNPC npc)
+  └─ lưu ref npc hiện tại
+  └─ render 6 UIShopSlot (icon + tên + giá + trạng thái locked)
+  └─ show panel
+
+Player click Buy trên UIShopSlot[i]
+  └─ check gold (TODO sau)
+  └─ tạo ItemBase mới từ ItemDataSO[i]
+  └─ _inventoryManager.FindSlotFirstEmpty(newItem)
+  └─ npc.SetLocked(i, true)
+  └─ UIShopSlot[i].Refresh() → hiện locked UI
+
+Press E lần 2 / nút Close
+  └─ UIShopManager.Close()
+Hierarchy
+
+Map Scene
+└── NPCShop
+    ├── NPCShopCtrl.cs       ← hub
+    ├── NPCInteract.cs       ← trigger zone + E key
+    ├── InventoryNPC.cs      ← data: ItemDataSO[6] + bool[6]
+    └── TriggerZone (child)  ← Collider2D isTrigger=true
+
+Canvas
+└── UIShop (Panel)
+    ├── UIShopManager.cs     ← Singleton
+    ├── UIShopSlot × 6
+    │   └── UIShopSlot.cs    ← icon + tên + giá + Buy button
+    └── CloseButton
+
+Project/SO
+└── ShopItemPoolSO.cs        ← List<ItemDataSO> — nguồn random
+    └── ShopPool_Map1        ← asset cụ thể cho Map 1
+Trách nhiệm từng class
+Class	Làm gì
+ShopItemPoolSO	SO chứa danh sách toàn bộ item có thể bán ở map đó
+InventoryNPC	Random 6 từ pool khi Start, lưu locked state
+NPCInteract	Detect player trong trigger, xử lý phím E
+NPCShopCtrl	Hub expose InventoryNPC + NPCInteract
+UIShopManager	Singleton, Open(InventoryNPC) / Close(), render slots
+UIShopSlot	Hiển thị 1 item: icon, tên, giá, nút Buy, locked overlay
+Thứ tự làm
+ShopItemPoolSO — tạo SO + tạo asset Map1
+InventoryNPC — random 6 khi Start, SetLocked()
+NPCInteract — trigger zone + E key → gọi UIShopManager
+UIShopManager + UIShopSlot — render + Buy logic
+NPCShopCtrl — kết nối 2 phần trên

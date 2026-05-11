@@ -6,12 +6,16 @@ public class PlayerDamageReceiver : DamageReceiver
     {
         GameEvents.OnPlayerRevived += OnRevived;
     }
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        baseMaxHP = 30f;
+    }
 
     private void OnDestroy()
     {
         GameEvents.OnPlayerRevived -= OnRevived;
     }
-
     private void OnRevived(int viewId)
     {
         if (_photonView.ViewID != viewId) return;

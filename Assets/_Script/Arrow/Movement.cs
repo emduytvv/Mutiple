@@ -7,7 +7,7 @@ public abstract class Movement : SaiMonoBehaviour
 {
     [SerializeField] protected float maxSpeed = 2f;
     [SerializeField] protected float baseMaxSpeed = 2f;
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Move();
     }

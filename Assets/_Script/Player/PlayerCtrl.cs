@@ -8,76 +8,90 @@ using UnityEngine.InputSystem;
 
 public class PlayerCtrl : SaiMonoBehaviour
 {
+    public PhotonView PhotonView => _photonView;
+    [SerializeField] protected PhotonView _photonView;
+    public Rigidbody2D Rigidbody2D => _rigidbody2D;
+    [SerializeField] protected Rigidbody2D _rigidbody2D;
     public PlayerMovement PlayerMovement => _playerMovement;
     [SerializeField] protected PlayerMovement _playerMovement;
-
+    public PlayerAnimation PlayerAnimation => _playerAnimation;
+    [SerializeField] protected PlayerAnimation _playerAnimation;
+    public PlayerDamageReceiver PlayerDamageReceiver => _playerDamageReceiver;
+    [SerializeField] protected PlayerDamageReceiver _playerDamageReceiver;
+    public PlayerDespawn PlayerDespawn => _playerDespawn;
+    [SerializeField] protected PlayerDespawn _playerDespawn;
     public TextMeshPro TextMeshPro => _textMeshPro;
     [SerializeField] protected TextMeshPro _textMeshPro;
 
-    public PhotonView PhotonView => _photonView;
-    [SerializeField] protected PhotonView _photonView;
-
-    public PlayerAnimation PlayerAnimation => _playerAnimation;
-    [SerializeField] protected PlayerAnimation _playerAnimation;
-
-    public PlayerDamageReceiver PlayerDamageReceiver => _playerDamageReceiver;
-    [SerializeField] protected PlayerDamageReceiver _playerDamageReceiver;
     private static List<PlayerCtrl> _allPlayers = new();
     public static List<PlayerCtrl> AllPlayers => _allPlayers;
-
     public string photonNickName = "offline";
 
     protected override void Awake()
     {
         base.Awake();
         _allPlayers.Add(this);
-        //     PlayerCtrl target = PlayerCtrl.allPlayers
-        // .OrderBy(p => Vector2.Distance(transform.position, p.transform.position))
-        // .FirstOrDefault();
     }
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPlayerMovement();
-        this.LoadTextMeshPro();
         this.LoadPhotonView();
+        this.LoadRigidbody2D();
+        this.LoadPlayerMovement();
         this.LoadPlayerAnimation();
         this.LoadPlayerDamageReceiver();
-    }
-
-    private void LoadPlayerMovement()
-    {
-        if (this._playerMovement != null) return;
-        this._playerMovement = GetComponentInChildren<PlayerMovement>();
-        Debug.Log(transform.name + ": Load PlayerMovement", gameObject);
-    }
-
-    private void LoadTextMeshPro()
-    {
-        if (this._textMeshPro != null) return;
-        this._textMeshPro = GetComponentInChildren<TextMeshPro>();
-        Debug.Log(transform.name + ": Load TextMeshPro", gameObject);
+        this.LoadPlayerDespawn();
+        this.LoadTextMeshPro();
     }
 
     private void LoadPhotonView()
     {
-        if (this._photonView != null) return;
-        this._photonView = GetComponent<PhotonView>();
+        if (_photonView != null) return;
+        _photonView = GetComponent<PhotonView>();
         Debug.Log(transform.name + ": Load PhotonView", gameObject);
+    }
+
+    private void LoadRigidbody2D()
+    {
+        if (_rigidbody2D != null) return;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        Debug.Log(transform.name + ": Load Rigidbody2D", gameObject);
+    }
+
+    private void LoadPlayerMovement()
+    {
+        if (_playerMovement != null) return;
+        _playerMovement = GetComponentInChildren<PlayerMovement>();
+        Debug.Log(transform.name + ": Load PlayerMovement", gameObject);
     }
 
     private void LoadPlayerAnimation()
     {
-        if (this._playerAnimation != null) return;
-        this._playerAnimation = GetComponentInChildren<PlayerAnimation>();
+        if (_playerAnimation != null) return;
+        _playerAnimation = GetComponentInChildren<PlayerAnimation>();
         Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
     }
 
     private void LoadPlayerDamageReceiver()
     {
-        if (this._playerDamageReceiver != null) return;
-        this._playerDamageReceiver = GetComponentInChildren<PlayerDamageReceiver>();
+        if (_playerDamageReceiver != null) return;
+        _playerDamageReceiver = GetComponentInChildren<PlayerDamageReceiver>();
         Debug.Log(transform.name + ": Load PlayerDamageReceiver", gameObject);
+    }
+
+    private void LoadPlayerDespawn()
+    {
+        if (_playerDespawn != null) return;
+        _playerDespawn = GetComponentInChildren<PlayerDespawn>();
+        Debug.Log(transform.name + ": Load PlayerDespawn", gameObject);
+    }
+
+    private void LoadTextMeshPro()
+    {
+        if (_textMeshPro != null) return;
+        _textMeshPro = GetComponentInChildren<TextMeshPro>();
+        Debug.Log(transform.name + ": Load TextMeshPro", gameObject);
     }
 
     [PunRPC]
@@ -114,6 +128,7 @@ public class PlayerCtrl : SaiMonoBehaviour
                 break;
         }
     }
+
     [PunRPC]
     private void RpcSetTrigger(string triggerName)
     {
@@ -153,7 +168,6 @@ public class PlayerCtrl : SaiMonoBehaviour
         GameEvents.OnPlayerFacingChanged -= SyncFacing;
     }
 
-
     private void SyncFacing(bool facingRight)
     {
         _photonView.RPC("RpcSetFacing", RpcTarget.Others, facingRight);
@@ -165,10 +179,10 @@ public class PlayerCtrl : SaiMonoBehaviour
         this.photonNickName = _photonView.Owner.NickName;
         this._textMeshPro.text = photonNickName;
     }
+
     [PunRPC]
     public void RpcRevive()
     {
         GameEvents.OnPlayerRevived?.Invoke(_photonView.ViewID);
     }
 }
-

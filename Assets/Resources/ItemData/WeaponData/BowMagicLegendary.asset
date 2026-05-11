@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c52ba9b9a526c9a479f70936bca1f49a, type: 3}
+  m_Name: BowMagicLegendary
+  m_EditorClassIdentifier:
+  _id: 8
+  _icon: {fileID: 21300000, guid: 26b2267ed6935d44984642736d791129, type: 3}
+  _typeItem: 0
+  _equipmentRarity: 3
+  _levels:
+  - _armorPenetration: 0.180
+    _criticalRate: 0.180
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 38
+    _upgradeCost: 200
+  - _armorPenetration: 0.198
+    _criticalRate: 0.198
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 42
+    _upgradeCost: 200
+  - _armorPenetration: 0.218
+    _criticalRate: 0.218
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 46
+    _upgradeCost: 200
+  - _armorPenetration: 0.240
+    _criticalRate: 0.240
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 51
+    _upgradeCost: 200
+  - _armorPenetration: 0.264
+    _criticalRate: 0.264
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 56
+    _upgradeCost: 200
+  - _armorPenetration: 0.290
+    _criticalRate: 0.290
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 61
+    _upgradeCost: 200
+  - _armorPenetration: 0.319
+    _criticalRate: 0.319
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 67
+    _upgradeCost: 200
+  - _armorPenetration: 0.351
+    _criticalRate: 0.351
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 74
+    _upgradeCost: 200
+  - _armorPenetration: 0.386
+    _criticalRate: 0.386
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 81
+    _upgradeCost: 200
+  - _armorPenetration: 0.424
+    _criticalRate: 0.424
+    _physicalDamageBonus: 0
+    _magicalDamageBonus: 90
+    _upgradeCost: 200
+  _skills: []

@@ -5,23 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : SaiMonoBehaviour
 {
-
     [Header("Move")]
     [SerializeField] protected InputAction inputAction;
-    public PhotonView PhotonView => _photonView;
-    [SerializeField] protected PhotonView _photonView;
-    public Rigidbody2D Rigidbody2D => _rigidbody2D;
-    [SerializeField] protected Rigidbody2D _rigidbody2D;
-    public PlayerCtrl PlayerCtrl => _playerCtrl;
     [SerializeField] protected PlayerCtrl _playerCtrl;
-    public PlayerAnimation PlayerAnimation => _playerAnimation;
-    [SerializeField] protected PlayerAnimation _playerAnimation;
     private Vector2 direction;
     public Vector2 Direction => direction;
-    public float VerticalVelocity => _rigidbody2D.linearVelocity.y;
+    public float VerticalVelocity => _playerCtrl.Rigidbody2D.linearVelocity.y;
     [SerializeField] protected float moveSpeed = 4f;
     private float _lastFacingX = 1f;
-
     private bool _isDashing;
 
     [Header("Jump")]
@@ -39,56 +30,36 @@ public class PlayerMovement : SaiMonoBehaviour
     {
         base.LoadComponents();
         this.LoadPlayerCtrl();
-        this.LoadRigidbody2D();
-        this.LoadPhotonView();
         this.LoadPointGroundCheck();
         this.LoadGroundLayer();
-        this.LoadPlayerAnimation();
     }
 
-    private void LoadPhotonView()
-    {
-        if (this._photonView != null) return;
-        this._photonView = GetComponentInParent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
-    }
-    private void LoadRigidbody2D()
-    {
-        if (this._rigidbody2D != null) return;
-        this._rigidbody2D = GetComponentInParent<Rigidbody2D>();
-        Debug.Log(transform.name + ": Load Rigidbody2D", gameObject);
-    }
     private void LoadPlayerCtrl()
     {
-        if (this._playerCtrl != null) return;
-        this._playerCtrl = GetComponentInParent<PlayerCtrl>();
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
         Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
-    private void LoadPlayerAnimation()
-    {
-        if (this._playerAnimation != null) return;
-        this._playerAnimation = transform.parent.GetComponentInChildren<PlayerAnimation>();
-        Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
-    }
     private void LoadPointGroundCheck()
     {
-        if (this.pointGroundCheck != null) return;
-        this.pointGroundCheck = transform.Find("pointGroundCheck");
+        if (pointGroundCheck != null) return;
+        pointGroundCheck = transform.Find("pointGroundCheck");
         Debug.Log(transform.name + ": Load PointGroundCheck", gameObject);
     }
 
     private void LoadGroundLayer()
     {
-        if (this.groundLayer != 0) return;
-        this.groundLayer = LayerMask.GetMask("Ground");
+        if (groundLayer != 0) return;
+        groundLayer = LayerMask.GetMask("Ground");
         Debug.Log(transform.name + ": Load GroundLayer", gameObject);
     }
+
     protected override void Start()
     {
-        if (!_photonView.IsMine)
+        if (!_playerCtrl.PhotonView.IsMine)
         {
-            _rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+            _playerCtrl.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
             return;
         }
         SetInputAction();
@@ -117,12 +88,12 @@ public class PlayerMovement : SaiMonoBehaviour
 
     private void Move()
     {
-        if (!_photonView.IsMine) return;
-        if (_playerAnimation.CurrentState == PlayerState.Die) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
+        if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         SetDirection();
         SetLastFacingX();
         if (_isDashing) return;
-        _rigidbody2D.linearVelocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.linearVelocity.y);
+        _playerCtrl.Rigidbody2D.linearVelocity = new Vector2(direction.x * moveSpeed, _playerCtrl.Rigidbody2D.linearVelocity.y);
     }
 
     private void SetDirection()
@@ -138,7 +109,7 @@ public class PlayerMovement : SaiMonoBehaviour
     private void OnDash(float dashForce)
     {
         float dirX = Mathf.Abs(direction.x) > 0.01f ? Mathf.Sign(direction.x) : _lastFacingX;
-        _rigidbody2D.linearVelocity = new Vector2(dirX * dashForce, _rigidbody2D.linearVelocity.y);
+        _playerCtrl.Rigidbody2D.linearVelocity = new Vector2(dirX * dashForce, _playerCtrl.Rigidbody2D.linearVelocity.y);
         _isDashing = true;
     }
 
@@ -153,18 +124,18 @@ public class PlayerMovement : SaiMonoBehaviour
         _isGrounded = Physics2D.OverlapBox(pointGroundCheck.position, groundCheckSize, 0, groundLayer);
 
         if (_isGrounded) _jumpCount = 0;
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         if (!_wasGrounded && _isGrounded) GameEvents.OnPlayerLanded?.Invoke();
     }
 
     private void TryJump()
     {
-        if (!_photonView.IsMine) return;
-        if (_playerAnimation.CurrentState == PlayerState.Die) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
+        if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         if (!_isGrounded && _jumpCount >= maxJumpCount) return;
 
         _jumpCount++;
-        _rigidbody2D.linearVelocity = new Vector2(_rigidbody2D.linearVelocity.x, jumpForce);
+        _playerCtrl.Rigidbody2D.linearVelocity = new Vector2(_playerCtrl.Rigidbody2D.linearVelocity.x, jumpForce);
         GameEvents.OnPlayerJumped?.Invoke();
     }
 
@@ -192,10 +163,8 @@ public class PlayerMovement : SaiMonoBehaviour
             .With("Right", "<Keyboard>/d");
     }
 
-
     private void SetKeyMove()
     {
         _jumpAction = new InputAction("Jump", binding: "<Keyboard>/space");
     }
-
 }

@@ -9,7 +9,7 @@ public class Spawner : SaiMonoBehaviour
     [SerializeField] protected Transform Holder;
     [SerializeField] protected List<Transform> pools;
     [SerializeField] protected int currentObject;
-    [SerializeField] protected int maxObject = 10;
+    [SerializeField] protected int maxObject = 100;
     private HashSet<Transform> spawnedObjects = new HashSet<Transform>();
 
     protected override void LoadComponents()

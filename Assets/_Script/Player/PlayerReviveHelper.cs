@@ -1,32 +1,34 @@
-using System;
-using System.Threading;
 using Photon.Pun;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerReviveHelper : SaiMonoBehaviour
 {
-    [SerializeField] private PhotonView _photonView;
+    [SerializeField] private PlayerCtrl _playerCtrl;
     [SerializeField] private float _reviveTime = 5f;
     [SerializeField] private float _timer = 0f;
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        if (_photonView != null) return;
-        _photonView = GetComponentInParent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
+        this.LoadPlayerCtrl();
+    }
+
+    private void LoadPlayerCtrl()
+    {
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
+        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         PlayerCtrl other = collision.GetComponentInParent<PlayerCtrl>();
         if (other == null) return;
         if (!other.PlayerDamageReceiver.isDead) return;
-        if (other.PhotonView == _photonView) return;
+        if (other.PhotonView == _playerCtrl.PhotonView) return;
 
         Help(other);
-
     }
 
     private void Help(PlayerCtrl other)

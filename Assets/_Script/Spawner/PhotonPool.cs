@@ -12,15 +12,17 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
         base.Awake();
         PhotonNetwork.PrefabPool = this;
     }
-    protected override void Start()
+    private void RegisterSpawners()
     {
-        base.Start();
         spawners.Add(EnemySpawner.Instance.GetComponent<Spawner>());
         spawners.Add(PlayerSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(ArrowSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(BulletSpawner.Instance.GetComponent<Spawner>());
     }
+
     public GameObject Instantiate(string prefabId, Vector3 pos, Quaternion rot)
     {
+        if (spawners.Count == 0) RegisterSpawners();
         foreach (Spawner spawner in spawners)
         {
             if (!spawner.HasPrefab(prefabId)) continue;

@@ -12,8 +12,7 @@ using UnityEngine;
 
 public class EnemyDamageReceiver : DamageReceiver
 {
-    public EnemyAnimation EnemyAnimation => _enemyAnimation;
-    [SerializeField] protected EnemyAnimation _enemyAnimation;
+    [SerializeField] protected EnemyCtrl _enemyCtrl;
 
     protected override void LoadComponents()
     {
@@ -23,17 +22,25 @@ public class EnemyDamageReceiver : DamageReceiver
 
     private void LoadEnemyAnimation()
     {
-        if (this._enemyAnimation != null) return;
-        this._enemyAnimation = GetComponentInParent<EnemyAnimation>();
+        if (this._enemyCtrl != null) return;
+        this._enemyCtrl = GetComponentInParent<EnemyCtrl>();
         Debug.Log(transform.name + ": Load EnemyAnimation", gameObject);
     }
 
-    protected override void OnDead() { }
+    protected override void OnDead()
+    {
+        GameEvents.OnEnemyDied?.Invoke();
+    }
     public override void Receiver(float damage)
     {
         if (isDead) return;
-        _enemyAnimation.OnHurt();
-        // FXSpawner.Instance.SpawnTextReduce("TextReduce", transform.position, damage.ToString());
+        _enemyCtrl.EnemyAnimation.OnHurt();
         Reduce(damage);
     }
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        baseMaxHP = 2f;
+    }
+
 }

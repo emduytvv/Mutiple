@@ -1,25 +1,19 @@
-using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
 public class EnemySpawner : Spawner
 {
     private static EnemySpawner _instance;
     public static EnemySpawner Instance => _instance;
+
     protected override void Awake()
     {
         base.Awake();
         _instance = this;
     }
-    protected override void Start()
+    protected override void ResetValue()
     {
-        base.Start();
-        Invoke(nameof(SpawnerTest), 3f);
+        base.ResetValue();
+        maxObject = 100;
     }
-    protected void SpawnerTest()
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
-        // PhotonNetwork.Instantiate("Enemy_1", Vector3.zero, Quaternion.identity);
-        PhotonNetwork.Instantiate("BatOrange", Vector3.zero, Quaternion.identity);
-    }
+
 }

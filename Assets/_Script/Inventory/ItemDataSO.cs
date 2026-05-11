@@ -1,6 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemDataSO", menuName = "SO/ItemDataSO")]
+// Base class — chỉ chứa field CHUNG cho mọi loại item
+// Không tạo trực tiếp — dùng EquipmentDataSO hoặc PowerUpDataSO
 public class ItemDataSO : ScriptableObject
 {
     public int _id;

@@ -3,33 +3,28 @@ using UnityEngine;
 
 public class EnemyDespawn : Despawn
 {
-    [SerializeField] private PhotonView _photonView;
-    [SerializeField] private EnemyDamageReceiver _damageReceiver;
+    [SerializeField] private EnemyCtrl _enemyCtrl;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPhotonView();
-        this.LoadDamageReceiver();
+        this.LoadEnemyCtrl();
     }
 
-    private void LoadPhotonView()
+    private void LoadEnemyCtrl()
     {
-        if (_photonView != null) return;
-        _photonView = GetComponentInParent<PhotonView>();
+        if (_enemyCtrl != null) return;
+        _enemyCtrl = GetComponentInParent<EnemyCtrl>();
     }
 
-    private void LoadDamageReceiver()
+    protected override bool CanDespawn()
     {
-        if (_damageReceiver != null) return;
-        _damageReceiver = transform.parent.GetComponentInChildren<EnemyDamageReceiver>();
+        return false;
     }
-
-    protected override bool CanDespawn() => _damageReceiver.isDead;
 
     public override void DespawnObject()
     {
-        if (!_photonView.IsMine) return;
-        PhotonNetwork.Destroy(_photonView.gameObject);
+        if (!_enemyCtrl.PhotonView.IsMine) return;
+        PhotonNetwork.Destroy(_enemyCtrl.PhotonView.gameObject);
     }
 }

@@ -6,12 +6,9 @@ public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash, Die }
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : SaiMonoBehaviour
 {
-    public PhotonView PhotonView => _photonView;
-    [SerializeField] protected PhotonView _photonView;
+    [SerializeField] protected PlayerCtrl _playerCtrl;
     public Animator Animator => _animator;
     [SerializeField] protected Animator _animator;
-    public PlayerMovement PlayerMovement => _playerMovement;
-    [SerializeField] protected PlayerMovement _playerMovement;
 
     static readonly int HashIsRun = Animator.StringToHash("isRun");
     static readonly int HashJump = Animator.StringToHash("jump");
@@ -30,30 +27,22 @@ public class PlayerAnimation : SaiMonoBehaviour
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPhotonView();
+        this.LoadPlayerCtrl();
         this.LoadAnimator();
-        this.LoadPlayerMovement();
     }
 
-    private void LoadPhotonView()
+    private void LoadPlayerCtrl()
     {
-        if (this._photonView != null) return;
-        this._photonView = GetComponentInParent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
+        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void LoadAnimator()
     {
-        if (this._animator != null) return;
-        this._animator = GetComponent<Animator>();
+        if (_animator != null) return;
+        _animator = GetComponent<Animator>();
         Debug.Log(transform.name + ": Load Animator", gameObject);
-    }
-
-    private void LoadPlayerMovement()
-    {
-        if (this._playerMovement != null) return;
-        this._playerMovement = transform.parent.GetComponentInChildren<PlayerMovement>();
-        Debug.Log(transform.name + ": Load PlayerMovement", gameObject);
     }
 
     protected override void Start()
@@ -82,14 +71,9 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     protected void Update()
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         CheckState();
         UpdateFlip();
-
-    }
-    private void FixedUpdate()
-    {
-        //  Debug.Log(transform.name + ": Current State: " + _currentState);
     }
 
     private void OnChangeState(PlayerState newState)
@@ -150,22 +134,21 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     private void HandleIdle()
     {
-        if (Mathf.Abs(_playerMovement.Direction.x) > 0.01f)
+        if (Mathf.Abs(_playerCtrl.PlayerMovement.Direction.x) > 0.01f)
             OnChangeState(PlayerState.Run);
     }
 
     private void HandleRun()
     {
-        if (Mathf.Abs(_playerMovement.Direction.x) <= 0.01f)
+        if (Mathf.Abs(_playerCtrl.PlayerMovement.Direction.x) <= 0.01f)
             OnChangeState(PlayerState.Idle);
     }
-    private void HandleDie()
-    {
-    }
+
+    private void HandleDie() { }
 
     private void HandleJump()
     {
-        if (_playerMovement.VerticalVelocity < 0.01f)
+        if (_playerCtrl.PlayerMovement.VerticalVelocity < 0.01f)
             OnChangeState(PlayerState.Drop);
     }
 
@@ -173,7 +156,7 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     private void HandleLand()
     {
-        if (Mathf.Abs(_playerMovement.Direction.x) > 0.01f)
+        if (Mathf.Abs(_playerCtrl.PlayerMovement.Direction.x) > 0.01f)
         {
             OnChangeState(PlayerState.Run);
             return;
@@ -188,7 +171,7 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     private void OnStartAim()
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         if (_currentState == PlayerState.Die) return;
         if (_currentState == PlayerState.Dash || _currentState == PlayerState.Shoot) return;
         OnChangeState(PlayerState.Aim);
@@ -196,7 +179,7 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     private void OnShoot()
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         if (_currentState != PlayerState.Aim) return;
         OnChangeState(PlayerState.Shoot);
     }
@@ -206,7 +189,7 @@ public class PlayerAnimation : SaiMonoBehaviour
         AnimatorStateInfo info = _animator.GetCurrentAnimatorStateInfo(0);
         if (info.normalizedTime >= 0.8f)
         {
-            if (Mathf.Abs(_playerMovement.Direction.x) > 0.01f)
+            if (Mathf.Abs(_playerCtrl.PlayerMovement.Direction.x) > 0.01f)
                 OnChangeState(PlayerState.Run);
             else
                 OnChangeState(PlayerState.Idle);
@@ -218,7 +201,7 @@ public class PlayerAnimation : SaiMonoBehaviour
         AnimatorStateInfo info = _animator.GetCurrentAnimatorStateInfo(0);
         if (info.normalizedTime >= 0.8f)
         {
-            if (Mathf.Abs(_playerMovement.Direction.x) > 0.01f)
+            if (Mathf.Abs(_playerCtrl.PlayerMovement.Direction.x) > 0.01f)
                 OnChangeState(PlayerState.Run);
             else
                 OnChangeState(PlayerState.Idle);
@@ -232,7 +215,7 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     private void OnAimAngleChanged(float angle)
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         _animator.SetFloat(HashAimAngle, angle);
     }
 
@@ -245,7 +228,7 @@ public class PlayerAnimation : SaiMonoBehaviour
             && InputManager.Instance != null)
             dirX = InputManager.Instance.MousePosition.x - transform.parent.position.x;
         else
-            dirX = _playerMovement.Direction.x;
+            dirX = _playerCtrl.PlayerMovement.Direction.x;
 
         if (dirX > 0.01f && !_facingRight) SetFacing(true);
         else if (dirX < -0.01f && _facingRight) SetFacing(false);
@@ -281,10 +264,9 @@ public class PlayerAnimation : SaiMonoBehaviour
         _animator.SetTrigger(HashShoot);
     }
 
-
     public void OnJump()
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         if (_currentState == PlayerState.Die) return;
         if (_currentState == PlayerState.Aim || _currentState == PlayerState.Shoot) return;
         OnChangeState(PlayerState.Jump);
@@ -292,23 +274,23 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     public void OnLand()
     {
-        if (!_photonView.IsMine) return;
+        if (!_playerCtrl.PhotonView.IsMine) return;
         if (_currentState == PlayerState.Die) return;
         if (_currentState == PlayerState.Aim || _currentState == PlayerState.Shoot) return;
         if (_currentState == PlayerState.Jump) return;
         OnChangeState(PlayerState.Land);
     }
+
     private void OnDied(int viewId)
     {
-        if (_photonView.ViewID != viewId) return;
+        if (_playerCtrl.PhotonView.ViewID != viewId) return;
         OnChangeState(PlayerState.Die);
     }
 
     private void OnRevived(int viewId)
     {
-        if (_photonView.ViewID != viewId) return;
+        if (_playerCtrl.PhotonView.ViewID != viewId) return;
         _animator.SetTrigger(HashRevive);
         OnChangeState(PlayerState.Idle);
     }
-
 }

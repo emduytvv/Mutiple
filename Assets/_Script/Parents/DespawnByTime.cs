@@ -5,7 +5,7 @@ public class DespawnByTime : Despawn
     [SerializeField] protected float timer = 0f;
     [SerializeField] protected float timeDespawn = 1f;
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         timer = 0f;
     }
