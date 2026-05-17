@@ -4,7 +4,6 @@ using UnityEngine;
 public class ArrowDamageSender : DamageSender
 {
     [SerializeField] protected ArrowCtrl _arrowCtrl;
-
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -17,20 +16,22 @@ public class ArrowDamageSender : DamageSender
         _arrowCtrl = GetComponentInParent<ArrowCtrl>();
     }
 
-    private bool _hasHit = false;
+    protected bool _hasHit;
+    protected float _armorPen = 0f;
 
-    private void OnEnable() => _hasHit = false;
-
-    void OnTriggerEnter2D(Collider2D collision)
+    public void SetDamage(float phys, float mag, float pen)
     {
-        if (_hasHit) return;
-        EnemyCtrl enemy = collision.GetComponentInParent<EnemyCtrl>();
-        if (enemy == null) return;
-
-        if (!_arrowCtrl.PhotonView.IsMine) return;
-        _hasHit = true;
-        enemy.PhotonView.RPC("RpcReceive", RpcTarget.All, maxDamage);
-
-        _arrowCtrl.ArrowDespawn.DespawnObject();
+        basePhysicalDamage = phys;
+        baseMagicalDamage  = mag;
+        _armorPen          = pen;
     }
+
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        baseMagicalDamage  = 1f;
+        basePhysicalDamage = 1f;
+    }
+
+    protected virtual void OnEnable() => _hasHit = false;
 }

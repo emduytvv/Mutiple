@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIInventoryManager : SaiMonoBehaviour
 {
     [SerializeField] private List<UIInventorySlot> _slotItems = new List<UIInventorySlot>();
-    [SerializeField] private int _totalSlot = 9;
+    [SerializeField] private const int _maxSlot = 9;
     private InventoryManager _inventory;
     public InventoryManager Inventory => _inventory;
 
@@ -29,23 +29,6 @@ public class UIInventoryManager : SaiMonoBehaviour
         ShowUI();
 
     }
-
-    private void Update()
-    {
-        CheckOpen();
-    }
-
-    private void CheckOpen()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab)) Open();
-    }
-
-
-    private void Open()
-    {
-        ShowUI();
-    }
-
     private void ShowUI()
     {
         if (_inventory == null)
@@ -63,7 +46,7 @@ public class UIInventoryManager : SaiMonoBehaviour
     }
     public void Refresh()
     {
-        for (int i = 0; i < _totalSlot; i++)
+        for (int i = 0; i < _maxSlot; i++)
         {
             ItemInventoryBase item = i < _inventory.Items.Count ? _inventory.Items[i] : null;
             _slotItems[i].SetItem(item);

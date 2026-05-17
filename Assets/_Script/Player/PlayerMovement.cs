@@ -11,7 +11,7 @@ public class PlayerMovement : SaiMonoBehaviour
     private Vector2 direction;
     public Vector2 Direction => direction;
     public float VerticalVelocity => _playerCtrl.Rigidbody2D.linearVelocity.y;
-    [SerializeField] protected float moveSpeed = 4f;
+    [SerializeField] protected float moveSpeed = 5f;
     private float _lastFacingX = 1f;
     private bool _isDashing;
 

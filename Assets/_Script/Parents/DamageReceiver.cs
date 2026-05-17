@@ -1,18 +1,22 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
 public abstract class DamageReceiver : SaiMonoBehaviour
 {
     [Header("DamageReceiver")]
-
     [SerializeField] protected PhotonView _photonView;
     public PhotonView PhotonView => _photonView;
-    [SerializeField] public float baseMaxHP = 10f;
-    [SerializeField] public float percentHP = 0;
+    [SerializeField] protected float baseMaxHP = 10f;
+    [SerializeField] protected float percentHPBonus = 0;
     [SerializeField] public float maxHP = 2f;
     [SerializeField] public float currentHp;
     public float CurrentHp => currentHp;
     public bool isDead = false;
+
+    [Header("Defense")]
+    [SerializeField] protected float physicalDefenseTotal = 0f;
+    [SerializeField] protected float magicalDefenseTotal = 0f;
 
     protected override void LoadComponents()
     {
@@ -23,17 +27,40 @@ public abstract class DamageReceiver : SaiMonoBehaviour
 
     protected virtual void OnEnable()
     {
-        maxHP = baseMaxHP;
+        SetTotalMaxHP();
         currentHp = maxHP;
         isDead = false;
     }
-    public virtual void Receiver(float damage)
+
+    public virtual void Receiver(float physDamage, float magDamage, float armorPen = 0f)
     {
         if (isDead) return;
-        // FXSpawner.Instance.SpawnTextReduce("TextReduce", transform.position, damage.ToString());
-        Reduce(damage);
+        float effectivePhys = CalculateDamagePhys(physDamage, armorPen);
+        float effectiveMag = CalculateDamageMagic(magDamage, armorPen);
+        SpawnTextDamage(effectivePhys, effectiveMag);
+        Reduce(effectivePhys + effectiveMag);
     }
 
+    private float CalculateDamageMagic(float magDamage, float armorPen)
+    {
+        float effectiveMagDef = magicalDefenseTotal * (1f - armorPen);
+        float effectiveMag = Mathf.Max(0f, magDamage - effectiveMagDef);
+        return effectiveMag;
+    }
+
+
+    private float CalculateDamagePhys(float physDamage, float armorPen)
+    {
+        float effectivePhysDef = physicalDefenseTotal * (1f - armorPen);
+        float effectivePhys = Mathf.Max(0f, physDamage - effectivePhysDef);
+        return effectivePhys;
+    }
+
+
+    private void SpawnTextDamage(float effectivePhys, float effectiveMag)
+    {
+        TextSpawner.Instance.SpawnText(transform.position + Vector3.up, effectivePhys, effectiveMag);
+    }
     public virtual bool IsDead()
     {
         if (isDead) return true;
@@ -52,21 +79,27 @@ public abstract class DamageReceiver : SaiMonoBehaviour
         SetTotalMaxHP();
     }
 
-    public virtual void AddPercentHP(float amount)
+    public virtual void AddPercentHPBonus(float amount)
     {
-        percentHP += amount;
+        percentHPBonus += amount;
         SetTotalMaxHP();
     }
 
-    private void SetTotalMaxHP()
+    protected virtual void SetTotalMaxHP()
     {
-        maxHP = baseMaxHP * (percentHP / 100 + 1);
+        maxHP = baseMaxHP * (percentHPBonus + 1);
     }
 
     public virtual void Buff(float buff)
     {
         if (currentHp == maxHP) return;
         currentHp += buff;
+        CheckHp();
+    }
+    public virtual void BuffPercentHP(float buff)
+    {
+        if (currentHp == maxHP) return;
+        currentHp += maxHP * buff;
         CheckHp();
     }
 
@@ -82,5 +115,6 @@ public abstract class DamageReceiver : SaiMonoBehaviour
         if (currentHp > maxHP) currentHp = maxHP;
         if (currentHp < 0f) currentHp = 0f;
     }
+
     protected abstract void OnDead();
 }

@@ -1,0 +1,314 @@
+Passive Skills — Sorted by Difficulty (Easy → Hard)
+2D Co-op Action Platformer · Unity 6 · Photon PUN 2
+════════════════════════════════════════════════════
+
+
+━━━ ĐỘ KHÓ 1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Hồi Máu Khi Nhặt  [ItemHeal]
+   (tên cũ: Gold Rush)
+   Mỗi lần nhặt gold/item → hồi 1% HP
+
+   Biến:
+     [SerializeField] private float _itemHealPercent = 0.01f;
+
+   Logic:
+     OnItemPickup() → Heal(maxHP * _itemHealPercent)
+
+   Kết nối:
+     Hook vào gold/item pickup → gọi Heal()
+
+   Lưu ý:
+     • Đơn giản nhất — không cần flag hay timer
+     • Heal mỗi lần nhặt dù số lượng gold bao nhiêu
+
+
+━━━ ĐỘ KHÓ 2 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. Hồi Máu Khi Lướt  [DashHeal]
+   (tên cũ: Roll Heal)
+   Mỗi lần dash xong → hồi 3% HP
+
+   Biến:
+     [SerializeField] private float _dashHealPercent = 0.03f;
+
+   Logic:
+     OnDashComplete() → Heal(maxHP * _dashHealPercent)
+
+   Kết nối:
+     Dash kết thúc → gọi OnDashComplete() → hồi HP
+
+   Lưu ý:
+     • Không cần cooldown riêng vì dash đã có cooldown sẵn
+     • Gọi heal sau khi dash kết thúc, không phải lúc bắt đầu
+
+
+━━━ ĐỘ KHÓ 3 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. Bùng Nổ Hồi Sinh  [ReviveBurst]
+   (tên cũ: Revive Surge)
+   Sau khi được revive → damage +50% trong 15s
+
+   Biến:
+     [SerializeField] private bool   _isReviveBurst    = false;
+     [SerializeField] private float  _burstStartTime   = 0f;
+     [SerializeField] private float  _burstDuration    = 15f;
+     [SerializeField] private float  _burstMultiplier  = 1.5f;
+
+   Logic:
+     OnReviveComplete() → _isReviveBurst = true, ghi Time.time
+     ApplyReviveBurst(damage):
+       nếu !_isReviveBurst           → return damage
+       nếu hết thời gian             → tắt buff → return damage
+       → return damage * _burstMultiplier
+
+   Kết nối:
+     GameEvents.OnPlayerRevived (đã có) → OnReviveComplete()
+     BuildArrowDamage() → wrap qua ApplyReviveBurst()
+
+   Lưu ý:
+     • Check hết hạn trong ApplyReviveBurst(), không dùng Update
+     • Solo mode → skill không bao giờ trigger
+
+
+━━━ ĐỘ KHÓ 4 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. Sức Mạnh Đồng Đội  [TeamworkAura]
+   (tên cũ: Aura)
+   Đồng đội đứng gần (≤5u) → ATK +10%
+
+   Biến:
+     [SerializeField] private bool  _isAuraActive   = false;
+     [SerializeField] private float _auraRange       = 5f;
+     [SerializeField] private float _auraMultiplier  = 1.1f;
+
+   Logic:
+     CheckAura() — throttle 0.5s:
+       lấy từ PlayerCtrl._allPlayers
+       tính khoảng cách → cập nhật _isAuraActive
+     ApplyAuraBonus(damage):
+       nếu !_isAuraActive → return damage
+       → return damage * _auraMultiplier
+
+   Kết nối:
+     Update (throttle 0.5s) → CheckAura()
+     BuildArrowDamage() → wrap qua ApplyAuraBonus()
+
+   Lưu ý:
+     • Solo → _allPlayers có 1 người → luôn false
+     • Không cần RPC vì chỉ ảnh hưởng damage của chính mình
+
+
+━━━ ĐỘ KHÓ 5 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. Sống Còn  [LastStand]
+   (tên cũ: Last Stand Burst)
+   HP < 20% → damage +40%, kéo dài khi còn dưới ngưỡng
+
+   Biến:
+     [SerializeField] private bool  _isLastStandActive    = false;
+     [SerializeField] private float _lastStandThreshold   = 0.2f;
+     [SerializeField] private float _lastStandMultiplier  = 1.4f;
+
+   Logic:
+     CheckLastStand() — gọi mỗi khi HP thay đổi:
+       currentHP/maxHP < threshold → _isLastStandActive = true
+       ngược lại → false
+     ApplyLastStand(damage):
+       nếu !_isLastStandActive → return damage
+       → return damage * _lastStandMultiplier
+
+   Kết nối:
+     TakeDamage() và Heal() → gọi CheckLastStand()
+     BuildArrowDamage() → wrap qua ApplyLastStand()
+
+   Lưu ý:
+     • HP hồi lên trên 20% → buff tắt ngay
+     • Check trong HP setter, không check trong Update
+
+
+━━━ ĐỘ KHÓ 6 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. Bứt Tốc Nguy Cấp  [CrisisSpeed]
+   (tên cũ: On Low HP)
+   HP < 30% → tốc độ di chuyển +20%
+
+   Biến:
+     [SerializeField] private bool  _isCrisisActive       = false;
+     [SerializeField] private float _crisisThreshold      = 0.3f;
+     [SerializeField] private float _crisisSpeedMult      = 1.2f;
+
+   Logic:
+     CheckCrisisSpeed() — gọi mỗi khi HP thay đổi:
+       nếu xuống dưới ngưỡng và chưa active
+         → _isCrisisActive = true, apply speed * mult
+       nếu lên trên ngưỡng và đang active
+         → _isCrisisActive = false, remove buff
+
+   Kết nối:
+     TakeDamage() và Heal() → gọi CheckCrisisSpeed()
+     Sửa PlayerMovement.moveSpeed khi cần
+
+   Lưu ý:
+     • Dùng flag tránh apply multiplier nhiều lần chồng nhau
+     • Giống Last Stand nhưng ảnh hưởng speed thay vì damage
+
+
+━━━ ĐỘ KHÓ 7 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. Tập Trung  [FocusCrit]
+   (tên cũ: Momentum)
+   Đứng yên 2s → đòn tiếp theo crit chắc chắn
+
+   Biến:
+     [SerializeField] private float _stillTime          = 0f;
+     [SerializeField] private float _stillThreshold     = 2f;
+     [SerializeField] private bool  _nextAttackCrit     = false;
+     [SerializeField] private float _critMultiplier     = 2f;
+
+   Logic:
+     CheckFocusCrit() — Update mỗi frame:
+       velocity ≈ 0 → stillTime += dt → nếu >= 2s → _nextAttackCrit = true
+       velocity != 0 → reset stillTime + _nextAttackCrit = false
+     ApplyFocusCrit(damage):
+       nếu !_nextAttackCrit → return damage
+       → _nextAttackCrit = false, stillTime = 0
+       → return damage * _critMultiplier
+
+   Kết nối:
+     Update → CheckFocusCrit()
+     BuildArrowDamage() → wrap qua ApplyFocusCrit()
+
+   Lưu ý:
+     • Bất kỳ chuyển động nào (kể cả knockback) reset stillTime
+     • Cần visual rõ khi nextAttackCrit = true
+
+
+━━━ ĐỘ KHÓ 8 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. Ý Chí  [SecondChance]
+   (tên cũ: Second Wind)
+   HP chạm 0 → tự hồi 30% thay vì Downed — 1 lần/map
+
+   Biến:
+     [SerializeField] private bool  _hasSecondChance        = true;
+     [SerializeField] private float _secondChanceHeal       = 0.3f;
+
+   Logic:
+     TrySecondChance():
+       nếu !_hasSecondChance → return false
+       _hasSecondChance = false
+       Heal(maxHP * _secondChanceHeal)
+       return true
+
+   Kết nối:
+     HP <= 0 → TrySecondChance()
+       → true  → hồi HP, skip Downed hoàn toàn
+       → false → trigger Downed bình thường
+
+   Lưu ý:
+     • Reset _hasSecondChance = true khi load map mới
+     • Cần visual feedback khi skill kích hoạt
+
+
+━━━ ĐỘ KHÓ 9 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. Lá Chắn Tự Động  [AutoShield]
+   (tên cũ: Barrier Recharge)
+   8s không nhận damage → tạo shield hấp thụ 1 đòn
+
+   Biến:
+     [SerializeField] private bool  _hasShield          = false;
+     [SerializeField] private float _rechargeTime       = 8f;
+     [SerializeField] private float _lastDamageTime     = 0f;
+
+   Logic:
+     CheckShieldRecharge() — throttle 0.5s:
+       nếu _hasShield → return
+       Time.time - _lastDamageTime >= 8s → _hasShield = true + visual
+     Khi nhận damage:
+       nếu _hasShield → absorb, tắt shield, cập nhật _lastDamageTime
+       nếu không → nhận damage bình thường, cập nhật _lastDamageTime
+
+   Kết nối:
+     Update (throttle 0.5s) → CheckShieldRecharge()
+     DamageReceiver.Receiver() → intercept nếu _hasShield
+
+   Lưu ý:
+     • _lastDamageTime cập nhật dù có shield hay không
+     • Cần sync visual shield qua Photon cho client khác thấy
+
+
+━━━ ĐỘ KHÓ 10 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. Kết Liễu  [Execute]
+    (tên cũ: Execute)
+    Enemy HP < 30% → nhận thêm 30% damage
+
+    Biến:
+      [SerializeField] private float _executeThreshold  = 0.3f;
+      [SerializeField] private float _executeMultiplier = 1.3f;
+
+    Logic:
+      ApplyExecute(damage, targetCurHP, targetMaxHP):
+        nếu targetCurHP/targetMaxHP < threshold
+          → return damage * _executeMultiplier
+        → return damage
+
+    Kết nối:
+      Arrow OnTriggerEnter → lấy HP từ EnemyDamageReceiver
+      → ApplyExecute(damage, curHP, maxHP)
+      Arrow cần lưu ref owner lúc spawn để đọc _executeThreshold
+
+    Lưu ý:
+      • Check HP phía Arrow, không phải phía Player
+      • Arrow cần ref đến PlayerCtrl của owner để đọc skill stats
+
+
+━━━ ĐỘ KHÓ 11 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+11. Đòn Bất Ngờ  [FirstBlood]
+    (tên cũ: Marked Target)
+    Đòn đầu tiên lên enemy mới → +25% damage
+
+    Biến (đặt ở EnemyCtrl):
+      [SerializeField] private List<int> _hitByActors = new();
+
+    Logic:
+      ApplyFirstBlood(damage, ownerActorNumber):
+        nếu _hitByActors.Contains(actorNumber) → return damage
+        _hitByActors.Add(actorNumber)
+        → return damage * 1.25f
+
+      Enemy.OnEnable() → _hitByActors.Clear()
+
+    Kết nối:
+      Arrow trúng Enemy → lấy actorNumber của owner
+      → ApplyFirstBlood(damage, actorNumber)
+      → gửi RPC damage
+
+    Lưu ý:
+      • Dùng ActorNumber của Photon để phân biệt player
+      • Reset list trong OnEnable() vì enemy lấy từ pool
+      • Mỗi player có mark riêng — A đánh rồi không ảnh hưởng B
+
+
+━━━ ĐỘ KHÓ 12 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+12. Xuyên Thấu  [PierceKill]
+    (tên cũ: Ricochet)
+    Arrow xuyên qua kẻ thù đầu tiên và giết ngay lập tức
+
+    Biến (đặt ở Arrow):
+      [SerializeField] private bool _hasPierced    = false;
+      [SerializeField] private bool _ownerHasPierce = false;
+
+    Logic:
+      Arrow OnTriggerEnter:
+        nếu !_ownerHasPierce → damage bình thường
+        nếu _ownerHasPierce:
+          → kill enemy ngay lập tức (set HP = 0)
+          → nếu !_hasPierced → _hasPierced = true → xuyên qua tiếp
+          → nếu _hasPierced  → dừng arrow
+
+      Arrow OnEnable() / lấy từ pool:
+        → _hasPierced = false
+        → đọc lại _ownerHasPierce từ owner
+
+    Kết nối:
+      Arrow cần ref PlayerCtrl owner
+      → đọc _ownerHasPierce khi spawn
+      ArrowSpawner / PhotonPool cần truyền owner info
+
+    Lưu ý:
+      • _hasPierced reset mỗi lần spawn từ pool
+      • Phức tạp nhất — cần sửa ArrowDamageSender + pool logic
+      • Cần test edge case: arrow xuyên qua nhưng RPC kill chỉ gửi 1 lần

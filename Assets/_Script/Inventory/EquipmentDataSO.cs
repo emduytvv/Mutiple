@@ -4,5 +4,5 @@ public class EquipmentDataSO : EquippableDataSO
 {
     public int _physicalDefense;
     public int _magicalDefense;
-    public int _hpBonus;
+    public int _hp;
 }

@@ -74,7 +74,7 @@ public class BatCombat : EnemyCombat
         {
             if (!collider.GetComponent<PlayerDamageReceiver>()) continue;
             PlayerCtrl player = collider.GetComponentInParent<PlayerCtrl>();
-            EnemyDamageSender.Send(player, 1);
+            EnemyDamageSender.Send(player);
         }
     }
 

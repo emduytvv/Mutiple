@@ -18,6 +18,8 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
         spawners.Add(PlayerSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(ArrowSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(BulletSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(TextSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(FXSpawner.Instance.GetComponent<Spawner>());
     }
 
     public GameObject Instantiate(string prefabId, Vector3 pos, Quaternion rot)
@@ -36,6 +38,7 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
 
     public void Destroy(GameObject go)
     {
+        if (spawners.Count == 0) RegisterSpawners();
         foreach (Spawner spawner in spawners)
         {
             if (!spawner.IsOwner(go.transform)) continue;

@@ -5,4 +5,5 @@ public class WeaponDataSO : EquippableDataSO
 {
     public WeaponLevelData[] _levels;
     public WeaponSkillSO[] _skills;
+    public ArrowType _arrowType = ArrowType.Normal;
 }

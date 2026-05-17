@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class FXSpawner : Spawner
+{
+    private static FXSpawner _instance;
+    public static FXSpawner Instance => _instance;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _instance = this;
+    }
+
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        maxObject = 50;
+    }
+}

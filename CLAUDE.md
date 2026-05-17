@@ -54,18 +54,6 @@ public EnemyDespawn EnemyDespawn => _enemyDespawn;
 private void LoadEnemyCtrl() { if (_enemyCtrl != null) return; _enemyCtrl = GetComponentInParent<EnemyCtrl>(); }
 ````
 
-## GetComponent Rules
-
-| Vị trí            | Method                                           |
-| ----------------- | ------------------------------------------------ |
-| Chính object      | `GetComponent<T>()`                              |
-| Cha               | `GetComponentInParent<T>()`                      |
-| Con               | `GetComponentInChildren<T>()`                    |
-| Sibling           | `transform.parent.GetComponentInChildren<T>()`   |
-| Runtime collision | `TryGetComponent<T>()` (không allocate khi miss) |
-
-**Ngoại lệ được load riêng** (không nằm trên Ctrl): component của chính object đó, LayerMask, `transform.Find()`, sibling type-specific.
-
 ## Photon Sync
 
 | Loại dữ liệu              | Cách sync                                      |
@@ -93,7 +81,7 @@ public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash, Die }
 3. Chiến đấu + Hồi sinh ✅
 4. Enemy + Wave 🔄 ← Factory ✅ · Wave system ✅ — còn: downed/revive sync 🌐, wave balance
 5. Boss
-6. Inventory + Shop + Level
+6. Inventory + Shop + Level 🔄 ← Data SO hierarchy ✅ · EquipmentManager ✅ · UICharacterPanel ✅ · NPCShopData ✅ — còn: NPCShopInteract, UIShopManager, shop logic, level system
 7. Thiết kế Map 1
 8. UI + Polish
 9. Tutorial
@@ -104,9 +92,6 @@ Gặp ký hiệu 🌐 → test 2 máy trước khi tiếp tục.
 
 - **RPC phải trên cùng GameObject với PhotonView** — Photon không lookup xuống children. Pattern: Ctrl nhận RPC → gọi xuống child.
 - **Chỉ MasterClient spawn/destroy enemy** — đặt `if (!PhotonNetwork.IsMasterClient) return` trước mọi `PhotonNetwork.Instantiate` trong enemy system.
-- **`_hasHit` flag trong projectile** — Arrow/Bullet dùng flag này để tránh double-hit khi collider overlap.
-- **`DespawnByTime` reset timer trong `OnEnable()`** — lý do pool có thể reuse object mà không despawn ngay.
-- **`EnemyDespawn.CanDespawn()` luôn trả về false** — despawn được trigger qua `EnemyAnimation.DespawnByEvent()`, không phải timer.
 - **`PlayerCtrl._allPlayers` là static list** — dùng list này để tìm target gần nhất (BatCreator, EnemyMovementToTarget).
 - **`PhotonPool` phải đăng ký tất cả spawners** — thêm loại projectile mới → phải đăng ký spawner vào PhotonPool.
 - **`_Assets/Photon/` là readonly** — không sửa bất kỳ file nào trong đó.

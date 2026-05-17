@@ -1,15 +1,5 @@
 using UnityEngine;
 
-// Enemy nhận damage từ Player
-// Dùng RpcTarget.All → cả 2 máy đều chạy Receiver()
-// → cả 2 máy tự giảm HP → không cần sync thêm
-//
-// MayA                        MayB
-// Receiver() chạy             Receiver() chạy
-// Giảm HP enemy               Giảm HP enemy
-// HP bar update ✓             HP bar update ✓
-// IsDead() → OnDead() ✓       IsDead() → OnDead() ✓
-
 public class EnemyDamageReceiver : DamageReceiver
 {
     [SerializeField] protected EnemyCtrl _enemyCtrl;
@@ -17,30 +7,33 @@ public class EnemyDamageReceiver : DamageReceiver
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadEnemyAnimation();
+        this.LoadEnemyCtrl();
     }
 
-    private void LoadEnemyAnimation()
+    private void LoadEnemyCtrl()
     {
-        if (this._enemyCtrl != null) return;
-        this._enemyCtrl = GetComponentInParent<EnemyCtrl>();
-        Debug.Log(transform.name + ": Load EnemyAnimation", gameObject);
+        if (_enemyCtrl != null) return;
+        _enemyCtrl = GetComponentInParent<EnemyCtrl>();
+        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
+    }
+
+    public override void Receiver(float physDamage, float magDamage, float armorPen = 0f)
+    {
+        if (isDead) return;
+        _enemyCtrl.EnemyAnimation.OnHurt();
+        base.Receiver(physDamage, magDamage, armorPen);
     }
 
     protected override void OnDead()
     {
         GameEvents.OnEnemyDied?.Invoke();
     }
-    public override void Receiver(float damage)
-    {
-        if (isDead) return;
-        _enemyCtrl.EnemyAnimation.OnHurt();
-        Reduce(damage);
-    }
+
     protected override void ResetValue()
     {
         base.ResetValue();
-        baseMaxHP = 2f;
+        baseMaxHP = 100f;
+        physicalDefenseTotal = 0f;
+        magicalDefenseTotal = 0f;
     }
-
 }

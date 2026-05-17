@@ -24,7 +24,7 @@ public class BulletDamageSender : DamageSender
         if (player == null) return;
         if (!_bulletCtrl.PhotonView.IsMine) return;
 
-        player.PhotonView.RPC("RpcReceive", RpcTarget.All, maxDamage);
+        player.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage);
         _bulletCtrl.BulletDespawn.DespawnObject();
     }
 }

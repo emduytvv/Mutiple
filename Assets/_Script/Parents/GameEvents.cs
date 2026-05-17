@@ -18,4 +18,5 @@ public static class GameEvents
     public static Action OnAllWavesCleared;
 
     public static Action OnEquipmentChanged;
+    public static Action OnWeaponUpgraded;
 }

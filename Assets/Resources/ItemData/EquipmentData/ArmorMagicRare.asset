@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: ArmorMagicRare
   m_EditorClassIdentifier:
   _id: 14
+  _name: ArmorMagicRare
   _icon: {fileID: 21300000, guid: b61ab60c968a48442b606a4a9b0f84c2, type: 3}
   _typeItem: 0
+  _price: 500
   _equipType: 1
   _equipmentRarity: 1
   _physicalDefense: 0
   _magicalDefense: 22
-  _hpBonus: 0
+  _hp: 0

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class BaseText : SaiMonoBehaviour
 {
-    [SerializeField] protected TextMeshProUGUI textMeshProUGUI;
-    public TextMeshProUGUI TextMeshProUGUI => textMeshProUGUI;
+    [SerializeField] protected TextMeshProUGUI _text;
+    public TextMeshProUGUI Text => _text;
 
     protected override void LoadComponents()
     {
@@ -14,8 +14,8 @@ public abstract class BaseText : SaiMonoBehaviour
 
     private void LoadTextMeshProUGUI()
     {
-        if (textMeshProUGUI != null) return;
-        textMeshProUGUI = GetComponent<TextMeshProUGUI>();
+        if (_text != null) return;
+        _text = GetComponent<TextMeshProUGUI>();
         Debug.LogWarning(transform.name + ": LoadTextMeshProUGUI()", gameObject);
     }
 

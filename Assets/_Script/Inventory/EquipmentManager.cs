@@ -16,6 +16,7 @@ public class EquipmentManager : SaiMonoBehaviour
     {
         ItemInventoryBase previous = _equipped[(int)equipType];
         _equipped[(int)equipType] = item;
+        GameEvents.OnEquipmentChanged?.Invoke();
         return previous;
     }
     // public ItemBase Unequip(EquipType equipType) => Equip(equipType, null);

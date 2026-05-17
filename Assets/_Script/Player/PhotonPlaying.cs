@@ -76,7 +76,7 @@ public class PhotonPlaying : MonoBehaviourPunCallbacks
 
         int playerIndex = actorNumbers.IndexOf(PhotonNetwork.LocalPlayer.ActorNumber);
         string prefabName = playerIndex == 0 ? ModelName1 : ModelName2;
-        GameObject Player = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+        GameObject Player = PhotonNetwork.Instantiate(prefabName, new Vector3(-32.94f, -2.82f, 0), Quaternion.identity);
 
         if (Player.GetComponent<PhotonView>().IsMine)
             Camera.main.transform.parent.GetComponent<CameraFollow>().SetTarget(Player.transform);

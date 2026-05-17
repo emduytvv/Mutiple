@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,12 +11,14 @@ public class UIInventorySlot : SaiMonoBehaviour, IBeginDragHandler, IDragHandler
     public Image Icon => _icon;
     public int SlotIndex { get; set; }
     private ItemInventoryBase _currentItem;
+    [SerializeField] private UIItemDetailInventory _uIItemDetailInventory;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadIcon();
         this.LoadAmount();
+        LoadUIItemDetailManager();
     }
 
     private void LoadIcon()
@@ -31,7 +34,12 @@ public class UIInventorySlot : SaiMonoBehaviour, IBeginDragHandler, IDragHandler
         this._amount = transform.Find("Amount").GetComponent<TextMeshProUGUI>();
         Debug.Log(transform.name + ": Load Amount", gameObject);
     }
-
+    private void LoadUIItemDetailManager()
+    {
+        if (_uIItemDetailInventory != null) return;
+        _uIItemDetailInventory = transform.parent.parent.GetComponentInChildren<UIItemDetailInventory>();
+        Debug.Log(transform.name + ": Load UIItemDetailManager", gameObject);
+    }
     public void SetItem(ItemInventoryBase item)
     {
         _currentItem = item;
@@ -43,10 +51,28 @@ public class UIInventorySlot : SaiMonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button != PointerEventData.InputButton.Right) return;
-        if (_currentItem?._info == null) return;
-        if (_currentItem._info._typeItem != TypeItem.Equipment) return;
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            OnMouseLeftClick(eventData);
+            return;
+        }
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OnMouseRightClick(eventData);
+            return;
+        }
+    }
+
+    private void OnMouseRightClick(PointerEventData eventData)
+    {
+        if (_currentItem == null || _currentItem._info == null) return;
         UIItemContextMenu.Instance.Show(eventData.position, SlotIndex);
+    }
+    private void OnMouseLeftClick(PointerEventData eventData)
+    {
+        if (_currentItem == null || _currentItem._info == null) return;
+        _uIItemDetailInventory.gameObject.SetActive(true);
+        _uIItemDetailInventory.Show(_currentItem);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -54,7 +80,6 @@ public class UIInventorySlot : SaiMonoBehaviour, IBeginDragHandler, IDragHandler
         if (_icon.sprite == null) return;
         DragController.Instance.BeginDrag(this);
     }
-
     public void OnDrag(PointerEventData eventData) { }
     public void OnEndDrag(PointerEventData eventData)
     {

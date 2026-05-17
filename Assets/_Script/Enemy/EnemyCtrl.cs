@@ -55,8 +55,8 @@ public class EnemyCtrl : SaiMonoBehaviour
     }
 
     [PunRPC]
-    public void RpcReceive(float damage)
+    public void RpcReceive(float physDamage, float magDamage, float armorPen)
     {
-        _damageReceiver.Receiver(damage);
+        _damageReceiver.Receiver(physDamage, magDamage, armorPen);
     }
 }

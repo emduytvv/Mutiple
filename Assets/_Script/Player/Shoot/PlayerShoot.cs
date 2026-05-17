@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerShoot : SaiMonoBehaviour
+{
+    [SerializeField] protected PlayerCtrl _playerCtrl;
+    [SerializeField] private float _aimAngle90;
+    [SerializeField] protected float _aimAngle180;
+    private bool _isAiming;
+    protected Vector3 centerAim = Vector3.up * 0.85f;
+
+    private Dictionary<WeaponSkillName, IShootStrategy> _strategyMap;
+    private List<IShootStrategy> _iShoot = new();
+    [SerializeField] private string _arrowPrefabName = "ArrowNormal";
+
+    private static readonly Dictionary<ArrowType, string> _arrowPrefabMap = new()
+    {
+        [ArrowType.Normal] = "ArrowNormal",
+        [ArrowType.Ricochet] = "ArrowRicochet",
+        [ArrowType.Piercing] = "ArrowPiercing",
+        [ArrowType.Explosive] = "ArrowExplosive",
+        [ArrowType.Gold] = "ArrowGold",
+    };
+
+    protected override void LoadComponents()
+    {
+        base.LoadComponents();
+        this.LoadPlayerCtrl();
+        this.BuildStrategyMap();
+    }
+
+    private void LoadPlayerCtrl()
+    {
+        if (_playerCtrl != null) return;
+        _playerCtrl = GetComponentInParent<PlayerCtrl>();
+        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
+    }
+
+    private void BuildStrategyMap()
+    {
+        _strategyMap = new Dictionary<WeaponSkillName, IShootStrategy>
+        {
+            [WeaponSkillName.SingleShot] = new SingleShot(),
+            [WeaponSkillName.SpreadThreeShot] = new SpreadThreeShot(),
+            [WeaponSkillName.SpreadFiveShot] = new SpreadFiveShot(),
+            [WeaponSkillName.DoubleShot] = new DoubleShot(this),
+            [WeaponSkillName.DoubleArrow] = new DoubleArrow(),
+            [WeaponSkillName.TripleArrow] = new TripleArrow(),
+        };
+        _iShoot.Add(_strategyMap[WeaponSkillName.SingleShot]);
+    }
+
+    private void OnEnable() => GameEvents.OnEquipmentChanged += RefreshStrategy;
+    private void OnDisable() => GameEvents.OnEquipmentChanged -= RefreshStrategy;
+
+    private void RefreshStrategy()
+    {
+        _iShoot.Clear();
+
+        var item = _playerCtrl.EquipmentManager.GetCurrentEquip(EquipType.Weapon);
+        if (item == null) return;
+        var weapon = item?._info as WeaponDataSO;
+        foreach (var skill in weapon._skills)
+            if (_strategyMap.TryGetValue(skill._name, out var s))
+            { _iShoot.Add(s); Debug.Log(skill._name); }
+
+        if (_iShoot.Count == 0)
+            _iShoot.Add(_strategyMap[WeaponSkillName.SingleShot]);
+        RefreshArrow(weapon);
+    }
+
+    private void RefreshArrow(WeaponDataSO weapon)
+    {
+        if (_arrowPrefabMap.TryGetValue(weapon._arrowType, out var name))
+            _arrowPrefabName = name; Debug.Log(name);
+    }
+
+
+    private void Update()
+    {
+        if (!_playerCtrl.PhotonView.IsMine) return;
+        if (InputManager.Instance == null) return;
+        if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die)
+        {
+            _isAiming = false;
+            return;
+        }
+        HandleAimInput();
+    }
+
+    private void HandleAimInput()
+    {
+        if (InputManager.Instance.RightMouseDown) StartAim();
+        if (_isAiming) UpdateAimAngle();
+        if (InputManager.Instance.RightMouseUp) OnShoot();
+    }
+
+    private void StartAim()
+    {
+        _isAiming = true;
+        GameEvents.OnPlayerStartAim?.Invoke();
+    }
+
+    private void OnShoot()
+    {
+        _isAiming = false;
+        Shoot();
+        GameEvents.OnPlayerShoot?.Invoke();
+    }
+
+    private void UpdateAimAngle()
+    {
+        Vector2 dir = InputManager.Instance.MousePosition - (Vector2)(transform.parent.position + centerAim);
+        _aimAngle90 = Mathf.Atan2(dir.y, Mathf.Abs(dir.x)) * Mathf.Rad2Deg;
+        _aimAngle90 = Mathf.Clamp(_aimAngle90, 0f, 90f);
+        GameEvents.OnPlayerAimAngleChanged?.Invoke(_aimAngle90);
+    }
+
+    private void Shoot()
+    {
+        UpdateAimAngle180();
+        var (phys, mag, pen) = _playerCtrl.PlayerDamageSender.BuildArrowDamage();
+        Vector3 center = transform.parent.position + centerAim;
+        foreach (var s in _iShoot)
+            s.Shoot(_arrowPrefabName, center, _aimAngle180, phys, mag, pen);
+    }
+
+    private void UpdateAimAngle180()
+    {
+        bool facingRight = _playerCtrl.PlayerAnimation.transform.localScale.x > 0;
+        _aimAngle180 = facingRight ? _aimAngle90 : 180f - _aimAngle90;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.parent.position + centerAim, 0.5f);
+    }
+}

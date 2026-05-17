@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PantsMagicEpic
   m_EditorClassIdentifier:
   _id: 23
+  _name: PantsMagicEpic
   _icon: {fileID: 21300000, guid: 752d6f658c4736042bb5e8761b328cf5, type: 3}
   _typeItem: 0
+  _price: 1000
   _equipType: 2
   _equipmentRarity: 2
   _physicalDefense: 0
   _magicalDefense: 13
-  _hpBonus: 65
+  _hp: 65

@@ -1,27 +1,22 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
-// Panel nhân vật: hiển thị 3 ô trang bị + chỉ số Attack/HP/Defense/Speed
-// Singleton vì UIEquipSlot và UIItemContextMenu cần gọi vào đây qua .Instance
 public class UICharacterPanel : Singleton<UICharacterPanel>
 {
     // Danh sách 3 UIEquipSlot — tự tìm qua GetComponentsInChildren, không cần gán tay
     [SerializeField] private List<UIEquipSlot> _equipSlots = new List<UIEquipSlot>();
 
-    // 4 ô text hiển thị số chỉ số — gán trong Inspector
-    [SerializeField] private TextMeshProUGUI _attackText;
-    [SerializeField] private TextMeshProUGUI _hpText;
-    [SerializeField] private TextMeshProUGUI _defenseText;
-    [SerializeField] private TextMeshProUGUI _speedText;
+    // Text Value của từng chỉ số — tự load từ StatsPanel hierarchy
+    [SerializeField] private TextMeshProUGUI _physDamValueText;
+    [SerializeField] private TextMeshProUGUI _magDamValueText;
+    [SerializeField] private TextMeshProUGUI _hpValueText;
+    [SerializeField] private TextMeshProUGUI _physDefValueText;
+    [SerializeField] private TextMeshProUGUI _magDefValueText;
+    [SerializeField] private TextMeshProUGUI _critValueText;
+    [SerializeField] private TextMeshProUGUI _armorPenValueText;
 
-    // const: giá trị cố định tại compile-time, là chỉ số gốc trước khi cộng bonus trang bị
-    private const int BaseAttack = 100;
-    private const int BaseHP = 100;
-    private const int BaseDefense = 100;
-    private const int BaseSpeed = 100;
-
-    // 3 ref tới data thực — không load trong LoadComponents vì player chưa tồn tại lúc Awake
+    // ref tới data thực — không load trong LoadComponents vì player chưa tồn tại lúc Awake
+    [SerializeField] private PlayerCtrl _playerCtrl;
     [SerializeField] private EquipmentManager _equipmentManager;
     [SerializeField] private InventoryManager _inventoryManager;
     [SerializeField] private UIInventoryManager _inventoryUI; // cần để gọi Refresh() sau khi equip/unequip
@@ -31,6 +26,7 @@ public class UICharacterPanel : Singleton<UICharacterPanel>
         base.LoadComponents();
         LoadEquipSlots();
         LoadInventoryUI();
+        LoadStatValueTexts();
     }
 
     private void LoadEquipSlots()
@@ -47,24 +43,44 @@ public class UICharacterPanel : Singleton<UICharacterPanel>
         Debug.Log(transform.name + ": Load UIInventoryManager", gameObject);
     }
 
+    private void LoadStatValueTexts()
+    {
+        if (_physDamValueText != null) return;
+        Transform stats = transform.Find("StatsPanel");
+        _physDamValueText = stats.Find("DamePhys/Value").GetComponent<TextMeshProUGUI>();
+        _magDamValueText = stats.Find("DameMag/Value").GetComponent<TextMeshProUGUI>();
+        _hpValueText = stats.Find("HP/Value").GetComponent<TextMeshProUGUI>();
+        _physDefValueText = stats.Find("PhysicalDefense/Value").GetComponent<TextMeshProUGUI>();
+        _magDefValueText = stats.Find("MagicalDefense/Value").GetComponent<TextMeshProUGUI>();
+        _critValueText = stats.Find("Crit/Value").GetComponent<TextMeshProUGUI>();
+        _armorPenValueText = stats.Find("ArmorPen/Value").GetComponent<TextMeshProUGUI>();
+    }
+
     protected override void Start()
     {
         base.LoadComponents();
-        // Invoke(nameof(LoadPlayerIventory), 1f);
-        // Invoke(nameof(RefreshSlotEquip), 1f);
         LoadPlayerIventory();
         RefreshSlotEquip();
+        GameEvents.OnWeaponUpgraded += RefreshStats;
     }
+
+    protected void OnDestroy()
+    {
+        GameEvents.OnWeaponUpgraded -= RefreshStats;
+    }
+    // protected void OnEnable()
+    // {
+    //     RefreshStats();
+    // }
     private void LoadPlayerIventory()
     {
         if (_equipmentManager != null) return;
-        var local = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);
-        if (local == null) return;
-        _equipmentManager = local.GetComponentInChildren<EquipmentManager>();
-        _inventoryManager = local.GetComponentInChildren<InventoryManager>();
+        _playerCtrl = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);
+        if (_playerCtrl == null) return;
+        _equipmentManager = _playerCtrl.EquipmentManager;
+        _inventoryManager = _playerCtrl.GetComponentInChildren<InventoryManager>();
         this.RefreshSlotEquip();
     }
-    // Cập nhật toàn bộ UI: 3 slot trang bị + 4 chỉ số
     public void RefreshSlotEquip()
     {
         foreach (UIEquipSlot slot in _equipSlots)
@@ -78,15 +94,20 @@ public class UICharacterPanel : Singleton<UICharacterPanel>
     }
     private void RefreshStats()
     {
-        // _attackText.text = (BaseAttack + _equipmentManager.GetBonus(EquipType.Weapon)).ToString();
-        // _hpText.text = (BaseHP + _equipmentManager.GetBonus(EquipType.Pants)).ToString();
-        // _defenseText.text = (BaseDefense + _equipmentManager.GetBonus(EquipType.Armor)).ToString();
-        // _speedText.text = BaseSpeed.ToString();
+        if (_playerCtrl == null) return;
+        var sender = _playerCtrl.PlayerDamageSender;
+        var receiver = _playerCtrl.PlayerDamageReceiver;
+
+        _physDamValueText.text = ((int)sender.PhysicalDamageTotal).ToString();
+        _magDamValueText.text = ((int)sender.MagicalDamageTotal).ToString();
+        _hpValueText.text = ((int)receiver.maxHP).ToString();
+        _physDefValueText.text = ((int)receiver.PhysicalDefenseTotal).ToString();
+        _magDefValueText.text = ((int)receiver.MagicalDefenseTotal).ToString();
+        _critValueText.text = Mathf.RoundToInt(sender.CritTotal * 100f) + "%";
+        _armorPenValueText.text = Mathf.RoundToInt(sender.ArmorPenTotal * 100f) + "%";
     }
     public void TryEquip(int inventoryIndex)
     {
-        // LoadPlayerIventory();
-
         ItemInventoryBase item = _inventoryManager.Items[inventoryIndex];
         if (item?._info._typeItem != TypeItem.Equipment) return;
 

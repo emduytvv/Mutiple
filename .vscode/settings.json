@@ -67,5 +67,17 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Multiple.slnx"
+    "dotnet.defaultSolution": "Multiple.slnx",
+    "files.watcherExclude": {
+        "**/Library/**": true,
+        "**/Temp/**": true,
+        "**/obj/**": true,
+        "**/Assets/Photon/**": true,
+        "**/Assets/TextMesh Pro/**": true
+    },
+    "search.exclude": {
+        "**/Library": true,
+        "**/Temp": true,
+        "**/Assets/Photon": true
+    }
 }

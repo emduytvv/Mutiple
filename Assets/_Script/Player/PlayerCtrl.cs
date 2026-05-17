@@ -18,11 +18,15 @@ public class PlayerCtrl : SaiMonoBehaviour
     [SerializeField] protected PlayerAnimation _playerAnimation;
     public PlayerDamageReceiver PlayerDamageReceiver => _playerDamageReceiver;
     [SerializeField] protected PlayerDamageReceiver _playerDamageReceiver;
+    public PlayerDamageSender PlayerDamageSender => _playerDamageSender;
+    [SerializeField] protected PlayerDamageSender _playerDamageSender;
     public PlayerDespawn PlayerDespawn => _playerDespawn;
     [SerializeField] protected PlayerDespawn _playerDespawn;
+    public EquipmentManager EquipmentManager => _equipmentManager;
+    [SerializeField] protected EquipmentManager _equipmentManager;
+
     public TextMeshPro TextMeshPro => _textMeshPro;
     [SerializeField] protected TextMeshPro _textMeshPro;
-
     private static List<PlayerCtrl> _allPlayers = new();
     public static List<PlayerCtrl> AllPlayers => _allPlayers;
     public string photonNickName = "offline";
@@ -41,8 +45,10 @@ public class PlayerCtrl : SaiMonoBehaviour
         this.LoadPlayerMovement();
         this.LoadPlayerAnimation();
         this.LoadPlayerDamageReceiver();
+        this.LoadPlayerDamageSender();
         this.LoadPlayerDespawn();
         this.LoadTextMeshPro();
+        this.LoadEquipmentManager();
     }
 
     private void LoadPhotonView()
@@ -79,6 +85,18 @@ public class PlayerCtrl : SaiMonoBehaviour
         _playerDamageReceiver = GetComponentInChildren<PlayerDamageReceiver>();
         Debug.Log(transform.name + ": Load PlayerDamageReceiver", gameObject);
     }
+    private void LoadPlayerDamageSender()
+    {
+        if (_playerDamageSender != null) return;
+        _playerDamageSender = GetComponentInChildren<PlayerDamageSender>();
+        Debug.Log(transform.name + ": LoadPlayerDamageSender", gameObject);
+    }
+    private void LoadEquipmentManager()
+    {
+        if (_equipmentManager != null) return;
+        _equipmentManager = GetComponentInChildren<EquipmentManager>();
+        Debug.Log(transform.name + ": LoadEquipmentManager", gameObject);
+    }
 
     private void LoadPlayerDespawn()
     {
@@ -95,9 +113,9 @@ public class PlayerCtrl : SaiMonoBehaviour
     }
 
     [PunRPC]
-    public void RpcReceive(float damage)
+    public void RpcReceive(float physDamage, float magDamage)
     {
-        _playerDamageReceiver.Receiver(damage);
+        _playerDamageReceiver.Receiver(physDamage, magDamage);
     }
 
     [PunRPC]

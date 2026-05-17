@@ -1,0 +1,14 @@
+{
+  "RoslynExtensionsOptions": {
+    "enableAnalyzersSupport": false
+  },
+  "FileOptions": {
+    "ExcludeSearchPatterns": [
+      "**/Assets/Photon/**",
+      "**/Assets/TextMesh Pro/**",
+      "**/Library/**",
+      "**/Temp/**",
+      "**/obj/**"
+    ]
+  }
+}

@@ -228,6 +228,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_6
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 1856
+        width: 258
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a770fb535e16b244b828784be3a24ce
+      internalID: 1794876652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -248,6 +270,7 @@ TextureImporter:
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_3: -1524591483
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_4: 663097742
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_5: 893705651
+      sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_6: 1794876652
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

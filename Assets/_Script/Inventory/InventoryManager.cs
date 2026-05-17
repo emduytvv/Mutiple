@@ -20,12 +20,12 @@ public class InventoryManager : SaiMonoBehaviour
         if (index < 0 || index >= _items.Count) return;
         _items[index] = null;
     }
-    public bool FindSlotFirstEmpty(ItemInventoryBase item)
+    public bool AddItem(ItemInventoryBase item)
     {
         for (int i = 0; i < MaxSlot; i++)
         {
             if (i >= _items.Count) { _items.Add(item); return true; }
-            if (_items[i] == null) { _items[i] = item; return true; }
+            if (_items[i] == null || _items[i]._info == null) { _items[i] = item; return true; }
         }
         return false;
     }

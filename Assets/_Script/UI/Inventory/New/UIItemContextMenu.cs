@@ -45,7 +45,7 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
 
     private void HanleClick()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
+        if (!InputManager.Instance.LeftMouseDown) return;
         if (IsPointerOverSelf()) return;
         Hide();
     }

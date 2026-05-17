@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: ArmorMagicLegendary
   m_EditorClassIdentifier:
   _id: 16
+  _name: ArmorMagicLegendary
   _icon: {fileID: 21300000, guid: 9a4066ac56fb8d2409d6d1bb9fc70c65, type: 3}
   _typeItem: 0
+  _price: 2000
   _equipType: 1
   _equipmentRarity: 3
   _physicalDefense: 0
   _magicalDefense: 48
-  _hpBonus: 0
+  _hp: 0
