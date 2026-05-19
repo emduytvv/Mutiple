@@ -19,21 +19,17 @@ public class ArrowExplosiveDamageSender : ArrowDamageSender
         Debug.Log(transform.name + ": Load EnemyLayer", gameObject);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnHitEnemy(EnemyCtrl enemy, Collider2D collision)
     {
-        if (_hasHit) return;
-        EnemyCtrl enemy = collision.GetComponentInParent<EnemyCtrl>();
-        if (enemy == null) return;
-        if (!_arrowCtrl.PhotonView.IsMine) return;
         _hasHit = true;
-
         enemy.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage, 0f);
         Explode(collision.transform.position);
-
-        PhotonNetwork.Instantiate(FXName.ImpactArrowExplosive.ToString(), transform.position, Quaternion.identity);
         _arrowCtrl.ArrowDespawn.DespawnObject();
     }
-
+    protected override void SpawnFX()
+    {
+        PhotonNetwork.Instantiate(FXName.ImpactArrowExplosive.ToString(), transform.position, Quaternion.identity);
+    }
     private void Explode(Vector3 center)
     {
         var hits = Physics2D.OverlapCircleAll(center, _radius, _enemyLayer);

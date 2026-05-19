@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class EnemyCombat : SaiMonoBehaviour
+public abstract class EnemyCombat<TCtrl> : SaiMonoBehaviour where TCtrl : EnemyCtrl
 {
-    [SerializeField] protected EnemyCtrl _enemyCtrl;
+    [SerializeField] protected TCtrl _enemyCtrl;
     [SerializeField] protected LayerMask _playerLayer;
 
     protected override void LoadComponents()
@@ -15,7 +15,7 @@ public abstract class EnemyCombat : SaiMonoBehaviour
     private void LoadEnemyCtrl()
     {
         if (_enemyCtrl != null) return;
-        _enemyCtrl = GetComponentInParent<EnemyCtrl>();
+        _enemyCtrl = GetComponentInParent<TCtrl>();
         Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 

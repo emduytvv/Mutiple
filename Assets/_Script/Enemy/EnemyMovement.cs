@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyMovement : Movement
+public abstract class EnemyMovement<TCtrl> : Movement where TCtrl : EnemyCtrl
 {
-    [SerializeField] protected EnemyCtrl _enemyCtrl;
+    [SerializeField] protected TCtrl _enemyCtrl;
     [SerializeField] protected float _moveSpeed = 2f;
 
     protected override void LoadComponents()
@@ -14,7 +14,7 @@ public class EnemyMovement : Movement
     private void LoadEnemyCtrl()
     {
         if (_enemyCtrl != null) return;
-        _enemyCtrl = GetComponentInParent<EnemyCtrl>();
+        _enemyCtrl = GetComponentInParent<TCtrl>();
         Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
@@ -23,9 +23,5 @@ public class EnemyMovement : Movement
         if (!_enemyCtrl.PhotonView.IsMine) return;
         if (_enemyCtrl.DamageReceiver.isDead) return;
         Move();
-    }
-
-    protected override void Move()
-    {
     }
 }

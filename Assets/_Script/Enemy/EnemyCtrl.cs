@@ -7,6 +7,8 @@ public class EnemyCtrl : SaiMonoBehaviour
     [SerializeField] protected PhotonView _photonView;
     public EnemyDamageReceiver DamageReceiver => _damageReceiver;
     [SerializeField] protected EnemyDamageReceiver _damageReceiver;
+    public EnemyDamageSender EnemyDamageSender => _enemyDamageSender;
+    [SerializeField] protected EnemyDamageSender _enemyDamageSender;
     public EnemyAnimation EnemyAnimation => _enemyAnimation;
     [SerializeField] protected EnemyAnimation _enemyAnimation;
     public Rigidbody2D Rigidbody2D => _rigidbody2D;
@@ -22,6 +24,7 @@ public class EnemyCtrl : SaiMonoBehaviour
         this.LoadEnemyAnimation();
         this.LoadRigidbody2D();
         this.LoadEnemyDespawn();
+        LoadEnemyDamageSender();
     }
 
     private void LoadPhotonView()
@@ -34,6 +37,11 @@ public class EnemyCtrl : SaiMonoBehaviour
     {
         if (_damageReceiver != null) return;
         _damageReceiver = GetComponentInChildren<EnemyDamageReceiver>();
+    }
+    private void LoadEnemyDamageSender()
+    {
+        if (_enemyDamageSender != null) return;
+        _enemyDamageSender = GetComponentInChildren<EnemyDamageSender>();
     }
 
     private void LoadEnemyAnimation()

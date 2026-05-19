@@ -5,16 +5,10 @@ public class ArrowRicochetDamageSender : ArrowDamageSender
 {
     [SerializeField] protected int _ricochetCount = 1;
 
-    void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnHitEnemy(EnemyCtrl enemy, Collider2D collision)
     {
-        if (_hasHit) return;
-        EnemyCtrl enemy = collision.GetComponentInParent<EnemyCtrl>();
-        if (enemy == null) return;
-        if (!_arrowCtrl.PhotonView.IsMine) return;
         _hasHit = true;
-
         enemy.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage, 0f);
-
         Ricochet(collision);
         _arrowCtrl.ArrowDespawn.DespawnObject();
     }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyDamageReceiver : DamageReceiver
@@ -19,10 +20,15 @@ public class EnemyDamageReceiver : DamageReceiver
 
     public override void Receiver(float physDamage, float magDamage, float armorPen = 0f)
     {
-        if (isDead) return;
-        _enemyCtrl.EnemyAnimation.OnHurt();
         base.Receiver(physDamage, magDamage, armorPen);
+        this.OnHurt();
     }
+
+    protected virtual void OnHurt()
+    {
+        _enemyCtrl.EnemyAnimation.OnHurt();
+    }
+
 
     protected override void OnDead()
     {

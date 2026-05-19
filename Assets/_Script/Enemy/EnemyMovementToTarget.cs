@@ -1,7 +1,6 @@
-using Photon.Pun;
 using UnityEngine;
 
-public class EnemyMovementToTarget : EnemyMovement
+public abstract class EnemyMovementToTarget<TCtrl> : EnemyMovement<TCtrl> where TCtrl : EnemyCtrl
 {
     [SerializeField] protected Transform _target;
     public Transform Target => _target;
@@ -9,6 +8,7 @@ public class EnemyMovementToTarget : EnemyMovement
     public Vector2 Direction => _direction;
     [SerializeField] protected float _currentDistance;
     [SerializeField] protected float _minDistanceToStop = 1f;
+
     public void SetTarget(Transform target)
     {
         this._target = target;

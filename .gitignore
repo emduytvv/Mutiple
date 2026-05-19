@@ -73,3 +73,9 @@ crashlytics-build.properties
 .vsconfig
 .idea
 .vs
+
+# IDE cache files (auto-generated, not needed in repo)
+*.lscache
+
+# Claude Code local settings
+.claude/

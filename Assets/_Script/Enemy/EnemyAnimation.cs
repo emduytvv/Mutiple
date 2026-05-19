@@ -51,6 +51,7 @@ public class EnemyAnimation : SaiMonoBehaviour
     public void OnHurt()
     {
         if (!_enemyCtrl.PhotonView.IsMine) return;
+        if (_enemyCtrl.DamageReceiver.isDead) return;
         _animator.SetTrigger(HashHurt);
     }
 

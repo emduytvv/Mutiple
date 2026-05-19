@@ -1,3 +1,5 @@
+using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -57,9 +59,20 @@ public class PlayerAbilityDash : SaiMonoBehaviour
         if (!_playerCtrl.PhotonView.IsMine) return;
         if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         if (_cooldownTimer > 0f) return;
+
         _cooldownTimer = _cooldown;
         _isDashing = true;
         _dashTimer = _dashDuration;
+
         GameEvents.OnPlayerDashed?.Invoke(_dashForce);
+        SpawnFX();
     }
+
+    private void SpawnFX()
+    {
+        int angle = _playerCtrl.PlayerAnimation.transform.localScale.x > 0 ? 0 : 180;
+        Quaternion rotate = Quaternion.Euler(0, angle, 0);
+        PhotonNetwork.Instantiate(FXName.Dash.ToString(), transform.position, rotate);
+    }
+
 }

@@ -12,6 +12,6 @@ public class BulletMovement : Movement
     protected override void ResetValue()
     {
         base.ResetValue();
-        baseMaxSpeed = 10f;
+        baseMaxSpeed = 30f;
     }
 }

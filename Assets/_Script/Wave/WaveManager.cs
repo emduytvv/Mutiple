@@ -63,6 +63,7 @@ public class WaveManager : SaiMonoBehaviour
         {
             for (int i = 0; i < enemy.count; i++)
             {
+                Debug.Log(enemy.count);
                 EnemyFactory.Instance.Create(enemy.enemyType, GetSpawnPoint(enemy.enemyType, i), Quaternion.identity);
                 _aliveCount++;
             }
@@ -92,6 +93,12 @@ public class WaveManager : SaiMonoBehaviour
                 return _spawnPointsManager.Points_MagicMini[index % _spawnPointsManager.Points_MagicMini.Count].position;
             case EnemyType.ShooterOnPlatform:
                 return _spawnPointsManager.Points_ShooterOnPlatform[index % _spawnPointsManager.Points_ShooterOnPlatform.Count].position;
+            case EnemyType.Airm:
+                return _spawnPointsManager.Points_Airm[index % _spawnPointsManager.Points_Airm.Count].position;
+            case EnemyType.Melee:
+                return _spawnPointsManager.Points_Melee[index % _spawnPointsManager.Points_Melee.Count].position;
+            case EnemyType.Slime:
+                return _spawnPointsManager.Points_Slime[index % _spawnPointsManager.Points_Slime.Count].position;
         }
         Debug.LogWarning("WaveManager: không tìm thấy spawn point cho " + type);
         return Vector3.zero;

@@ -11,12 +11,22 @@ public class SpawnPointsManager : SaiMonoBehaviour
     public List<Transform> Points_MagicMini => points_MagicMini;
     [SerializeField] protected List<Transform> points_ShooterOnPlatform;
     public List<Transform> Points_ShooterOnPlatform => points_ShooterOnPlatform;
+    [SerializeField] protected List<Transform> points_Airm;
+    public List<Transform> Points_Airm => points_Airm;
+    [SerializeField] protected List<Transform> points_Melee;
+    public List<Transform> Points_Melee => points_Melee;
+
+    [SerializeField] protected List<Transform> points_Slime;
+    public List<Transform> Points_Slime => points_Slime;
     protected override void LoadComponents()
     {
         base.LoadComponents();
         LoadPointsBat();
         LoadPointsMagicMini();
         LoadPointsShooterOnPlatform();
+        LoadPointsAirm();
+        LoadPointsMelee();
+        LoadPointsSlime();
     }
 
     private void LoadPointsBat()
@@ -48,5 +58,35 @@ public class SpawnPointsManager : SaiMonoBehaviour
             points_ShooterOnPlatform.Add(point);
         }
         Debug.Log(transform.name + ": LoadPointsShooterOnPlatform", gameObject);
+    }
+    private void LoadPointsAirm()
+    {
+        if (points_Airm.Count > 0) return;
+        Transform points = transform.Find("Points_Airm");
+        foreach (Transform point in points)
+        {
+            points_Airm.Add(point);
+        }
+        Debug.Log(transform.name + ": LoadPointsAirm", gameObject);
+    }
+    private void LoadPointsMelee()
+    {
+        if (points_Melee.Count > 0) return;
+        Transform points = transform.Find("Points_Melee");
+        foreach (Transform point in points)
+        {
+            points_Melee.Add(point);
+        }
+        Debug.Log(transform.name + ": LoadPointsMelee", gameObject);
+    }
+    private void LoadPointsSlime()
+    {
+        if (points_Slime.Count > 0) return;
+        Transform points = transform.Find("Points_Slime");
+        foreach (Transform point in points)
+        {
+            points_Slime.Add(point);
+        }
+        Debug.Log(transform.name + ": LoadPointsSlime", gameObject);
     }
 }

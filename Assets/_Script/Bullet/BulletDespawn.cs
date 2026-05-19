@@ -20,7 +20,7 @@ public class BulletDespawn : DespawnByTime
     protected override void ResetValue()
     {
         base.ResetValue();
-        timeDespawn = 5f;
+        timeDespawn = 2.5f;
     }
 
     public override void DespawnObject()

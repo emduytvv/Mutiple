@@ -5,6 +5,7 @@ public class EnemyRotate : SaiMonoBehaviour
 {
     [SerializeField] protected EnemyCtrl _enemyCtrl;
 
+
     protected override void LoadComponents()
     {
         base.LoadComponents();

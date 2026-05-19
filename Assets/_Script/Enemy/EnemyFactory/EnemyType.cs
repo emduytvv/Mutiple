@@ -2,5 +2,8 @@ public enum EnemyType
 {
     Bat,
     MagicMini,
-    ShooterOnPlatform
+    ShooterOnPlatform,
+    Airm,
+    Melee,
+    Slime,
 }
