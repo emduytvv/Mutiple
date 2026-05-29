@@ -92,6 +92,7 @@ public class PlayerAnimation : SaiMonoBehaviour
             case PlayerState.Jump:
                 _animator.ResetTrigger(HashLand);
                 _animator.SetTrigger(HashJump);
+                _animator.SetBool(HashIsRun, false);
                 break;
             case PlayerState.Drop:
                 _animator.SetTrigger(HashDrop);
@@ -173,7 +174,7 @@ public class PlayerAnimation : SaiMonoBehaviour
     {
         if (!_playerCtrl.PhotonView.IsMine) return;
         if (_currentState == PlayerState.Die) return;
-        if (_currentState == PlayerState.Dash || _currentState == PlayerState.Shoot) return;
+        if (_currentState == PlayerState.Dash) return;
         OnChangeState(PlayerState.Aim);
     }
 
@@ -210,12 +211,19 @@ public class PlayerAnimation : SaiMonoBehaviour
 
     public void OnDash(float dashForce)
     {
+        if (!_playerCtrl.PhotonView.IsMine) return;
         OnChangeState(PlayerState.Dash);
     }
 
     private void OnAimAngleChanged(float angle)
     {
         if (!_playerCtrl.PhotonView.IsMine) return;
+        _animator.SetFloat(HashAimAngle, angle);
+        _playerCtrl.PhotonView.RPC("RpcSetAimAngle", RpcTarget.Others, angle);
+    }
+
+    public void SetAimAngle(float angle)
+    {
         _animator.SetFloat(HashAimAngle, angle);
     }
 

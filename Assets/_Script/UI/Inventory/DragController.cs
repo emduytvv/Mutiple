@@ -65,10 +65,44 @@ public class DragController : Singleton<DragController>
         _cloneIcon.gameObject.SetActive(false);
         _saveSlot.Icon.enabled = true;
 
+        if (GetTransferTarget(eventData) != null)
+        {
+            TransferToTeammate(_saveSlot.SlotIndex);
+            _saveSlot = null;
+            return;
+        }
+
         UIInventorySlot targetSlot = GetSlotToSwap(eventData);
         SwapSlot(targetSlot);
-
         _saveSlot = null;
+    }
+
+    private UITransferTarget GetTransferTarget(PointerEventData eventData)
+    {
+        var results = new List<RaycastResult>();
+        _raycaster.Raycast(eventData, results);
+        foreach (var r in results)
+        {
+            var t = r.gameObject.GetComponent<UITransferTarget>();
+            if (t != null) return t;
+        }
+        return null;
+    }
+
+    private void TransferToTeammate(int slotIndex)
+    {
+        PlayerCtrl local = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);
+        PlayerCtrl teammate = PlayerCtrl.AllPlayers.Find(p => !p.PhotonView.IsMine);
+        if (teammate == null) return;
+
+        ItemInventoryBase item = local.InventoryManager.Items[slotIndex];
+        if (item == null || item._info == null) return;
+
+        string json = ItemTransferData.Serialize(item);
+        local.InventoryManager.Remove(slotIndex);
+        _inventoryUI.Refresh();
+
+        teammate.PhotonView.RPC("RpcReceiveItem", teammate.PhotonView.Owner, json);
     }
 
     private void SwapSlot(UIInventorySlot targetSlot)

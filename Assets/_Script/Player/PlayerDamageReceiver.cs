@@ -13,6 +13,9 @@ public class PlayerDamageReceiver : DamageReceiver
     [SerializeField] private float _physicalDefenseBonus = 0f;
     [SerializeField] private float _magicalDefenseBonus = 0f;
     [SerializeField] private float _hpEquipmentBonus = 0f;
+    [Header("PowerUp Reduction (0=none 0.5=-50% 0.8=-80%)")]
+    [SerializeField] private float _physicalDamageReduction = 0f;
+    [SerializeField] private float _magicalDamageReduction = 0f;
     public AutoShield AutoShield => _autoShield;
     [SerializeField] protected AutoShield _autoShield;
     private PlayerCtrl _playerCtrl;
@@ -22,7 +25,8 @@ public class PlayerDamageReceiver : DamageReceiver
         base.OnEnable();
         CalculateTotalStats();
         GameEvents.OnPlayerRevived += OnRevived;
-        GameEvents.OnEquipmentChanged += UpdateEquipmentStats;
+        if (_playerCtrl != null && _playerCtrl.PhotonView.IsMine)
+            GameEvents.OnEquipmentChanged += UpdateEquipmentStats;
     }
     private void OnDestroy()
     {
@@ -52,7 +56,7 @@ public class PlayerDamageReceiver : DamageReceiver
     protected override void ResetValue()
     {
         base.ResetValue();
-        baseMaxHP = 100f;
+        baseMaxHP = 1000f;
     }
     private void OnRevived(int viewId)
     {
@@ -62,7 +66,7 @@ public class PlayerDamageReceiver : DamageReceiver
 
     public void Revive()
     {
-        isDead = false;
+        _isDead = false;
         currentHp = maxHP * 0.3f;
     }
     private void CalculateTotalStats()
@@ -82,6 +86,17 @@ public class PlayerDamageReceiver : DamageReceiver
         _magicalDefenseBonus += amount;
         CalculateTotalStats();
     }
+
+    public void AddPhysicalReduction(float amount)
+    {
+        _physicalDamageReduction = Mathf.Clamp01(_physicalDamageReduction + amount);
+    }
+
+    public void AddMagicalReduction(float amount)
+    {
+        _magicalDamageReduction = Mathf.Clamp01(_magicalDamageReduction + amount);
+    }
+
     public override void Receiver(float physDamage, float magDamage, float armorPen = 0f)
     {
         if (_autoShield.HasShield)
@@ -89,8 +104,9 @@ public class PlayerDamageReceiver : DamageReceiver
             _autoShield.SetActiveShield(false);
             return;
         }
+        physDamage *= (1f - _physicalDamageReduction);
+        magDamage *= (1f - _magicalDamageReduction);
         base.Receiver(physDamage, magDamage, armorPen);
-
     }
     protected override void SetTotalMaxHP()
     {

@@ -6,4 +6,6 @@ public enum EnemyType
     Airm,
     Melee,
     Slime,
+    Explosion,
+    Boss,
 }

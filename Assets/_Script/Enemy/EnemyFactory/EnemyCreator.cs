@@ -8,20 +8,14 @@ public abstract class EnemyCreator : SaiMonoBehaviour
     public EnemyType EnemyType => _enemyType;
 
     [SerializeField] protected List<EnemyName> _enemyNames;
+    public List<EnemyName> EnemyNames => _enemyNames;
 
-    protected virtual string GetName()
-    {
-        if (_enemyNames.Count == 0) return string.Empty;
-        return _enemyNames[Random.Range(0, _enemyNames.Count)].ToString();
-    }
-
-    public virtual EnemyCtrl Create(Vector3 pos, Quaternion rot)
+    public virtual EnemyCtrl Create(EnemyName name, Vector3 pos, Quaternion rot, float multiplier = 1f)
     {
         if (!PhotonNetwork.IsMasterClient) return null;
-        string name = GetName();
-
-        GameObject go = PhotonNetwork.Instantiate(name, pos, rot);
+        GameObject go = PhotonNetwork.Instantiate(name.ToString(), pos, rot);
         EnemyCtrl enemy = go.GetComponent<EnemyCtrl>();
+        enemy.ApplyStatMultiplier(multiplier);
         OnCreated(enemy);
         return enemy;
     }

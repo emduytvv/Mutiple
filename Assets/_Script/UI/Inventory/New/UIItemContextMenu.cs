@@ -9,13 +9,16 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
 {
     [SerializeField] private Button _btnUse;
     [SerializeField] private RectTransform _canvasRect;
+    [SerializeField] private UIInventoryManager _uiInventoryManager;
 
     private int _InventoryIndex;
+    private TypeItem _itemType;
     protected override void LoadComponents()
     {
         base.LoadComponents();
         LoadBtnUse();
         LoadCanvasRect();
+        LoadUIInventoryManager();
     }
     private void LoadBtnUse()
     {
@@ -29,6 +32,13 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
         if (_canvasRect != null) return;
         _canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         Debug.Log(transform.name + ": Load CanvasRect", gameObject);
+    }
+
+    private void LoadUIInventoryManager()
+    {
+        if (_uiInventoryManager != null) return;
+        _uiInventoryManager = transform.parent.GetComponentInChildren<UIInventoryManager>();
+        Debug.Log(transform.name + ": Load UIInventoryManager", gameObject);
     }
 
     protected override void Start()
@@ -55,9 +65,10 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
     {
         return RectTransformUtility.RectangleContainsScreenPoint(GetComponent<RectTransform>(), Input.mousePosition, Camera.main);
     }
-    public void Show(Vector2 screenPos, int inventoryIndex)
+    public void Show(Vector2 screenPos, int inventoryIndex, TypeItem itemType)
     {
         _InventoryIndex = inventoryIndex;
+        _itemType = itemType;
         SetPosition(screenPos);
         gameObject.SetActive(true);
     }
@@ -76,7 +87,16 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
 
     private void OnClickUse()
     {
-        UICharacterPanel.Instance.TryEquip(_InventoryIndex);
+        if (_itemType == TypeItem.PowerUp)
+        {
+            var localPlayer = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);
+            if (localPlayer != null) localPlayer.PlayerPowerUpManager.Use(_InventoryIndex);
+            _uiInventoryManager.Refresh();
+        }
+        else
+        {
+            UICharacterPanel.Instance.TryEquip(_InventoryIndex);
+        }
         Hide();
     }
 }

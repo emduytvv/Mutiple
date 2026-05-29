@@ -12,6 +12,7 @@ public class WaveManager : SaiMonoBehaviour
     [SerializeField] private List<WaveDataSO> _waves;
     [SerializeField] private int _currentWave = -1;
     [SerializeField] private int _aliveCount = 0;
+    [SerializeField] private bool _allWavesCleared = false;
     [SerializeField] private SpawnPointsManager _spawnPointsManager;
 
     protected override void Awake()
@@ -59,16 +60,25 @@ public class WaveManager : SaiMonoBehaviour
         _currentWave = index;
         _aliveCount = 0;
 
-        foreach (SpawnEnemyProfile enemy in _waves[index]._enemies)
+        var spawnIndex = new Dictionary<EnemyType, int>();
+        foreach (SpawnEnemyProfile profile in _waves[index]._enemies)
         {
-            for (int i = 0; i < enemy.count; i++)
+            EnemyType group = EnemyFactory.Instance.GetEnemyType(profile.enemyName);
+            if (!spawnIndex.ContainsKey(group)) spawnIndex[group] = 0;
+            for (int i = 0; i < profile.count; i++)
             {
-                Debug.Log(enemy.count);
-                EnemyFactory.Instance.Create(enemy.enemyType, GetSpawnPoint(enemy.enemyType, i), Quaternion.identity);
+                EnemyFactory.Instance.Create(profile.enemyName, GetSpawnPoint(group, spawnIndex[group]), Quaternion.identity, GameManager.Instance.StatMultiplier);
+                spawnIndex[group]++;
                 _aliveCount++;
             }
         }
     }
+    public void AddAliveCount(int count)
+    {
+        if (_allWavesCleared) return;
+        _aliveCount += count;
+    }
+
     private void OnEnemyDied()
     {
         _aliveCount--;
@@ -81,7 +91,10 @@ public class WaveManager : SaiMonoBehaviour
         if (next < _waves.Count)
             StartWave(next);
         else
+        {
+            _allWavesCleared = true;
             GameEvents.OnAllWavesCleared?.Invoke();
+        }
     }
     private Vector3 GetSpawnPoint(EnemyType type, int index)
     {
@@ -99,6 +112,8 @@ public class WaveManager : SaiMonoBehaviour
                 return _spawnPointsManager.Points_Melee[index % _spawnPointsManager.Points_Melee.Count].position;
             case EnemyType.Slime:
                 return _spawnPointsManager.Points_Slime[index % _spawnPointsManager.Points_Slime.Count].position;
+            case EnemyType.Explosion:
+                return _spawnPointsManager.Points_Explosion[index % _spawnPointsManager.Points_Explosion.Count].position;
         }
         Debug.LogWarning("WaveManager: không tìm thấy spawn point cho " + type);
         return Vector3.zero;

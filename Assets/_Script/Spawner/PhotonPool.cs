@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
 {
@@ -10,8 +11,21 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
     protected override void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject);
         PhotonNetwork.PrefabPool = this;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        spawners.Clear();
+    }
+
     private void RegisterSpawners()
     {
         spawners.Add(EnemySpawner.Instance.GetComponent<Spawner>());
@@ -20,6 +34,9 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
         spawners.Add(BulletSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(TextSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(FXSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(BossSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(SkillBossSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(ItemDropSpawner.Instance.GetComponent<Spawner>());
     }
 
     public GameObject Instantiate(string prefabId, Vector3 pos, Quaternion rot)
@@ -29,7 +46,11 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
         {
             if (!spawner.HasPrefab(prefabId)) continue;
             Transform spawned = spawner.SpawnByName(prefabId, pos, rot);
-            if (spawned == null) continue;
+            if (spawned == null)
+            {
+                Debug.LogWarning("PhotonPool: pool đã đầy cho: " + prefabId);
+                return null;
+            }
             return spawned.gameObject;
         }
         Debug.LogWarning("PhotonPool: không tìm thấy prefab: " + prefabId);

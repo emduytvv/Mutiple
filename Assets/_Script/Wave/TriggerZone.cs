@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -9,6 +8,7 @@ public class TriggerZone : SaiMonoBehaviour
     [SerializeField] private WaveDataSO _waveData;
     [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private bool _triggered = false;
+    [SerializeField] private bool _wavesCleared = false;
 
     protected override void LoadComponents()
     {
@@ -16,6 +16,7 @@ public class TriggerZone : SaiMonoBehaviour
         LoadSpawnPoints();
         LoadWaveDataSO();
     }
+
     private void LoadWaveDataSO()
     {
         if (_waveData != null) return;
@@ -32,9 +33,23 @@ public class TriggerZone : SaiMonoBehaviour
         Debug.Log(transform.name + ": Load SpawnPoints", gameObject);
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        GameEvents.OnAllWavesCleared += OnWavesCleared;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnAllWavesCleared -= OnWavesCleared;
+    }
+
+    private void OnWavesCleared() => _wavesCleared = true;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_triggered) return;
+        if (_wavesCleared) return;
         if (!PhotonNetwork.IsMasterClient) return;
         if (!other.GetComponent<PlayerDamageReceiver>()) return;
         _triggered = true;
@@ -43,18 +58,20 @@ public class TriggerZone : SaiMonoBehaviour
 
     private void SpawnEnemies()
     {
+        int total = 0;
         foreach (SpawnEnemyProfile enemy in _waveData._enemies)
         {
             for (int i = 0; i < enemy.count; i++)
             {
-                EnemyFactory.Instance.Create(enemy.enemyType, GetSpawnPoint(enemy.enemyType, i), Quaternion.identity);
+                EnemyFactory.Instance.Create(enemy.enemyName, GetSpawnPoint(i), Quaternion.identity);
+                total++;
             }
         }
+        WaveManager.Instance.AddAliveCount(total);
     }
 
-    private Vector3 GetSpawnPoint(EnemyType enemyType, int i)
+    private Vector3 GetSpawnPoint(int i)
     {
         return _spawnPoints[i % _spawnPoints.Count].position;
     }
-
 }

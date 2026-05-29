@@ -17,6 +17,12 @@ public class BulletDamageSender : DamageSender
         _bulletCtrl = GetComponentInParent<BulletCtrl>();
     }
 
+    public void SetDamage(float physDamage, float magDamage)
+    {
+        basePhysicalDamage = physDamage;
+        baseMagicalDamage  = magDamage;
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerCtrl player = collision.GetComponentInParent<PlayerCtrl>();

@@ -14,6 +14,7 @@ public class BtnUpgrade : BaseBtn
 
     protected override void OnClick()
     {
+        base.OnClick();
         _uiItemUpgradeManager.TryUpgradeWeapon();
     }
 

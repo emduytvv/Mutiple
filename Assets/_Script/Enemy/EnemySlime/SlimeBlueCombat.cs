@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class SlimeBlueCombat : SlimeCombat
@@ -10,6 +11,7 @@ public class SlimeBlueCombat : SlimeCombat
     }
     public override void Implement()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         for (int i = 0; i < _totalBullet; i++)
         {
             _angle = Random.Range(0, 60);

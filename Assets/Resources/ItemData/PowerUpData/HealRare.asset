@@ -1,0 +1,24 @@
+﻿%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0236cb36125b2a741b3352a94129997f, type: 3}
+  m_Name: HealRare
+  m_EditorClassIdentifier: 
+  _id: 111
+  _name: HealRare
+  _icon: {fileID: 21300000, guid: 401b3c52637e6fd4ebe32f632b533aea, type: 3}
+  _typeItem: 1
+  _price: 200
+  _rarity: 1
+  _effectName: 10
+  _value: 0.3
+  _duration: 0
+  _description: Hoi 30% MaxHP

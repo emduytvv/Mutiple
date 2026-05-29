@@ -14,7 +14,12 @@ public class BulletSpawner : Spawner
     protected override void ResetValue()
     {
         base.ResetValue();
-        maxObject = 100;
+        maxObject = 1000;
     }
 
+    public void Spawn(string bulletName, Vector3 position, Quaternion rotation, float physDamage, float magDamage)
+    {
+        object[] data = { physDamage, magDamage };
+        PhotonNetwork.Instantiate(bulletName, position, rotation, 0, data);
+    }
 }

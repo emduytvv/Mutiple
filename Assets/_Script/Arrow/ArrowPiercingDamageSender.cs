@@ -12,9 +12,9 @@ public class ArrowPiercingDamageSender : ArrowDamageSender
         _currentHit = _maxHit;
     }
 
-    protected override void OnHitEnemy(EnemyCtrl enemy, Collider2D collision)
+    protected override void OnHitTarget(DamageableCtrl target, Collider2D collision)
     {
-        enemy.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage, 0f);
+        target.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage, 0f);
         CheckCanDespawn();
     }
 

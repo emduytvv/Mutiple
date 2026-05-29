@@ -79,3 +79,6 @@ crashlytics-build.properties
 
 # Claude Code local settings
 .claude/
+
+# Firebase SDK (contains binaries > 100MB, không push lên GitHub)
+Assets/Firebase/

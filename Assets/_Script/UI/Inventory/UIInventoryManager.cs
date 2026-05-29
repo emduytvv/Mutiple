@@ -13,6 +13,12 @@ public class UIInventoryManager : SaiMonoBehaviour
     protected override void Start()
     {
         base.Start();
+        GameEvents.OnItemReceived += Refresh;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnItemReceived -= Refresh;
     }
     protected override void LoadComponents()
     {
@@ -46,6 +52,7 @@ public class UIInventoryManager : SaiMonoBehaviour
     }
     public void Refresh()
     {
+        if (_inventory == null) return;
         for (int i = 0; i < _maxSlot; i++)
         {
             ItemInventoryBase item = i < _inventory.Items.Count ? _inventory.Items[i] : null;

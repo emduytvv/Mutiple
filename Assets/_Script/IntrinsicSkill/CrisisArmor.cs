@@ -1,4 +1,4 @@
-using System;
+using Photon.Pun;
 using UnityEngine;
 
 public class CrisisArmor : BaseIntrinsicSkill
@@ -13,28 +13,21 @@ public class CrisisArmor : BaseIntrinsicSkill
     private void OnHPSmall()
     {
         if (!_isActive) return;
+        if (!_player.PhotonView.IsMine) return;
 
         if (CanImplement() && !_buffActive)
         {
             _buffActive = true;
-            AddDefense(_attackMultiplier);
+            _player.PhotonView.RPC("RpcAddDefense", RpcTarget.All, _attackMultiplier);
         }
         else if (!CanImplement() && _buffActive)
         {
             _buffActive = false;
-            AddDefense(-_attackMultiplier);
+            _player.PhotonView.RPC("RpcAddDefense", RpcTarget.All, -_attackMultiplier);
         }
-    }
-    protected void AddDefense(float attackMultiplier)
-    {
-        _player.PlayerDamageReceiver.AddMagicalDefense(attackMultiplier);
-        _player.PlayerDamageReceiver.AddPhysicalDefense(attackMultiplier);
-
     }
     private bool CanImplement()
     {
         return _player.PlayerDamageReceiver.GetCurrrentHPPercent() < _threshold;
     }
-
-
 }

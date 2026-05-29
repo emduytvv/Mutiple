@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class BuffHP : BaseIntrinsicSkill
@@ -10,7 +11,7 @@ public class BuffHP : BaseIntrinsicSkill
     }
     protected virtual void Apply()
     {
-        _player.PlayerDamageReceiver.AddMaxHP(_hpBonus);
+        _player.PhotonView.RPC("RpcAddMaxHP", RpcTarget.All, _hpBonus);
         _isActive = false;
     }
 }

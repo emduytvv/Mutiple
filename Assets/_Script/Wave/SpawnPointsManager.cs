@@ -15,6 +15,8 @@ public class SpawnPointsManager : SaiMonoBehaviour
     public List<Transform> Points_Airm => points_Airm;
     [SerializeField] protected List<Transform> points_Melee;
     public List<Transform> Points_Melee => points_Melee;
+    [SerializeField] protected List<Transform> points_Explosion;
+    public List<Transform> Points_Explosion => points_Explosion;
 
     [SerializeField] protected List<Transform> points_Slime;
     public List<Transform> Points_Slime => points_Slime;
@@ -27,6 +29,7 @@ public class SpawnPointsManager : SaiMonoBehaviour
         LoadPointsAirm();
         LoadPointsMelee();
         LoadPointsSlime();
+        LoadPointsExplosion();
     }
 
     private void LoadPointsBat()
@@ -88,5 +91,15 @@ public class SpawnPointsManager : SaiMonoBehaviour
             points_Slime.Add(point);
         }
         Debug.Log(transform.name + ": LoadPointsSlime", gameObject);
+    }
+    private void LoadPointsExplosion()
+    {
+        if (points_Explosion.Count > 0) return;
+        Transform points = transform.Find("Points_Explosion");
+        foreach (Transform point in points)
+        {
+            points_Explosion.Add(point);
+        }
+        Debug.Log(transform.name + ": LoadPointsExplosion", gameObject);
     }
 }

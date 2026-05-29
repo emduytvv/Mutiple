@@ -23,7 +23,10 @@ public abstract class BaseBtn : SaiMonoBehaviour
         this.button.onClick.AddListener(this.OnClick);
     }
 
-    protected abstract void OnClick();
+    protected virtual void OnClick()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+    }
 
     protected virtual void LoadButton()
     {

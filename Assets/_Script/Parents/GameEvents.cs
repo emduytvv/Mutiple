@@ -16,7 +16,9 @@ public static class GameEvents
 
     public static Action OnEnemyDied;
     public static Action OnAllWavesCleared;
+    public static Action<int, int> OnGateReadyCountChanged;
 
     public static Action OnEquipmentChanged;
     public static Action OnWeaponUpgraded;
+    public static Action OnItemReceived;
 }

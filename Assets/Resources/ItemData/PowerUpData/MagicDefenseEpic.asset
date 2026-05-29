@@ -1,0 +1,24 @@
+﻿%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0236cb36125b2a741b3352a94129997f, type: 3}
+  m_Name: MagicDefenseEpic
+  m_EditorClassIdentifier: 
+  _id: 102
+  _name: MagicDefenseEpic
+  _icon: {fileID: 21300000, guid: 83b91d0a4c6566b4997a56590b932c97, type: 3}
+  _typeItem: 1
+  _price: 400
+  _rarity: 2
+  _effectName: 1
+  _value: 0.8
+  _duration: 60
+  _description: -80% nhan sat thuong phep trong 60s

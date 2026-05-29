@@ -1,4 +1,4 @@
-using System;
+using Photon.Pun;
 using UnityEngine;
 
 public class DashHeal : BaseIntrinsicSkill
@@ -15,9 +15,7 @@ public class DashHeal : BaseIntrinsicSkill
     private void OnDashEnded()
     {
         if (!_isActive) return;
-        _player.PlayerDamageReceiver.BuffPercentHP(_dashHealPercent);
+        if (!_player.PhotonView.IsMine) return;
+        _player.PhotonView.RPC("RpcBuffPercentHP", RpcTarget.All, _dashHealPercent);
     }
-
-
-
 }

@@ -6,10 +6,10 @@ public class EnemyAnimation : SaiMonoBehaviour
     [SerializeField] protected EnemyCtrl _enemyCtrl;
     [SerializeField] protected Animator _animator;
 
-    static readonly int HashDie = Animator.StringToHash("isDead");
-    static readonly int HashHurt = Animator.StringToHash("isHurt");
-    static readonly int HashAttack = Animator.StringToHash("attack");
-    [SerializeField] private bool _dieTriggered;
+    protected int HashDie = Animator.StringToHash("isDead");
+    protected int HashHurt = Animator.StringToHash("isHurt");
+    protected int HashAttack = Animator.StringToHash("attack");
+    [SerializeField] protected bool _dieTriggered;
 
     protected override void LoadComponents()
     {
@@ -36,33 +36,28 @@ public class EnemyAnimation : SaiMonoBehaviour
     {
         _dieTriggered = false;
     }
-
-    private void Update()
-    {
-        if (!_enemyCtrl.PhotonView.IsMine) return;
-        HandleDeadAnim();
-    }
-
     public void SetAttackTrigger()
     {
         _animator.SetTrigger(HashAttack);
     }
 
-    public void OnHurt()
+    public void SetHurtTrigger()
     {
         if (!_enemyCtrl.PhotonView.IsMine) return;
         if (_enemyCtrl.DamageReceiver.isDead) return;
         _animator.SetTrigger(HashHurt);
     }
-
-    private void HandleDeadAnim()
+    public virtual void AttackByEvent()
     {
-        if (_dieTriggered || !_enemyCtrl.DamageReceiver.isDead) return;
+        _enemyCtrl.EnemyCombat.Send();
+    }
+    public void SetDieTrigger()
+    {
+        if (_dieTriggered) return;
         _dieTriggered = true;
         _animator.ResetTrigger(HashHurt);
         _animator.SetTrigger(HashDie);
     }
-
     public void DespawnByEvent()
     {
         _enemyCtrl.EnemyDespawn.DespawnObject();

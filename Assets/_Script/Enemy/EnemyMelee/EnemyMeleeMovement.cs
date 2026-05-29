@@ -44,13 +44,13 @@ public class EnemyMeleeMovement : EnemyMovementToTarget<EnemyMeleeCtrl>
         }
         _direction = _target.position - transform.position;
         _moveDir = _direction.x > 0 ? 1f : -1f;
-        _enemyCtrl.Rigidbody2D.linearVelocity = new Vector2(_moveDir * maxSpeed * _rateSpeedOnTarget, _enemyCtrl.Rigidbody2D.linearVelocity.y);
+        _enemyCtrl.Rigidbody2D.linearVelocity = new Vector2(_moveDir * _moveSpeed * _rateSpeedOnTarget, _enemyCtrl.Rigidbody2D.linearVelocity.y);
     }
     private void MoveNotTarget()
     {
         if (!HasGroundAhead()) _moveDir *= -1f;
         else if (HasWallAhead()) _moveDir *= -1f;
-        _enemyCtrl.Rigidbody2D.linearVelocity = new Vector2(_moveDir * maxSpeed, _enemyCtrl.Rigidbody2D.linearVelocity.y);
+        _enemyCtrl.Rigidbody2D.linearVelocity = new Vector2(_moveDir * _moveSpeed, _enemyCtrl.Rigidbody2D.linearVelocity.y);
     }
 
 

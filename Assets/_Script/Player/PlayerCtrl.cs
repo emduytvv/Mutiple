@@ -24,6 +24,16 @@ public class PlayerCtrl : SaiMonoBehaviour
     [SerializeField] protected PlayerDespawn _playerDespawn;
     public EquipmentManager EquipmentManager => _equipmentManager;
     [SerializeField] protected EquipmentManager _equipmentManager;
+    public PlayerPickup PlayerPickup => _playerPickup;
+    [SerializeField] protected PlayerPickup _playerPickup;
+    public AutoShield AutoShield => _autoShield;
+    [SerializeField] protected AutoShield _autoShield;
+    public InventoryManager InventoryManager => _inventoryManager;
+    [SerializeField] protected InventoryManager _inventoryManager;
+    public PlayerPowerUpManager PlayerPowerUpManager => _playerPowerUpManager;
+    [SerializeField] protected PlayerPowerUpManager _playerPowerUpManager;
+    public PlayerItemTransfer PlayerItemTransfer => _playerItemTransfer;
+    [SerializeField] protected PlayerItemTransfer _playerItemTransfer;
 
     public TextMeshPro TextMeshPro => _textMeshPro;
     [SerializeField] protected TextMeshPro _textMeshPro;
@@ -49,6 +59,11 @@ public class PlayerCtrl : SaiMonoBehaviour
         this.LoadPlayerDespawn();
         this.LoadTextMeshPro();
         this.LoadEquipmentManager();
+        this.LoadPlayerPickup();
+        this.LoadAutoShield();
+        this.LoadInventoryManager();
+        this.LoadPlayerPowerUpManager();
+        this.LoadPlayerItemTransfer();
     }
 
     private void LoadPhotonView()
@@ -96,6 +111,39 @@ public class PlayerCtrl : SaiMonoBehaviour
         if (_equipmentManager != null) return;
         _equipmentManager = GetComponentInChildren<EquipmentManager>();
         Debug.Log(transform.name + ": LoadEquipmentManager", gameObject);
+    }
+
+    private void LoadPlayerPickup()
+    {
+        if (_playerPickup != null) return;
+        _playerPickup = GetComponentInChildren<PlayerPickup>();
+    }
+
+    private void LoadAutoShield()
+    {
+        if (_autoShield != null) return;
+        _autoShield = GetComponentInChildren<AutoShield>();
+    }
+
+    private void LoadInventoryManager()
+    {
+        if (_inventoryManager != null) return;
+        _inventoryManager = GetComponentInChildren<InventoryManager>();
+        Debug.Log(transform.name + ": Load InventoryManager", gameObject);
+    }
+
+    private void LoadPlayerPowerUpManager()
+    {
+        if (_playerPowerUpManager != null) return;
+        _playerPowerUpManager = GetComponentInChildren<PlayerPowerUpManager>();
+        Debug.Log(transform.name + ": Load PlayerPowerUpManager", gameObject);
+    }
+
+    private void LoadPlayerItemTransfer()
+    {
+        if (_playerItemTransfer != null) return;
+        _playerItemTransfer = GetComponentInChildren<PlayerItemTransfer>();
+        Debug.Log(transform.name + ": Load PlayerItemTransfer", gameObject);
     }
 
     private void LoadPlayerDespawn()
@@ -166,9 +214,37 @@ public class PlayerCtrl : SaiMonoBehaviour
     }
 
     [PunRPC]
+    private void RpcSetAimAngle(float angle)
+    {
+        _playerAnimation.SetAimAngle(angle);
+    }
+
+    [PunRPC]
     private void RpcShoot()
     {
         _playerAnimation.PlayShoot();
+    }
+
+    [PunRPC]
+    private void RpcSetShield(bool isActive)
+    {
+        _autoShield.SetActiveShield(isActive);
+    }
+
+    [PunRPC]
+    private void RpcAddMaxHP(float amount) => _playerDamageReceiver.AddMaxHP(amount);
+
+    [PunRPC]
+    private void RpcAddPercentHP(float percent) => _playerDamageReceiver.AddPercentHPBonus(percent);
+
+    [PunRPC]
+    private void RpcBuffPercentHP(float percent) => _playerDamageReceiver.BuffPercentHP(percent);
+
+    [PunRPC]
+    private void RpcAddDefense(float amount)
+    {
+        _playerDamageReceiver.AddPhysicalDefense(amount);
+        _playerDamageReceiver.AddMagicalDefense(amount);
     }
 
     protected override void Start()
@@ -196,6 +272,12 @@ public class PlayerCtrl : SaiMonoBehaviour
         if (_photonView.ViewID == 0) return;
         this.photonNickName = _photonView.Owner.NickName;
         this._textMeshPro.text = photonNickName;
+    }
+
+    [PunRPC]
+    private void RpcReceiveItem(string json)
+    {
+        _playerItemTransfer.ReceiveItem(json);
     }
 
     [PunRPC]

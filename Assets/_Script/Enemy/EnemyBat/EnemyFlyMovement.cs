@@ -11,7 +11,7 @@ public class EnemyFlyMovement : EnemyMovementToTarget<EnemyCtrl>
             _enemyCtrl.Rigidbody2D.linearVelocity = Vector2.zero;
             return;
         }
-        _enemyCtrl.Rigidbody2D.linearVelocity = _direction.normalized * maxSpeed;
+        _enemyCtrl.Rigidbody2D.linearVelocity = _direction.normalized * _moveSpeed;
     }
 
     private void UpdateDistance()

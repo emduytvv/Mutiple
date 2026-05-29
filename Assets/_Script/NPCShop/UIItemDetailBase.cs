@@ -59,9 +59,7 @@ public class UIItemDetailBase : SaiMonoBehaviour
     }
     protected void SetColor(ItemInventoryBase item)
     {
-        if (item._info is not EquippableDataSO equip) { _nameItem.color = Color.white; return; }
-        Color color = equip._equipmentRarity.EquipmentToColor();
-        _nameItem.color = color;
+        _nameItem.color = item._info._rarity.ToColor();
     }
     protected void SetAvatar(ItemInventoryBase item)
     {
@@ -71,19 +69,22 @@ public class UIItemDetailBase : SaiMonoBehaviour
     protected void ShowWeapon(WeaponDataSO weapon, int level)
     {
         WeaponLevelData _data = weapon._levels[level];
-
-        SetRow(0, "PhysicalDamage", _data._physicalDamageBonus.ToString());
-        SetRow(1, "MagicalDamage", _data._magicalDamageBonus.ToString());
-        SetRow(2, "CriticalRate", $"{_data._criticalRate:P0}");
-        SetRow(3, "ArmorPenetration", $"{_data._armorPenetration:P0}");
+        int amount = 0;
+        SetRow(amount++, "PhysicalDamage", _data._physicalDamageBonus.ToString());
+        SetRow(amount++, "MagicalDamage", _data._magicalDamageBonus.ToString());
+        SetRow(amount++, "CriticalRate", $"{_data._criticalRate:P0}");
+        SetRow(amount++, "ArmorPenetration", $"{_data._armorPenetration:P0}");
+        //SetRow ArrowType
+        SetRow(amount++, $"ArrowType " + weapon._arrowType.ToString(), "", Color.purple);
         //SetRow SpecialSkill
         int _length = weapon._skills.Length;
         for (int i = 0; i < _length; i++)
         {
-            Color color = weapon._skills[i]._rarity.SkillToColor();
-            SetRow(i + 4, weapon._skills[i]._description, "", color);
+            Color color = weapon._skills[i]._rarity.ToColor();
+            SetRow(i + amount, weapon._skills[i]._description, "", color);
         }
-        SetActiveRows(4 + _length);
+        amount += _length;
+        SetActiveRows(amount);
     }
     protected void ShowEquipment(EquipmentDataSO eq)
     {
@@ -107,14 +108,14 @@ public class UIItemDetailBase : SaiMonoBehaviour
     }
     protected void ShowPowerUp(PowerUpDataSO pu)
     {
-        SetRow(0, "Value", pu._value.ToString());
-        string dur = pu._duration <= 0 ? "Permanent" : $"{pu._duration}s";
-        SetRow(1, "Duration", dur);
-        SetActiveRows(2);
+        int amount = 0;
+        SetRow(amount++, pu._description.ToString(), "");
+        SetActiveRows(amount);
     }
 
     protected void SetRow(int index, string label, string value, Color? color = null)
     {
+        if (index >= _statLabels.Length) return;
         Color _color = color == null ? Color.white : (Color)color;
         _statLabels[index].text = label;
         _statValues[index].text = value;

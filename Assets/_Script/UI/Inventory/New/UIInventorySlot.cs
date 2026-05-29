@@ -66,11 +66,12 @@ public class UIInventorySlot : SaiMonoBehaviour, IBeginDragHandler, IDragHandler
     private void OnMouseRightClick(PointerEventData eventData)
     {
         if (_currentItem == null || _currentItem._info == null) return;
-        UIItemContextMenu.Instance.Show(eventData.position, SlotIndex);
+        UIItemContextMenu.Instance.Show(eventData.position, SlotIndex, _currentItem._info._typeItem);
     }
     private void OnMouseLeftClick(PointerEventData eventData)
     {
         if (_currentItem == null || _currentItem._info == null) return;
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         _uIItemDetailInventory.gameObject.SetActive(true);
         _uIItemDetailInventory.Show(_currentItem);
     }

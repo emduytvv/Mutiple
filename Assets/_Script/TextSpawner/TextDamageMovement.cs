@@ -15,6 +15,6 @@ public class TextDamageMovement : Movement
     protected override void Move()
     {
         _velocity.y -= _gravity * Time.fixedDeltaTime;
-        transform.parent.position += _velocity * maxSpeed * Time.fixedDeltaTime;
+        transform.parent.position += _velocity * _moveSpeed * Time.fixedDeltaTime;
     }
 }

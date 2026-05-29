@@ -7,11 +7,11 @@ public class BulletMovement : Movement
 {
     protected override void Move()
     {
-        transform.parent.Translate(Vector3.right * (baseMaxSpeed * Time.fixedDeltaTime));
+        transform.parent.Translate(Vector3.right * (_moveSpeed * Time.fixedDeltaTime));
     }
     protected override void ResetValue()
     {
         base.ResetValue();
-        baseMaxSpeed = 30f;
+        _moveSpeed = 30f;
     }
 }

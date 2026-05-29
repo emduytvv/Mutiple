@@ -1,10 +1,10 @@
-using System;
 using Photon.Pun;
 using UnityEngine;
 
 public class ArrowDamageSender : DamageSender
 {
     [SerializeField] protected ArrowCtrl _arrowCtrl;
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -37,10 +37,12 @@ public class ArrowDamageSender : DamageSender
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (_hasHit) return;
-        EnemyCtrl enemy = collision.GetComponentInParent<EnemyCtrl>();
-        if (enemy == null) return;
         if (!_arrowCtrl.PhotonView.IsMine) return;
-        OnHitEnemy(enemy, collision);
+
+        DamageableCtrl target = collision.GetComponentInParent<DamageableCtrl>();
+        if (target == null) return;
+
+        OnHitTarget(target, collision);
         SpawnFX();
     }
 
@@ -49,8 +51,7 @@ public class ArrowDamageSender : DamageSender
         PhotonNetwork.Instantiate(FXName.ImpactArrow.ToString(), transform.position, transform.rotation);
     }
 
-
-    protected virtual void OnHitEnemy(EnemyCtrl enemy, Collider2D collision) { }
+    protected virtual void OnHitTarget(DamageableCtrl target, Collider2D collision) { }
 
     protected virtual void OnEnable() => _hasHit = false;
 }

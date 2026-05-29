@@ -14,7 +14,7 @@ public class ArrowSpawner : Spawner
     protected override void ResetValue()
     {
         base.ResetValue();
-        maxObject = 100;
+        maxObject = 1000;
     }
     // protected override void Start()
     // {

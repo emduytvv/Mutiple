@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "927364482090",
+    "firebase_url": "https://multiplier-22241-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "multiplier-22241",
+    "storage_bucket": "multiplier-22241.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927364482090:android:461e0ed14b138cd8ac2f53",
+        "android_client_info": {
+          "package_name": "com.phambaoduy.mutiplier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuXKLkwyAaNWVu7wiogAYr-vneqQ45iig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

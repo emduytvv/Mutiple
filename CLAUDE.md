@@ -1,4 +1,4 @@
-# Project
+﻿# Project
 
 2D co-op action platformer, 1–2 người chơi qua mạng.
 
@@ -11,6 +11,12 @@
 ## Phong cách trả lời
 
 Bạn là 1 expert Unity 8 năm kinh nghiệm
+
+Khi user đề xuất một cấu trúc code/architecture, hãy:
+- So sánh với pattern phổ biến trong Unity/game dev
+- Nếu có cách tốt hơn hoặc thông dụng hơn → nói thẳng và giải thích lý do
+- Không chỉ xác nhận "đúng rồi" nếu có vấn đề hoặc tradeoff đáng nói
+- Đưa ra quan điểm cụ thể: "cách bạn làm được, nhưng thông thường người ta làm X vì..."
 
 ## Core Loop
 
@@ -52,7 +58,40 @@ public EnemyDespawn EnemyDespawn => _enemyDespawn;
 // Child chỉ load ctrl:
 [SerializeField] protected EnemyCtrl _enemyCtrl;
 private void LoadEnemyCtrl() { if (_enemyCtrl != null) return; _enemyCtrl = GetComponentInParent<EnemyCtrl>(); }
-````
+```
+
+## Generic Ctrl Pattern
+
+Base class dùng `<TCtrl>` để child class tự động có đúng kiểu ctrl, không cần field thứ 2 trong inspector.
+
+```csharp
+// Base class — khai báo generic
+public abstract class EnemyMovement<TCtrl> : Movement where TCtrl : EnemyCtrl
+{
+    [SerializeField] protected TCtrl _enemyCtrl;
+    private void LoadEnemyCtrl() { _enemyCtrl = GetComponentInParent<TCtrl>(); }
+}
+
+// Tầng giữa — truyền generic xuống
+public abstract class EnemyMovementToTarget<TCtrl> : EnemyMovement<TCtrl> where TCtrl : EnemyCtrl { }
+
+// Leaf class — đóng generic lại bằng type cụ thể
+public class EnemyMeleeMovement : EnemyMovementToTarget<EnemyMeleeCtrl> { }
+public class EnemyFlyMovement   : EnemyMovementToTarget<EnemyCtrl> { }
+```
+
+Áp dụng cho cả `EnemyCombat<TCtrl>`. Khi leaf class cần method của ctrl con (VD: `MeleeMovement`, `ShooterMovement`), ctrl con đó phải expose property ở Ctrl của nó.
+
+**Khi nào dùng cast property thay vì generic:**
+Nếu base class bị referenced BY ctrl (VD: `EnemyAnimation`, `EnemyDamageReceiver` lưu trong `EnemyCtrl`) thì không thể make generic — dùng cast property thay:
+```csharp
+// Áp dụng cho bất kỳ class nào kế thừa từ class được EnemyCtrl giữ ref
+// EnemyMeleeAnimation : EnemyAnimation
+private EnemyMeleeCtrl MeleeCtrl => _enemyCtrl as EnemyMeleeCtrl;
+
+// SlimeDamageReceiver : EnemyDamageReceiver
+private SlimeCtrl _slimeCtrl => _enemyCtrl as SlimeCtrl;
+```
 
 ## Photon Sync
 
@@ -95,10 +134,4 @@ Gặp ký hiệu 🌐 → test 2 máy trước khi tiếp tục.
 - **`PlayerCtrl._allPlayers` là static list** — dùng list này để tìm target gần nhất (BatCreator, EnemyMovementToTarget).
 - **`PhotonPool` phải đăng ký tất cả spawners** — thêm loại projectile mới → phải đăng ký spawner vào PhotonPool.
 - **`_Assets/Photon/` là readonly** — không sửa bất kỳ file nào trong đó.
-
-# Scripts Index
-
-**Quy tắc bắt buộc:** Trước khi dùng Glob hoặc Grep để tìm file → đọc `docs/architecture.md` trước.
-
-- Script đã có trong đó → dùng `Read` với path trực tiếp, **không được Glob/Grep**
-- Script chưa có → mới được phép dùng Glob/Grep
+````

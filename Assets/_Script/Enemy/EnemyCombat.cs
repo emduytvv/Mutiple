@@ -1,15 +1,24 @@
 using UnityEngine;
 
-public abstract class EnemyCombat<TCtrl> : SaiMonoBehaviour where TCtrl : EnemyCtrl
+public class EnemyCombat<TCtrl> : EnemyCombatBase where TCtrl : EnemyCtrl
 {
     [SerializeField] protected TCtrl _enemyCtrl;
     [SerializeField] protected LayerMask _playerLayer;
+    [SerializeField] protected float _coolDown = 1f;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadEnemyCtrl();
         this.LoadPlayerLayer();
+    }
+
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        if (_enemyCtrl?.EnemyStatsSO == null) return;
+        if (_enemyCtrl.EnemyStatsSO._cooldown <= 0) return;
+        _coolDown = _enemyCtrl.EnemyStatsSO._cooldown;
     }
 
     private void LoadEnemyCtrl()

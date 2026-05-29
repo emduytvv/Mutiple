@@ -61,8 +61,8 @@ public class UIShopSlot : SaiMonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         _uIShopManager.SetCurrentSlot(this);
-
         _uIItemDetailShop.gameObject.SetActive(true);
         _uIItemDetailShop.Show(_currentItem, this);
     }

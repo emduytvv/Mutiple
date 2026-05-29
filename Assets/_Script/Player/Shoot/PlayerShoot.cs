@@ -8,19 +8,23 @@ public class PlayerShoot : SaiMonoBehaviour
     [SerializeField] private float _aimAngle90;
     [SerializeField] protected float _aimAngle180;
     private bool _isAiming;
+    //  private float _maxChargeTime = 0.4f;
+    private float _minChargeTime = 0.2f;
+    private float _chargeTimer = 0f;
+    private bool _canShoot;
     protected Vector3 centerAim = Vector3.up * 0.85f;
 
     private Dictionary<WeaponSkillName, IShootStrategy> _strategyMap;
     private List<IShootStrategy> _iShoot = new();
-    [SerializeField] private string _arrowPrefabName = "ArrowNormal";
+    [SerializeField] private ArrowName _arrowPrefabName = ArrowName.ArrowNormal;
 
-    private static readonly Dictionary<ArrowType, string> _arrowPrefabMap = new()
+    private static readonly Dictionary<ArrowType, ArrowName> _arrowPrefabMap = new()
     {
-        [ArrowType.Normal] = "ArrowNormal",
-        [ArrowType.Ricochet] = "ArrowRicochet",
-        [ArrowType.Piercing] = "ArrowPiercing",
-        [ArrowType.Explosive] = "ArrowExplosive",
-        [ArrowType.Gold] = "ArrowGold",
+        [ArrowType.Normal] = ArrowName.ArrowNormal,
+        [ArrowType.Ricochet] = ArrowName.ArrowRicochet,
+        [ArrowType.Piercing] = ArrowName.ArrowPiercing,
+        [ArrowType.Explosive] = ArrowName.ArrowExplosive,
+        [ArrowType.Gold] = ArrowName.ArrowGold,
     };
 
     protected override void LoadComponents()
@@ -92,22 +96,40 @@ public class PlayerShoot : SaiMonoBehaviour
     private void HandleAimInput()
     {
         if (InputManager.Instance.RightMouseDown) StartAim();
-        if (_isAiming) UpdateAimAngle();
+        if (_isAiming)
+        {
+            UpdateAimAngle();
+            CanShoot();
+        }
         if (InputManager.Instance.RightMouseUp) OnShoot();
-    }
 
+    }
     private void StartAim()
     {
         _isAiming = true;
+        //   AudioManager.Instance.PlaySFX(AudioManager.Instance.Aim);
         GameEvents.OnPlayerStartAim?.Invoke();
     }
-
+    private void CanShoot()
+    {
+        _chargeTimer += Time.deltaTime;
+        _canShoot = _chargeTimer >= _minChargeTime;
+    }
     private void OnShoot()
     {
-        _isAiming = false;
-        Shoot();
+        ResetAim();
         GameEvents.OnPlayerShoot?.Invoke();
+        if (!_canShoot) return;
+        Shoot();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.ShootSFX);
     }
+
+    private void ResetAim()
+    {
+        _chargeTimer = 0f;
+        _isAiming = false;
+    }
+
 
     private void UpdateAimAngle()
     {
@@ -123,7 +145,7 @@ public class PlayerShoot : SaiMonoBehaviour
         var (phys, mag, pen) = _playerCtrl.PlayerDamageSender.BuildArrowDamage();
         Vector3 center = transform.parent.position + centerAim;
         foreach (var s in _iShoot)
-            s.Shoot(_arrowPrefabName, center, _aimAngle180, phys, mag, pen);
+            s.Shoot(_arrowPrefabName.ToString(), center, _aimAngle180, phys, mag, pen);
     }
 
     private void UpdateAimAngle180()

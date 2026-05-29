@@ -16,10 +16,6 @@ public class FXSpawner : Spawner
     protected override void ResetValue()
     {
         base.ResetValue();
-        maxObject = 50;
+        maxObject = 1000;
     }
-    // public void SpawnImpactArrow(Vector3 pos, quaternion rot)
-    // {
-    //     PhotonNetwork.Instantiate(FXName.ImpactArrow.ToString(), pos, Quaternion.identity);
-    // }
 }

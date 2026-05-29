@@ -51,9 +51,9 @@ public class NPCShopData : SaiMonoBehaviour
     protected override void Start()
     {
         base.Start();
-        AddWeapon(_weapons, 4);
-        AddRandom(_equipments, 1);
-        AddRandom(_powerUps, 1);
+        AddWeapon(_weapons, 1);
+        AddRandom(_equipments, 2);
+        AddRandom(_powerUps, 3);
     }
     private void AddRandom<T>(List<T> pool, int count) where T : ItemDataSO
     {
@@ -79,6 +79,7 @@ public class NPCShopData : SaiMonoBehaviour
         {
             if (_shop.Count >= MaxSlot) break;
             var copy = ScriptableObject.Instantiate(listFake[i]);
+            copy.name = listFake[i].name;
             copy._arrowType = RandomType();
             copy._skills = RandomSkills();
             _shop.Add(new ItemInventoryBase { _info = copy, _amount = 1, _currentLevel = 0 });

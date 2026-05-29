@@ -10,9 +10,10 @@ public abstract class DamageReceiver : SaiMonoBehaviour
     [SerializeField] protected float baseMaxHP = 10f;
     [SerializeField] protected float percentHPBonus = 0;
     [SerializeField] public float maxHP = 2f;
-    [SerializeField] public float currentHp;
+    [SerializeField] protected float currentHp;
     public float CurrentHp => currentHp;
-    public bool isDead = false;
+    public bool isDead => _isDead;
+    protected bool _isDead = false;
 
     [Header("Defense")]
     [SerializeField] protected float physicalDefenseTotal = 0f;
@@ -29,12 +30,12 @@ public abstract class DamageReceiver : SaiMonoBehaviour
     {
         SetTotalMaxHP();
         currentHp = maxHP;
-        isDead = false;
+        _isDead = false;
     }
 
     public virtual void Receiver(float physDamage, float magDamage, float armorPen = 0f)
     {
-        if (isDead) return;
+        if (_isDead) return;
         float effectivePhys = CalculateDamagePhys(physDamage, armorPen);
         float effectiveMag = CalculateDamageMagic(magDamage, armorPen);
         SpawnTextDamage(effectivePhys, effectiveMag);
@@ -63,10 +64,10 @@ public abstract class DamageReceiver : SaiMonoBehaviour
     }
     public virtual bool IsDead()
     {
-        if (isDead) return true;
+        if (_isDead) return true;
         if (currentHp <= 0f)
         {
-            isDead = true;
+            _isDead = true;
             OnDead();
             return true;
         }
@@ -115,6 +116,10 @@ public abstract class DamageReceiver : SaiMonoBehaviour
         if (currentHp > maxHP) currentHp = maxHP;
         if (currentHp < 0f) currentHp = 0f;
     }
-
+    public void SetIsDead(bool isDead)
+    {
+        _isDead = isDead;
+        OnDead();
+    }
     protected abstract void OnDead();
 }

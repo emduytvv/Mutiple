@@ -37,11 +37,12 @@ public class AutoShield : BaseIntrinsicSkill
 
     public void SetActiveShield(bool isActive)
     {
-        if (_shield != null)
-        {
-            _hasShield = isActive;
-            _shield.gameObject.SetActive(isActive);
-        }
+        if (_shield == null) return;
+        _hasShield = isActive;
+        _shield.gameObject.SetActive(isActive);
+
+        if (_player.PhotonView.IsMine)
+            _player.PhotonView.RPC("RpcSetShield", Photon.Pun.RpcTarget.Others, isActive);
     }
 
 }

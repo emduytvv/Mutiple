@@ -1,6 +1,6 @@
 [System.Serializable]
 public class SpawnEnemyProfile
 {
-    public EnemyType enemyType;
+    public EnemyName enemyName;
     public int count;
 }

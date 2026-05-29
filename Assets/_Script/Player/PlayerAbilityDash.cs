@@ -35,6 +35,7 @@ public class PlayerAbilityDash : SaiMonoBehaviour
 
     protected override void Start()
     {
+        if (!_playerCtrl.PhotonView.IsMine) return;
         _dashAction.Enable();
         _dashAction.performed += _ => OnDash();
     }
@@ -56,7 +57,9 @@ public class PlayerAbilityDash : SaiMonoBehaviour
 
     private void OnDash()
     {
+        if (_playerCtrl == null || _playerCtrl.PhotonView == null) return;
         if (!_playerCtrl.PhotonView.IsMine) return;
+        if (_playerCtrl.PlayerAnimation == null) return;
         if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         if (_cooldownTimer > 0f) return;
 
@@ -65,6 +68,8 @@ public class PlayerAbilityDash : SaiMonoBehaviour
         _dashTimer = _dashDuration;
 
         GameEvents.OnPlayerDashed?.Invoke(_dashForce);
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.DashSFX);
         SpawnFX();
     }
 

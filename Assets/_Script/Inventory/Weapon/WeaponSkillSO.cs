@@ -5,5 +5,5 @@ public class WeaponSkillSO : ScriptableObject
 {
     public string _description;
     public WeaponSkillName _name;
-    public SkillWeaponRarity _rarity;
+    public ItemRarity _rarity;
 }

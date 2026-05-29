@@ -10,6 +10,7 @@ public class SlimeCombat : EnemyCombat<SlimeCtrl>
     protected int _totalBullet = 4;
     public virtual void Implement()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         for (int i = 0; i < _totalBullet; i++)
         {
             int z = _angleBase + _angle * i;
@@ -20,7 +21,8 @@ public class SlimeCombat : EnemyCombat<SlimeCtrl>
 
     protected virtual void SpawnBullet(Quaternion quaternion)
     {
-        PhotonNetwork.Instantiate(nameBullet, transform.parent.position, quaternion);
+        BulletSpawner.Instance.Spawn(nameBullet, transform.parent.position, quaternion,
+            _enemyCtrl.EnemyDamageSender.PhysicalDamage, _enemyCtrl.EnemyDamageSender.MagicalDamage);
     }
 
 }

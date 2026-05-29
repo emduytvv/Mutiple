@@ -4,11 +4,13 @@ using UnityEngine;
 public class EnemyDamageReceiver : DamageReceiver
 {
     [SerializeField] protected EnemyCtrl _enemyCtrl;
+    [SerializeField] private Collider2D _hitbox;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadEnemyCtrl();
+        this.LoadHitbox();
     }
 
     private void LoadEnemyCtrl()
@@ -18,28 +20,55 @@ public class EnemyDamageReceiver : DamageReceiver
         Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
+    private void LoadHitbox()
+    {
+        if (_hitbox != null) return;
+        _hitbox = GetComponentInParent<Collider2D>();
+    }
+
+    public void ApplyMultiplier(float multiplier)
+    {
+        baseMaxHP *= multiplier;
+        physicalDefenseTotal *= multiplier;
+        magicalDefenseTotal *= multiplier;
+        SetTotalMaxHP();
+        currentHp = maxHP;
+    }
+
+    protected override void OnEnable()
+    {
+        // _enemyCtrl.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        _hitbox.enabled = true;
+        LoadStatsFromSO();
+        base.OnEnable();
+    }
+
+    private void LoadStatsFromSO()
+    {
+        if (_enemyCtrl?.EnemyStatsSO == null) return;
+        baseMaxHP = _enemyCtrl.EnemyStatsSO._baseMaxHP;
+        physicalDefenseTotal = _enemyCtrl.EnemyStatsSO._physicalDefense;
+        magicalDefenseTotal = _enemyCtrl.EnemyStatsSO._magicalDefense;
+    }
+
     public override void Receiver(float physDamage, float magDamage, float armorPen = 0f)
     {
         base.Receiver(physDamage, magDamage, armorPen);
+        if (_isDead) return;
         this.OnHurt();
     }
-
     protected virtual void OnHurt()
     {
-        _enemyCtrl.EnemyAnimation.OnHurt();
+        _enemyCtrl.EnemyAnimation.SetHurtTrigger();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.EnemyHitSFX);
     }
-
-
     protected override void OnDead()
     {
-        GameEvents.OnEnemyDied?.Invoke();
-    }
+        _hitbox.enabled = false;
+        // _enemyCtrl.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
 
-    protected override void ResetValue()
-    {
-        base.ResetValue();
-        baseMaxHP = 100f;
-        physicalDefenseTotal = 0f;
-        magicalDefenseTotal = 0f;
+        GameEvents.OnEnemyDied?.Invoke();
+        _enemyCtrl.EnemyItemDropper?.OnEnemyDead();
+        _enemyCtrl.EnemyAnimation.SetDieTrigger();
     }
 }

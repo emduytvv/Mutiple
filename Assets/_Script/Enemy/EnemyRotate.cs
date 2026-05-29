@@ -24,9 +24,15 @@ public class EnemyRotate : SaiMonoBehaviour
         Rotate();
     }
 
+    private Vector3 _prevPosition;
+
     private void Rotate()
     {
-        if (math.abs(_enemyCtrl.Rigidbody2D.linearVelocity.x) < 0.01f) return;
-        transform.parent.localScale = new Vector3(_enemyCtrl.Rigidbody2D.linearVelocity.x < 0 ? -1 : 1, 1, 1);
+        // if (math.abs(_enemyCtrl.Rigidbody2D.linearVelocity.x) < 0.01f) return;
+        // transform.parent.localScale = new Vector3(_enemyCtrl.Rigidbody2D.linearVelocity.x < 0 ? -1 : 1, 1, 1);
+        Vector3 delta = transform.parent.position - _prevPosition;
+        if (Mathf.Abs(delta.x) > 0.001f)
+            transform.parent.localScale = new Vector3(delta.x < 0 ? -1 : 1, 1, 1);
+        _prevPosition = transform.parent.position;
     }
 }

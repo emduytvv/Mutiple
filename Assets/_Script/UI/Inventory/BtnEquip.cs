@@ -5,6 +5,6 @@ public class BtnEquip : BaseBtn
 {
     protected override void OnClick()
     {
-
+        base.OnClick();
     }
 }

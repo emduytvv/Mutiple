@@ -1,10 +1,10 @@
+using System;
+using System.IO;
 using Photon.Pun;
 using UnityEngine;
 
-public class EnemyCtrl : SaiMonoBehaviour
+public class EnemyCtrl : DamageableCtrl
 {
-    public PhotonView PhotonView => _photonView;
-    [SerializeField] protected PhotonView _photonView;
     public EnemyDamageReceiver DamageReceiver => _damageReceiver;
     [SerializeField] protected EnemyDamageReceiver _damageReceiver;
     public EnemyDamageSender EnemyDamageSender => _enemyDamageSender;
@@ -15,29 +15,41 @@ public class EnemyCtrl : SaiMonoBehaviour
     [SerializeField] protected Rigidbody2D _rigidbody2D;
     public EnemyDespawn EnemyDespawn => _enemyDespawn;
     [SerializeField] protected EnemyDespawn _enemyDespawn;
+    [SerializeField] protected EnemyStatsSO _enemyStatsSO;
+    public EnemyStatsSO EnemyStatsSO => _enemyStatsSO;
+    public EnemyItemDropper EnemyItemDropper => _enemyItemDropper;
+    [SerializeField] protected EnemyItemDropper _enemyItemDropper;
+    public EnemyCombatBase EnemyCombat => _enemyCombat;
+    [SerializeField] protected EnemyCombatBase _enemyCombat;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPhotonView();
         this.LoadDamageReceiver();
         this.LoadEnemyAnimation();
         this.LoadRigidbody2D();
         this.LoadEnemyDespawn();
-        LoadEnemyDamageSender();
+        this.LoadEnemyDamageSender();
+        this.LoadEnemyStatsSO();
+        this.LoadEnemyItemDropper();
+        LoadEneeyCombat();
     }
 
-    private void LoadPhotonView()
+    private void LoadEnemyStatsSO()
     {
-        if (_photonView != null) return;
-        _photonView = GetComponent<PhotonView>();
+        if (_enemyStatsSO != null) return;
+        string path = "EnemyStats/" + transform.name;
+        _enemyStatsSO = Resources.Load<EnemyStatsSO>(path);
+        Debug.Log(transform.name + ": Load EnemyStatsSO from " + path, gameObject);
     }
+
 
     private void LoadDamageReceiver()
     {
         if (_damageReceiver != null) return;
         _damageReceiver = GetComponentInChildren<EnemyDamageReceiver>();
     }
+
     private void LoadEnemyDamageSender()
     {
         if (_enemyDamageSender != null) return;
@@ -62,9 +74,39 @@ public class EnemyCtrl : SaiMonoBehaviour
         _enemyDespawn = GetComponentInChildren<EnemyDespawn>();
     }
 
+    private void LoadEnemyItemDropper()
+    {
+        if (_enemyItemDropper != null) return;
+        _enemyItemDropper = GetComponentInChildren<EnemyItemDropper>();
+    }
+    private void LoadEneeyCombat()
+    {
+        if (_enemyCombat != null) return;
+        _enemyCombat = GetComponentInChildren<EnemyCombatBase>();
+    }
+    public void ApplyStatMultiplier(float multiplier)
+    {
+        if (Mathf.Approximately(multiplier, 1f)) return;
+        _damageReceiver.ApplyMultiplier(multiplier);
+        _enemyDamageSender.ApplyMultiplier(multiplier);
+        GetComponentInChildren<Movement>()?.ApplyMultiplier(multiplier);
+    }
+
     [PunRPC]
-    public void RpcReceive(float physDamage, float magDamage, float armorPen)
+    public override void RpcReceive(float physDamage, float magDamage, float armorPen)
     {
         _damageReceiver.Receiver(physDamage, magDamage, armorPen);
+    }
+
+    [PunRPC]
+    public void RpcForceKill()
+    {
+        _damageReceiver.SetIsDead(true);
+    }
+
+    [PunRPC]
+    public void RpcSpawnItemDrop(string prefabName, int amount, Vector3 pos)
+    {
+        _enemyItemDropper.SpawnItemDrop(prefabName, amount, pos);
     }
 }

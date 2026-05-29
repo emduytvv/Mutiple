@@ -10,6 +10,7 @@ public class PlayerSpawner : Spawner
     {
         base.Awake();
         _instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     protected override void Loadprefabs()

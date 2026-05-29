@@ -3,7 +3,6 @@ using UnityEngine;
 public abstract class EnemyMovement<TCtrl> : Movement where TCtrl : EnemyCtrl
 {
     [SerializeField] protected TCtrl _enemyCtrl;
-    [SerializeField] protected float _moveSpeed = 2f;
 
     protected override void LoadComponents()
     {
@@ -18,10 +17,27 @@ public abstract class EnemyMovement<TCtrl> : Movement where TCtrl : EnemyCtrl
         Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
+    public override void ApplyMultiplier(float multiplier)
+    {
+        _moveSpeed *= multiplier;
+    }
+
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        if (_enemyCtrl?.EnemyStatsSO == null) return;
+        if (_enemyCtrl.EnemyStatsSO._moveSpeed <= 0) return;
+        _moveSpeed = _enemyCtrl.EnemyStatsSO._moveSpeed;
+    }
+
     protected override void FixedUpdate()
     {
         if (!_enemyCtrl.PhotonView.IsMine) return;
-        if (_enemyCtrl.DamageReceiver.isDead) return;
+        if (_enemyCtrl.DamageReceiver.isDead)
+        {
+            _enemyCtrl.Rigidbody2D.linearVelocity = Vector2.zero;
+            return;
+        }
         Move();
     }
 }

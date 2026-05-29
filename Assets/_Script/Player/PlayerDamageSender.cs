@@ -14,6 +14,8 @@ public class PlayerDamageSender : DamageSender
     [Header("Other Bonus (PowerUp / Buff)")]
     [SerializeField] private float _physicalDamageBonus = 0f;
     [SerializeField] private float _magicalDamageBonus = 0f;
+    [SerializeField] private float _percentPhysicalDamage = 0f;
+    [SerializeField] private float _percentMagicalDamage = 0f;
     [Header("Base")]
     [SerializeField] private float _armorPenetration = 0f;
     [SerializeField] private float _criticalRate = 0f;
@@ -42,8 +44,11 @@ public class PlayerDamageSender : DamageSender
     protected void OnEnable()
     {
         CaculateTotalStats();
-        GameEvents.OnEquipmentChanged += UpdateWeaponStats;
-        GameEvents.OnWeaponUpgraded += UpdateWeaponStats;
+        if (_playerCtrl != null && _playerCtrl.PhotonView.IsMine)
+        {
+            GameEvents.OnEquipmentChanged += UpdateWeaponStats;
+            GameEvents.OnWeaponUpgraded += UpdateWeaponStats;
+        }
     }
     protected void OnDestroy()
     {
@@ -54,8 +59,8 @@ public class PlayerDamageSender : DamageSender
     {
         float totalPhysBonus = _weaponPhysicalBonus + _physicalDamageBonus;
         float totalMagBonus = _weaponMagicalBonus + _magicalDamageBonus;
-        _physicalDamageTotal = (basePhysicalDamage + totalPhysBonus) * (_percentDamage + 1f);
-        _magicalDamageTotal = (baseMagicalDamage + totalMagBonus) * (_percentDamage + 1f);
+        _physicalDamageTotal = (basePhysicalDamage + totalPhysBonus) * (_percentDamage + _percentPhysicalDamage + 1f);
+        _magicalDamageTotal = (baseMagicalDamage + totalMagBonus) * (_percentDamage + _percentMagicalDamage + 1f);
         _armorPenetrationTotal = _weaponArmorPenetration + _armorPenetration;
         _criticalRateTotal = _weaponCriticalRate + _criticalRate;
     }
@@ -74,6 +79,8 @@ public class PlayerDamageSender : DamageSender
         _percentDamage += amount;
         CaculateTotalStats();
     }
+    public void AddPercentPhysicalDamage(float amount) { _percentPhysicalDamage += amount; CaculateTotalStats(); }
+    public void AddPercentMagicalDamage(float amount) { _percentMagicalDamage += amount; CaculateTotalStats(); }
     public void AddCriticalRate(float amount) { _criticalRate += amount; CaculateTotalStats(); }
     public void AddArmorPenetration(float amount) { _armorPenetration += amount; CaculateTotalStats(); }
     // Gọi bởi PlayerShoot khi spawn Arrow

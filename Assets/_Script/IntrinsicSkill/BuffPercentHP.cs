@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class BuffPercentHP : BaseIntrinsicSkill
@@ -11,7 +12,7 @@ public class BuffPercentHP : BaseIntrinsicSkill
     }
     protected virtual void Apply()
     {
-        _player.PlayerDamageReceiver.AddPercentHPBonus(_percentHPBonus);
+        _player.PhotonView.RPC("RpcAddPercentHP", RpcTarget.All, _percentHPBonus);
         _isActive = false;
     }
 }

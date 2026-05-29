@@ -3,13 +3,10 @@ public class SlimeCreator : EnemyCreator
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        LoadNames();
-        LoadType();
-    }
-    private void LoadType()
-    {
         _enemyType = EnemyType.Slime;
+        LoadNames();
     }
+
     private void LoadNames()
     {
         if (_enemyNames.Count > 0) return;
@@ -17,5 +14,4 @@ public class SlimeCreator : EnemyCreator
         _enemyNames.Add(EnemyName.SlimeGreen);
         _enemyNames.Add(EnemyName.SlimeBlue);
     }
-
 }

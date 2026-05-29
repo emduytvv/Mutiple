@@ -31,7 +31,7 @@ public class EnemyMovementOnPlatform : EnemyMovement<EnemyCtrl>
         if (!_isMoving) return;
         if (!HasGroundAhead()) _moveDir *= -1f;
         else if (HasWallAhead()) _moveDir *= -1f;
-        _enemyCtrl.Rigidbody2D.linearVelocity = new Vector2(_moveDir * maxSpeed, _enemyCtrl.Rigidbody2D.linearVelocity.y);
+        _enemyCtrl.Rigidbody2D.linearVelocity = new Vector2(_moveDir * _moveSpeed, _enemyCtrl.Rigidbody2D.linearVelocity.y);
     }
     private bool HasWallAhead()
     {

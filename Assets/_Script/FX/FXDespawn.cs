@@ -15,11 +15,6 @@ public class FXDespawn : DespawnByTime
         if (_fxCtrl != null) return;
         _fxCtrl = GetComponentInParent<FXCtrl>();
     }
-    protected override void ResetValue()
-    {
-        base.ResetValue();
-        timeDespawn = 1f;
-    }
     public override void DespawnObject()
     {
         if (!_fxCtrl.PhotonView.IsMine) return;

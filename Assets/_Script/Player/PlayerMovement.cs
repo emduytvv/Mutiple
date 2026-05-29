@@ -3,7 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : SaiMonoBehaviour
+public class PlayerMovement : Movement
 {
     [Header("Move")]
     [SerializeField] protected InputAction inputAction;
@@ -11,7 +11,6 @@ public class PlayerMovement : SaiMonoBehaviour
     private Vector2 direction;
     public Vector2 Direction => direction;
     public float VerticalVelocity => _playerCtrl.Rigidbody2D.linearVelocity.y;
-    [SerializeField] protected float moveSpeed = 5f;
     private float _lastFacingX = 1f;
     private bool _isDashing;
 
@@ -25,6 +24,9 @@ public class PlayerMovement : SaiMonoBehaviour
     [SerializeField] protected bool _wasGrounded;
     [SerializeField] protected int maxJumpCount = 1;
     [SerializeField] protected int _jumpCount;
+    [SerializeField] protected float _rateSpeedAim = 0.3f;
+    [SerializeField] protected float _currentRateSpeed = 1f;
+    [SerializeField] protected float _baseRateSpeed = 1f;
 
     protected override void LoadComponents()
     {
@@ -80,20 +82,28 @@ public class PlayerMovement : SaiMonoBehaviour
         GameEvents.OnPlayerDashEnded -= OnDashEnded;
     }
 
-    protected void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        Move();
+
+        CheckRateSpeed();
+        base.FixedUpdate();
         UpdateGrounded();
     }
 
-    private void Move()
+    private void CheckRateSpeed()
+    {
+        _currentRateSpeed = _playerCtrl.PlayerAnimation.CurrentState == PlayerState.Aim ? _rateSpeedAim : _baseRateSpeed;
+    }
+
+
+    protected override void Move()
     {
         if (!_playerCtrl.PhotonView.IsMine) return;
         if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         SetDirection();
         SetLastFacingX();
         if (_isDashing) return;
-        _playerCtrl.Rigidbody2D.linearVelocity = new Vector2(direction.x * moveSpeed, _playerCtrl.Rigidbody2D.linearVelocity.y);
+        _playerCtrl.Rigidbody2D.linearVelocity = new Vector2(direction.x * _moveSpeed * _currentRateSpeed, _playerCtrl.Rigidbody2D.linearVelocity.y);
     }
 
     private void SetDirection()
@@ -130,13 +140,16 @@ public class PlayerMovement : SaiMonoBehaviour
 
     private void TryJump()
     {
+        if (_playerCtrl == null || _playerCtrl.PhotonView == null) return;
         if (!_playerCtrl.PhotonView.IsMine) return;
+        if (_playerCtrl.PlayerAnimation == null) return;
         if (_playerCtrl.PlayerAnimation.CurrentState == PlayerState.Die) return;
         if (!_isGrounded && _jumpCount >= maxJumpCount) return;
 
         _jumpCount++;
         _playerCtrl.Rigidbody2D.linearVelocity = new Vector2(_playerCtrl.Rigidbody2D.linearVelocity.x, jumpForce);
         GameEvents.OnPlayerJumped?.Invoke();
+        // AudioManager.Instance.PlaySFX(AudioManager.Instance.JumpSFX);
     }
 
     private void OnDrawGizmos()
