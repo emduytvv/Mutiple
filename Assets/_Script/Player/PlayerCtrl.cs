@@ -285,4 +285,10 @@ public class PlayerCtrl : SaiMonoBehaviour
     {
         GameEvents.OnPlayerRevived?.Invoke(_photonView.ViewID);
     }
+
+    [PunRPC]
+    private void RpcSyncDefenseStats(float physDef, float magDef, float hp)
+    {
+        _playerDamageReceiver.ApplyEquipmentDefenseBonus(physDef, magDef, hp);
+    }
 }

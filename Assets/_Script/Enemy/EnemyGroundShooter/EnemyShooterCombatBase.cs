@@ -4,8 +4,8 @@ using UnityEngine;
 public abstract class EnemyShooterCombatBase : EnemyCombat<EnemyShooterCtrl>
 {
     [SerializeField] protected Transform _pointShoot;
-    [SerializeField] protected float _detectionRadiusIn = 10f;
-    [SerializeField] protected float _detectionRadiusExit = 12f;
+    [SerializeField] protected float _detectionRadiusIn = 25f;
+    [SerializeField] protected float _detectionRadiusExit = 27f;
     [SerializeField] protected float _coolDownTimer;
     [SerializeField] protected Transform _target;
     [SerializeField] protected bool _isPreparing;
@@ -80,7 +80,7 @@ public abstract class EnemyShooterCombatBase : EnemyCombat<EnemyShooterCtrl>
     protected virtual void ResetCombat()
     {
         _canShoot = false;
-        _coolDownTimer = 4;
+        _coolDownTimer = 0f;
         if (_isPreparing) ResumeMovement();
     }
 

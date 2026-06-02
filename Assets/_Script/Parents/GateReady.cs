@@ -7,7 +7,7 @@ public class GateReady : SaiMonoBehaviour
     [SerializeField] private Transform _gate;
     [SerializeField] private PhotonView _photonView;
     private HashSet<int> _playersInside = new HashSet<int>();
-    private bool _isGateReady = false;
+    [SerializeField] private bool _isGateReady = false;
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -30,6 +30,7 @@ public class GateReady : SaiMonoBehaviour
     }
     protected void OnEnable()
     {
+        Debug.Log(transform.name + ": OnEnable", gameObject);
         _gate.gameObject.SetActive(false);
         GameEvents.OnAllWavesCleared += OnAllWavesCleared;
     }
@@ -41,6 +42,7 @@ public class GateReady : SaiMonoBehaviour
 
     private void OnAllWavesCleared()
     {
+        Debug.Log(transform.name + ": OnAllWavesCleared", gameObject);
         _gate.gameObject.SetActive(true);
         _isGateReady = true;
     }

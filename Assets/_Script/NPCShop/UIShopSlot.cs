@@ -73,4 +73,10 @@ public class UIShopSlot : SaiMonoBehaviour, IPointerClickHandler
         _uIItemDetailShop.SetBuyItem(_currentItem, this);
     }
 
+    public void ResetSold()
+    {
+        _isSold = false;
+        _lockIcon.gameObject.SetActive(false);
+    }
+
 }

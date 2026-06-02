@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
-    protected override bool Persistent => true;
-
     [SerializeField] private CenterCtrl _center;
     [SerializeField] private Canvas _canvas;
     public CenterCtrl Center => _center;

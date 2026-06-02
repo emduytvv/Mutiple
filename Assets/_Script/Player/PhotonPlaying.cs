@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Firebase.Auth;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Cinemachine;
@@ -18,7 +19,6 @@ public class PhotonPlaying : MonoBehaviourPunCallbacks
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
-        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
         LoadPlayers();
     }
@@ -70,14 +70,22 @@ public class PhotonPlaying : MonoBehaviourPunCallbacks
 
     public virtual void Leave()
     {
-        Debug.Log(transform.name + ": Leave Room");
-        PhotonNetwork.LeaveRoom();
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log(transform.name + ": Leave Room");
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            Destroy(transform.root.gameObject);
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     public override void OnLeftRoom()
     {
-        Debug.Log("OnLeftRoom");
-        PhotonNetwork.LoadLevel("SampleScene");
+        Destroy(transform.root.gameObject);
+        SceneManager.LoadScene("Menu");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

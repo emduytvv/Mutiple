@@ -89,7 +89,7 @@ public class EnemyCtrl : DamageableCtrl
         if (Mathf.Approximately(multiplier, 1f)) return;
         _damageReceiver.ApplyMultiplier(multiplier);
         _enemyDamageSender.ApplyMultiplier(multiplier);
-        GetComponentInChildren<Movement>()?.ApplyMultiplier(multiplier);
+        // GetComponentInChildren<Movement>()?.ApplyMultiplier(multiplier);
     }
 
     [PunRPC]

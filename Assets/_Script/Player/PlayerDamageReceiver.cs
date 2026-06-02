@@ -120,9 +120,18 @@ public class PlayerDamageReceiver : DamageReceiver
     {
         var armor = _playerCtrl.EquipmentManager.GetCurrentEquip(EquipType.Armor)?._info as EquipmentDataSO;
         var pants = _playerCtrl.EquipmentManager.GetCurrentEquip(EquipType.Pants)?._info as EquipmentDataSO;
-        _equipmentPhysicalDefenseBonus = (armor?._physicalDefense ?? 0) + (pants?._physicalDefense ?? 0);
-        _equipmentMagicalDefenseBonus = (armor?._magicalDefense ?? 0) + (pants?._magicalDefense ?? 0);
-        _hpEquipmentBonus = (armor?._hp ?? 0) + (pants?._hp ?? 0);
+        float physDef = (armor?._physicalDefense ?? 0) + (pants?._physicalDefense ?? 0);
+        float magDef = (armor?._magicalDefense ?? 0) + (pants?._magicalDefense ?? 0);
+        float hp = (armor?._hp ?? 0) + (pants?._hp ?? 0);
+        ApplyEquipmentDefenseBonus(physDef, magDef, hp);
+        _playerCtrl.PhotonView.RPC("RpcSyncDefenseStats", Photon.Pun.RpcTarget.Others, physDef, magDef, hp);
+    }
+
+    public void ApplyEquipmentDefenseBonus(float physDef, float magDef, float hp)
+    {
+        _equipmentPhysicalDefenseBonus = physDef;
+        _equipmentMagicalDefenseBonus = magDef;
+        _hpEquipmentBonus = hp;
         SetTotalMaxHP();
         CalculateTotalStats();
     }

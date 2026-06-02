@@ -7,8 +7,8 @@ public class SlimeGreenCombat : SlimeCombat
     protected override void ResetValue()
     {
         base.ResetValue();
-        _angleBase = 45;
-        _totalBullet = 4;
+        _angleBase = 22;
+        _totalBullet = 8;
         nameBullet = NameBullet.Bullet_Fire.ToString();
     }
 

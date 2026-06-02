@@ -14,6 +14,7 @@ public static class GameEvents
     public static Action<int> OnPlayerRevived;
     public static Action<int> OnPlayerDied;
 
+    public static Action OnBossDied;
     public static Action OnEnemyDied;
     public static Action OnAllWavesCleared;
     public static Action<int, int> OnGateReadyCountChanged;

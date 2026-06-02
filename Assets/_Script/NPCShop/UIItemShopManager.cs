@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIItemShopManager : Singleton<UIItemShopManager>
 {
@@ -10,7 +11,8 @@ public class UIItemShopManager : Singleton<UIItemShopManager>
 
     protected PlayerGold _playerGold;
     protected InventoryManager _inventoryManager;
-    [SerializeField] private const int _maxSlot = 6;
+    private const int _maxSlot = 6;
+    private readonly HashSet<string> _visitedScenes = new HashSet<string>();
 
     protected override void Start()
     {
@@ -46,9 +48,17 @@ public class UIItemShopManager : Singleton<UIItemShopManager>
     }
     protected void OnEnable()
     {
+        CheckResetSold();
         LoadShopData();
         ShowUI();
     }
+
+    private void CheckResetSold()
+    {
+        if (_visitedScenes.Add(SceneManager.GetActiveScene().name))
+            foreach (var slot in _slotItems) slot.ResetSold();
+    }
+
 
     private void LoadShopData()
     {

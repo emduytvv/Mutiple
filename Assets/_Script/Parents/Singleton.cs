@@ -4,7 +4,7 @@ public abstract class Singleton<T> : SaiMonoBehaviour where T : SaiMonoBehaviour
 {
     private static T _instance;
 
-    // Override true để giữ qua scene (DontDestroyOnLoad). Mặc định false = scene-bound.
+    // Override true để destroy duplicate khi load scene mới.
     protected virtual bool Persistent => false;
 
     public static T Instance
@@ -24,19 +24,11 @@ public abstract class Singleton<T> : SaiMonoBehaviour where T : SaiMonoBehaviour
 
     protected virtual void LoadInstance()
     {
-        if (Persistent)
+        if (Persistent && _instance != null && _instance != this as T)
         {
-            if (_instance != null && _instance != this as T)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            _instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            _instance = this as T;
-        }
+        _instance = this as T;
     }
 }

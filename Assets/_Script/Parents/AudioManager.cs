@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    protected override bool Persistent => true;
 
     [Header("-----------------Audio Source------------------")]
     [SerializeField] protected AudioSource musicSource;

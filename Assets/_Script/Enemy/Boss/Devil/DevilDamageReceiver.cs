@@ -82,13 +82,14 @@ public class DevilDamageReceiver : BossDamageReceiver
 
     protected override void OnDead()
     {
-        // GameEvents.OnBossDied?.Invoke();
+
+        base.OnDead();
     }
 
     protected override void ResetValue()
     {
         base.ResetValue();
-        _basePhysMaxHP = 2000f;
-        _baseMagMaxHP = 2000f;
+        _basePhysMaxHP = 5;
+        _baseMagMaxHP = 5;
     }
 }

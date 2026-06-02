@@ -1,31 +1,57 @@
+using System;
+using Firebase.Auth;
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 
 public class PhotonLogin : MonoBehaviourPunCallbacks
 {
-    public TMP_InputField inputUsername;
-    void Start()
+    [SerializeField] private GameObject _setNamePanel;
+    [SerializeField] private GameObject _mainMenu;
+
+    private void Start()
     {
-        inputUsername.text = "Duy";
+        CheckNewAccount();
     }
-    public virtual void Login()
+
+    private void CheckNewAccount()
     {
-        string name = inputUsername.text;
-        Debug.Log("Login: " + name);
+        FirebaseUser user = FirebaseAuth.DefaultInstance.CurrentUser;
+        if (user == null)
+        {
+            Debug.LogError("PhotonLogin: No Firebase user found");
+            return;
+        }
+
+        // Đọc tên từ Firebase DB — async, kết quả trả về qua callback
+        FirebaseDatabaseManager.Instance.ReadPlayerName(user.UserId, playerName =>
+        {
+            if (!string.IsNullOrEmpty(playerName))
+            {
+                Debug.Log("PhotonLogin: Old account");
+                ConnectWithName(playerName);
+            }         // tài khoản cũ
+            else
+            {
+                Debug.Log("PhotonLogin: New account");
+                _mainMenu.SetActive(false);
+                _setNamePanel.SetActive(true);       // tài khoản mới → đặt tên
+            }
+        });
+    }
+
+
+    public void ConnectWithName(string playerName)
+    {
+        Debug.Log("Connecting as: " + playerName);
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.NickName = name;
+        PhotonNetwork.NickName = playerName;
         PhotonNetwork.ConnectUsingSettings();
     }
-    //Được gọi khi ConnectUsingSettings
+
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Master");
         PhotonNetwork.JoinLobby();
     }
-    //Được gọi khi JoinLobby
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("Joined Lobby");
-    }
+
+    public override void OnJoinedLobby() { }
 }

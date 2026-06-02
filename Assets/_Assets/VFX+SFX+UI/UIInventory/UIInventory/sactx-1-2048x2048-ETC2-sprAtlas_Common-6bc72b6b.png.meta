@@ -128,7 +128,7 @@ TextureImporter:
         height: 185
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 23, y: 24, z: 28, w: 26}
       customData: 
       outline: []
       physicsShape: []
@@ -237,7 +237,7 @@ TextureImporter:
         width: 258
         height: 84
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -246,6 +246,94 @@ TextureImporter:
       bones: []
       spriteID: 0a770fb535e16b244b828784be3a24ce
       internalID: 1794876652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_7
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 1594
+        width: 184
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 23, y: 21, z: 22, w: 20}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47453a209d438054a874b8834734b824
+      internalID: 1005777923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_8
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 1384
+        width: 453
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33844385b6fbc50428be12e3a0eb09bf
+      internalID: -1729701764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1111
+        width: 439
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94141e3ab452c994b9bd6406ebc3c194
+      internalID: 611783143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1752
+        width: 452
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17d633d4dc935db49a6aa04098f6c441
+      internalID: 1543571404
       vertices: []
       indices: 
       edges: []
@@ -266,11 +354,15 @@ TextureImporter:
     nameFileIdTable:
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_0: -263148221
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_1: -1402060319
+      sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_10: 1543571404
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_2: -2108225179
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_3: -1524591483
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_4: 663097742
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_5: 893705651
       sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_6: 1794876652
+      sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_7: 1005777923
+      sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_8: -1729701764
+      sactx-1-2048x2048-ETC2-sprAtlas_Common-6bc72b6b_9: 611783143
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

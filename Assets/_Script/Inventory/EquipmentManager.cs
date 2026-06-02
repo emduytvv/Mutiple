@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // Component gắn trên Player — lưu trạng thái 3 ô trang bị đang đeo
@@ -7,6 +8,15 @@ public class EquipmentManager : SaiMonoBehaviour
     protected override void Awake()
     {
         _equipped = new ItemInventoryBase[3];
+        AddWeaponBasic();
+    }
+    private void AddWeaponBasic()
+    {
+        ItemInventoryBase weapon = new ItemInventoryBase();
+        weapon._info = Resources.Load<WeaponDataSO>("ItemData/WeaponData/BowPhysicalCommon");
+        weapon._amount = 1;
+        weapon._currentLevel = 0;
+        Equip(EquipType.Weapon, weapon);
     }
     public ItemInventoryBase GetCurrentEquip(EquipType equipType)
     {

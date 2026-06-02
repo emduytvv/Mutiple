@@ -16,7 +16,7 @@ public class EnemyFlyMovement : EnemyMovementToTarget<EnemyCtrl>
 
     private void UpdateDistance()
     {
-        _direction = _target.position - transform.position;
+        _direction = _target.position + Vector3.up * 0.7f - transform.position;
         _currentDistance = _direction.magnitude;
     }
 
@@ -24,4 +24,5 @@ public class EnemyFlyMovement : EnemyMovementToTarget<EnemyCtrl>
     {
         return _currentDistance > _minDistanceToStop;
     }
+
 }

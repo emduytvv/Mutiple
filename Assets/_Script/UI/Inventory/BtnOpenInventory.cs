@@ -8,4 +8,10 @@ public class BtnOpenInventory : BaseBtn
         base.OnClick();
         CenterCtrl.Instance.OpenInventory();
     }
+    protected void Update()
+    {
+        if (!Input.GetKeyDown(KeyCode.Tab)) return;
+        CenterCtrl.Instance.OpenInventory();
+
+    }
 }

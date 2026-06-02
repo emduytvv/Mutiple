@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class InputManager : Singleton<InputManager>
 {
-    protected override bool Persistent => true;
 
     protected Vector2 mousePosition;
     public Vector2 MousePosition => mousePosition;

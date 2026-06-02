@@ -5,7 +5,7 @@ using UnityEngine;
 public class SlimeCombat : EnemyCombat<SlimeCtrl>
 {
     protected string nameBullet = NameBullet.Bullet_Fire.ToString();
-    protected int _angle = 90;
+    protected int _angle = 45;
     protected int _angleBase = 45;
     protected int _totalBullet = 4;
     public virtual void Implement()

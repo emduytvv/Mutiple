@@ -2,7 +2,7 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class UIRoomProfile : MonoBehaviour
+public class UIRoomProfile : BaseBtn
 {
     [SerializeField] protected TextMeshProUGUI roomName;
     [SerializeField] protected RoomProfile roomProfile;
@@ -13,9 +13,9 @@ public class UIRoomProfile : MonoBehaviour
         this.roomName.text = this.roomProfile.name;
     }
 
-    public virtual void OnClick()
+    protected override void OnClick()
     {
         Debug.Log("OnClick: " + this.roomProfile.name);
-        PhotonRoom.instance.nameRoom.text = this.roomProfile.name;
+        transform.GetComponentInParent<PanelJoinRoom>().SetInputRoomName(this.roomProfile.name);
     }
 }

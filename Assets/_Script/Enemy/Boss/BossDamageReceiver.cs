@@ -16,7 +16,11 @@ public class BossDamageReceiver : DamageReceiver
         _bossCtrl = GetComponentInParent<BossCtrl>();
     }
 
-    protected override void OnDead() { }
+    protected override void OnDead()
+    {
+        GameEvents.OnBossDied?.Invoke();
+        _bossCtrl.BossDespawn.DespawnObject();
+    }
 
     protected override void ResetValue()
     {

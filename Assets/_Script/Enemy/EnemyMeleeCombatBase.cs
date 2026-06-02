@@ -65,7 +65,6 @@ public abstract class EnemyMeleeCombatBase<TCtrl> : EnemyCombat<TCtrl> where TCt
 
     public override void Send()
     {
-        Debug.Log("Send");
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_pointAttack.position, _rangeAttack, _playerLayer);
         if (colliders.Length == 0) return;
         foreach (Collider2D collider in colliders)

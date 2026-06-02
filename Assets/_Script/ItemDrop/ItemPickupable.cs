@@ -26,7 +26,6 @@ public class ItemPickupable : SaiMonoBehaviour
     {
         _targetPlayer = player;
         _itemDropCtrl.ItemDropMove.SetTarget(player.transform);
-        Debug.Log(transform.name + player.transform.name, gameObject);
         _itemDropCtrl.Rigidbody2D.simulated = false;
     }
 

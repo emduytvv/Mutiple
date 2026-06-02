@@ -11,7 +11,6 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(gameObject);
         PhotonNetwork.PrefabPool = this;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -37,6 +36,7 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
         spawners.Add(BossSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(SkillBossSpawner.Instance.GetComponent<Spawner>());
         spawners.Add(ItemDropSpawner.Instance.GetComponent<Spawner>());
+        spawners.Add(HPBarEnemySpawner.Instance.GetComponent<Spawner>());
     }
 
     public GameObject Instantiate(string prefabId, Vector3 pos, Quaternion rot)

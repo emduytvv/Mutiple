@@ -7,6 +7,12 @@ public class CenterCtrl : Singleton<CenterCtrl>
     [SerializeField] protected Transform _uiShop;
     [SerializeField] protected Transform _uiUpgrade;
     [SerializeField] private Transform _uiChestSkillPanel;
+    [SerializeField] private Transform _panelSetting;
+    public Transform PanelSetting => _panelSetting;
+    [SerializeField] private Transform _panelGameOver;
+    public Transform PanelGameOver => _panelGameOver;
+    [SerializeField] private Transform _panelGameWin;
+    public Transform PanelGameWin => _panelGameWin;
 
     protected override void LoadComponents()
     {
@@ -15,6 +21,9 @@ public class CenterCtrl : Singleton<CenterCtrl>
         LoadUIShop();
         LoadUIChestSkillPanel();
         LoadUIUpgrade();
+        LoadPanelSetting();
+        LoadPanelGameOver();
+        LoadPanelGameWin();
     }
 
     private void LoadUIInventory()
@@ -60,5 +69,29 @@ public class CenterCtrl : Singleton<CenterCtrl>
     public void OpenChestSkillPanel(ChestCtrl chest, PlayerCtrl player)
     {
         _uiChestSkillPanel.GetComponentInChildren<UIChestSkillPanel>().Show(chest.ChestData.OfferedSkills, player);
+    }
+
+    private void LoadPanelSetting()
+    {
+        if (_panelSetting != null) return;
+        _panelSetting = transform.Find("PanelSetting");
+        _panelSetting.gameObject.SetActive(false);
+        Debug.Log(transform.name + ": LoadPanelSetting", gameObject);
+    }
+
+    private void LoadPanelGameOver()
+    {
+        if (_panelGameOver != null) return;
+        _panelGameOver = transform.Find("PanelGameOver");
+        _panelGameOver.gameObject.SetActive(false);
+        Debug.Log(transform.name + ": LoadPanelGameOver", gameObject);
+    }
+
+    private void LoadPanelGameWin()
+    {
+        if (_panelGameWin != null) return;
+        _panelGameWin = transform.Find("PanelGameWin");
+        _panelGameWin.gameObject.SetActive(false);
+        Debug.Log(transform.name + ": LoadPanelGameWin", gameObject);
     }
 }

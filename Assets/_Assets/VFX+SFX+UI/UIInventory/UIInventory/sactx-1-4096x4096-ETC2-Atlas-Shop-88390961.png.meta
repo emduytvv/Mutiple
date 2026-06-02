@@ -105,7 +105,7 @@ TextureImporter:
         width: 236
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -127,7 +127,7 @@ TextureImporter:
         width: 257
         height: 237
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -136,6 +136,28 @@ TextureImporter:
       bones: []
       spriteID: 814e8819f00eb9746bd32caad8e004b6
       internalID: 2136952276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-1-4096x4096-ETC2-Atlas-Shop-88390961_2
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 1486
+        width: 297
+        height: 504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5296ecc873b39c14889eccec07e95a59
+      internalID: -1387331410
       vertices: []
       indices: 
       edges: []
@@ -156,6 +178,7 @@ TextureImporter:
     nameFileIdTable:
       sactx-1-4096x4096-ETC2-Atlas-Shop-88390961_0: 623903292
       sactx-1-4096x4096-ETC2-Atlas-Shop-88390961_1: 2136952276
+      sactx-1-4096x4096-ETC2-Atlas-Shop-88390961_2: -1387331410
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

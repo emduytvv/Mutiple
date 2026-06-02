@@ -8,7 +8,7 @@ public class SlimeCarrotCombat : SlimeCombat
     {
         base.ResetValue();
         _angleBase = 0;
-        _totalBullet = 4;
+        _totalBullet = 8;
         nameBullet = NameBullet.Bullet_Fire.ToString();
     }
 

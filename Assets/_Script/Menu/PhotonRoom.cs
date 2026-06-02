@@ -6,30 +6,30 @@ using UnityEngine;
 
 public class PhotonRoom : MonoBehaviourPunCallbacks
 {
+    [SerializeField] protected GameObject _mainMenu;
     public static PhotonRoom instance;
-    public TMP_InputField nameRoom;
     public List<RoomProfile> rooms = new List<RoomProfile>();
     public UIRoomProfile roomPrefab;
     public List<RoomInfo> updatedRooms;
-    public Transform roomContent;
-    void Start()
-    {
-        nameRoom.text = "Room1";
-    }
+    public Transform _roomHolder;
+    // void Start()
+    // {
+    //     nameRoom.text = "Room1";
+    // }
     private void Awake()
     {
         PhotonRoom.instance = this;//Dont do this in your game
     }
-    public void Create()
+    public void Create(string nameRoom)
     {
-        Debug.Log("Create Room: " + nameRoom.text, gameObject);
-        PhotonNetwork.CreateRoom(nameRoom.text);
+        Debug.Log("Create Room: " + nameRoom, gameObject);
+        PhotonNetwork.CreateRoom(nameRoom);
     }
-    public void Join()
+    public void Join(string nameRoom)
     {
-        Debug.Log("Join Room: " + nameRoom.text, gameObject);
-        PhotonNetwork.JoinRoom(nameRoom.text);
-        ClearRoomProfileUI();
+        Debug.Log("Join Room: " + nameRoom, gameObject);
+        PhotonNetwork.JoinRoom(nameRoom);
+        // ClearRoomProfileUI();
     }
     public virtual void Leave()
     {
@@ -42,17 +42,39 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) PhotonNetwork.LoadLevel("Level1_Map1");
         else Debug.Log("Not Master Client");
     }
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Joined Room: " + nameRoom.text, gameObject);
-    }
     public override void OnCreatedRoom()
     {
-        Debug.Log("Created Room: " + nameRoom.text, gameObject);
+        Debug.Log("Created Room");
+        CenterMenuCtrl.Instance.PanelCreateRoom.SetActive(false);
+        CenterMenuCtrl.Instance.UILobby.ShowAsCreator();
     }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Joined Room");
+        if (PhotonNetwork.IsMasterClient) return;
+        CenterMenuCtrl.Instance.PanelJoinRoom.SetActive(false);
+        CenterMenuCtrl.Instance.UILobby.ShowAsJoiner();
+    }
+
     public override void OnLeftRoom()
     {
         Debug.Log("OnLeftRoom");
+        UILobby.Instance.gameObject.SetActive(false);
+        _mainMenu.SetActive(true);
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        UILobby.Instance.UpdateMasterButtons();
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("Char1"))
+            UILobby.Instance.SyncCharacter(1, (string)changedProps["Char1"]);
+        if (changedProps.ContainsKey("Char2"))
+            UILobby.Instance.SyncCharacter(2, (string)changedProps["Char2"]);
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
@@ -76,7 +98,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     {
         RoomProfile roomProfile;
 
-        roomProfile = this.RoomByName(roomInfo.Name);
+        roomProfile = this.GetRoomByName(roomInfo.Name);
         if (roomProfile != null) return;
 
         roomProfile = new RoomProfile
@@ -95,13 +117,13 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         {
             UIRoomProfile uiRoomProfile = Instantiate(this.roomPrefab);
             uiRoomProfile.SetRoomProfile(roomProfile);
-            uiRoomProfile.transform.SetParent(this.roomContent, false);
+            uiRoomProfile.transform.SetParent(this._roomHolder, false);
         }
     }
 
     protected virtual void ClearRoomProfileUI()
     {
-        foreach (Transform child in this.roomContent)
+        foreach (Transform child in this._roomHolder)
         {
             Destroy(child.gameObject);
         }
@@ -109,12 +131,12 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
 
     protected virtual void RoomRemove(RoomInfo roomInfo)
     {
-        RoomProfile roomProfile = this.RoomByName(roomInfo.Name);
+        RoomProfile roomProfile = this.GetRoomByName(roomInfo.Name);
         if (roomProfile == null) return;
         this.rooms.Remove(roomProfile);
     }
 
-    protected virtual RoomProfile RoomByName(string name)
+    protected virtual RoomProfile GetRoomByName(string name)
     {
         foreach (RoomProfile roomProfile in this.rooms)
         {

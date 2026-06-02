@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyMeleeCombat : EnemyMeleeCombatBase<EnemyMeleeCtrl>
 {
-    [SerializeField] private float _detectionLength = 6f;
+    [SerializeField] private float _detectionLength = 10f;
 
     protected override void UpdateTarget()
     {

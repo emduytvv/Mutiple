@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyAirmCombat : EnemyShooterCombatBase
@@ -35,14 +36,20 @@ public class EnemyAirmCombat : EnemyShooterCombatBase
 
     private void HandleAirm()
     {
-        _lineRenderer.enabled = true;
-        _lineRenderer.SetPosition(0, transform.position);
-        _lineRenderer.SetPosition(1, _target.position + Vector3.up * 0.5f);
+        DrawLine();
         _airmTimer += Time.deltaTime;
         if (_airmTimer < _airmDuration) return;
         _lineRenderer.enabled = false;
         _isAirm = true;
     }
+
+    private void DrawLine()
+    {
+        _lineRenderer.enabled = true;
+        _lineRenderer.SetPosition(0, transform.position);
+        _lineRenderer.SetPosition(1, _target.position + Vector3.up * 0.5f);
+    }
+
 
     protected override void ResetCombat()
     {

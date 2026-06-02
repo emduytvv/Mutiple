@@ -118,6 +118,7 @@ public abstract class DamageReceiver : SaiMonoBehaviour
     }
     public void SetIsDead(bool isDead)
     {
+        currentHp = 0f;
         _isDead = isDead;
         OnDead();
     }
