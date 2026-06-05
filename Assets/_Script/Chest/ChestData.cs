@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ChestData : SaiMonoBehaviour
@@ -21,7 +21,6 @@ public class ChestData : SaiMonoBehaviour
     {
         if (_allSkills.Count > 0) return;
         _allSkills.AddRange(Resources.LoadAll<IntrinsicSkillSO>(_path));
-        Debug.Log(transform.name + ": Load " + _allSkills.Count + " IntrinsicSkillSO from " + _path, gameObject);
     }
 
     protected override void Start()

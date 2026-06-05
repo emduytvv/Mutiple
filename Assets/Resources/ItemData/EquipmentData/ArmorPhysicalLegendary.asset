@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -16,7 +16,7 @@ MonoBehaviour:
   _name: ArmorPhysicalLegendary
   _icon: {fileID: 21300000, guid: fdc16663a37cd7442af982875e1fc9d0, type: 3}
   _typeItem: 0
-  _price: 2000
+  _price: 3000
   _equipType: 1
   _equipmentRarity: 3
   _physicalDefense: 48

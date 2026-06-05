@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class EnemyDamageReceiver : DamageReceiver
@@ -17,7 +17,6 @@ public class EnemyDamageReceiver : DamageReceiver
     {
         if (_enemyCtrl != null) return;
         _enemyCtrl = GetComponentInParent<EnemyCtrl>();
-        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
     private void LoadHitbox()

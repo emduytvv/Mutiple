@@ -27,16 +27,24 @@ public class PhotonPool : SaiMonoBehaviour, IPunPrefabPool
 
     private void RegisterSpawners()
     {
-        spawners.Add(EnemySpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(PlayerSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(ArrowSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(BulletSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(TextSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(FXSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(BossSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(SkillBossSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(ItemDropSpawner.Instance.GetComponent<Spawner>());
-        spawners.Add(HPBarEnemySpawner.Instance.GetComponent<Spawner>());
+        TryAddSpawner(EnemySpawner.Instance);
+        TryAddSpawner(PlayerSpawner.Instance);
+        TryAddSpawner(ArrowSpawner.Instance);
+        TryAddSpawner(BulletSpawner.Instance);
+        TryAddSpawner(TextSpawner.Instance);
+        TryAddSpawner(FXSpawner.Instance);
+        TryAddSpawner(BossSpawner.Instance);
+        TryAddSpawner(SkillBossSpawner.Instance);
+        TryAddSpawner(ItemDropSpawner.Instance);
+        TryAddSpawner(HPBarEnemySpawner.Instance);
+    }
+
+    private void TryAddSpawner(MonoBehaviour instance)
+    {
+        if (instance == null) { Debug.LogWarning("PhotonPool: một spawner singleton chưa được khởi tạo"); return; }
+        Spawner spawner = instance.GetComponent<Spawner>();
+        if (spawner == null) { Debug.LogWarning($"PhotonPool: {instance.name} không có component Spawner"); return; }
+        spawners.Add(spawner);
     }
 
     public GameObject Instantiate(string prefabId, Vector3 pos, Quaternion rot)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,14 +24,12 @@ public class UIItemDetailShop : UIItemDetailBase
         if (_price != null) return;
         _price = transform.Find("Buy").Find("Price").GetComponent<TextMeshProUGUI>();
 
-        Debug.Log(transform.name + ": Load Price", gameObject);
     }
     private void LoadSold()
     {
         if (_sold != null) return;
         _sold = transform.Find("Buy").Find("Sold").GetComponent<TextMeshProUGUI>();
         _sold.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load Price", gameObject);
     }
     public void Show(ItemInventoryBase item, UIShopSlot slot)
     {

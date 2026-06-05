@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     public GameState CurrentState => _currentState;
 
     [SerializeField] private string[] _sceneOrder = { "Level1_Map1", "Level1_Map2", "Level1_Map3", "Level1_Map4", "Level1_Map5", "Level1_Map6", "Level1_Map7", "Level1_Map8" };
-    [SerializeField] private float[] _statMultipliersEnemys = { 1f, 1.2f, 1.4f, 1.6f, 1.8f, 2.0f, 2.2f, 2.4f };
+    [SerializeField] private float[] _statMultipliersEnemys = { 1f, 1.1f, 1.22f, 1.36f, 1.52f, 1.70f, 1.90f, 2.10f };
     [SerializeField] private int _currentMapIndex = 0;
 
     public float StatMultiplier => _currentMapIndex < _statMultipliersEnemys.Length
@@ -20,7 +20,6 @@ public class GameManager : Singleton<GameManager>
     public void SetGameState(GameState state)
     {
         _currentState = state;
-        Time.timeScale = state == GameState.Playing ? 1f : 0f;
     }
 
     public void SetMapIndex(int index) => _currentMapIndex = index;
@@ -30,8 +29,8 @@ public class GameManager : Singleton<GameManager>
         base.Start();
         GameEvents.OnPlayerDied += CheckGameOver;
         GameEvents.OnBossDied += OnGameWin;
+        AudioManager.Instance.PlayBattleMusic();
     }
-
     private void OnDestroy()
     {
         GameEvents.OnPlayerDied -= CheckGameOver;

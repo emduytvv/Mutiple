@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-// Để GameObject này INACTIVE trong scene — tự bật khi Show() được gọi
+// Äá»ƒ GameObject nÃ y INACTIVE trong scene â€” tá»± báº­t khi Show() Ä‘Æ°á»£c gá»i
 public class UIChestSkillPanel : SaiMonoBehaviour
 {
     [SerializeField] private List<UIChestSkillSlot> _slots = new();
@@ -18,7 +18,6 @@ public class UIChestSkillPanel : SaiMonoBehaviour
     {
         if (_slots.Count > 0) return;
         _slots.AddRange(GetComponentsInChildren<UIChestSkillSlot>(true));
-        Debug.Log(transform.name + ": Load UIChestSkillSlot x" + _slots.Count, gameObject);
     }
 
     public void Show(List<IntrinsicSkillSO> skills, PlayerCtrl player)

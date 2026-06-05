@@ -39,11 +39,19 @@ public class PanelCreateRoom : SaiMonoBehaviour
     protected override void Awake()
     {
         base.Awake();
-        _buttonCreateRoom.onClick.AddListener(() => PhotonRoom.instance.Create(_inputRoomName.text));
+        _buttonCreateRoom.onClick.AddListener(OnClickCreate);
         _buttonBack.onClick.AddListener(Back);
     }
+
+    private void OnClickCreate()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+        PhotonRoom.instance.Create(_inputRoomName.text);
+    }
+
     private void Back()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         _mainMenu.gameObject.SetActive(true);
         transform.parent.gameObject.SetActive(false);
     }

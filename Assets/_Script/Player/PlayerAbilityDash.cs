@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,7 +7,8 @@ public class PlayerAbilityDash : SaiMonoBehaviour
 {
     [SerializeField] protected PlayerCtrl _playerCtrl;
     [SerializeField] protected InputAction _dashAction;
-    [SerializeField] protected float _cooldown = 1f;
+    [SerializeField] protected float _cooldown = 2f;
+    public float Cooldown => _cooldown;
     [SerializeField] protected float _dashForce = 15f;
     [SerializeField] protected float _dashDuration = 0.2f;
     private float _cooldownTimer;
@@ -24,13 +25,16 @@ public class PlayerAbilityDash : SaiMonoBehaviour
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     protected override void ResetValue()
     {
         base.ResetValue();
         _dashAction = new InputAction("Dash", binding: "<Keyboard>/leftShift");
+        if (_playerCtrl == null || _playerCtrl.CharacterData == null) return;
+        _dashForce = _playerCtrl.CharacterData.dashForce;
+        _dashDuration = _playerCtrl.CharacterData.dashDuration;
+        _cooldown = _playerCtrl.CharacterData.dashCooldown;
     }
 
     protected override void Start()

@@ -23,7 +23,8 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     public void Create(string nameRoom)
     {
         Debug.Log("Create Room: " + nameRoom, gameObject);
-        PhotonNetwork.CreateRoom(nameRoom);
+        var opts = new RoomOptions { MaxPlayers = 2, IsVisible = true, IsOpen = true };
+        PhotonNetwork.CreateRoom(nameRoom, opts);
     }
     public void Join(string nameRoom)
     {
@@ -42,9 +43,13 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) PhotonNetwork.LoadLevel("Level1_Map1");
         else Debug.Log("Not Master Client");
     }
+    private bool _isCreator;
+
+
     public override void OnCreatedRoom()
     {
         Debug.Log("Created Room");
+        _isCreator = true;
         CenterMenuCtrl.Instance.PanelCreateRoom.SetActive(false);
         CenterMenuCtrl.Instance.UILobby.ShowAsCreator();
     }
@@ -53,6 +58,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     {
         Debug.Log("Joined Room");
         if (PhotonNetwork.IsMasterClient) return;
+        _isCreator = false;
         CenterMenuCtrl.Instance.PanelJoinRoom.SetActive(false);
         CenterMenuCtrl.Instance.UILobby.ShowAsJoiner();
     }
@@ -62,6 +68,24 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         Debug.Log("OnLeftRoom");
         UILobby.Instance.gameObject.SetActive(false);
         _mainMenu.SetActive(true);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (UILobby.Instance == null || !UILobby.Instance.gameObject.activeSelf) return;
+        if (_isCreator)
+        {
+            // Ta là Char1, người kia (Char2) out → ẩn slot 2
+            UILobby.Instance.HideCharacter(2);
+        }
+        else
+        {
+            // Ta là Char2, creator (Char1) out → ta lên slot 1, ẩn slot 2
+            var props = PhotonNetwork.CurrentRoom.CustomProperties;
+            string ourChar = props.ContainsKey(UILobby.KEY_CHAR2) ? (string)props[UILobby.KEY_CHAR2] : "";
+            UILobby.Instance.PromoteToSlot1(ourChar);
+            _isCreator = true;
+        }
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -82,7 +106,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("OnRoomListUpdate");
         this.updatedRooms = roomList;
 
         foreach (RoomInfo roomInfo in roomList)

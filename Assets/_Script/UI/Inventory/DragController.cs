@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,7 +26,6 @@ public class DragController : Singleton<DragController>
     {
         if (_canvasRect != null) return;
         _canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-        Debug.Log(transform.name + ": Load CanvasRect", gameObject);
     }
 
 
@@ -35,14 +34,12 @@ public class DragController : Singleton<DragController>
     {
         if (_raycaster != null) return;
         _raycaster = GetComponentInParent<GraphicRaycaster>();
-        Debug.Log(transform.name + ": Load GraphicRaycaster", gameObject);
     }
 
     private void LoadInventoryUI()
     {
         if (_inventoryUI != null) return;
         _inventoryUI = GetComponentInParent<UIInventoryManager>();
-        Debug.Log(transform.name + ": Load UIInventoryManager", gameObject);
     }
 
     public void BeginDrag(UIInventorySlot originSlot)

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class BasePowerUpEffect : SaiMonoBehaviour
 {
@@ -20,7 +20,6 @@ public abstract class BasePowerUpEffect : SaiMonoBehaviour
     {
         if (_player != null) return;
         _player = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     public void Activate(PowerUpDataSO so)

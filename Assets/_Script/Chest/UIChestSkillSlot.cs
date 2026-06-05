@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,21 +24,18 @@ public class UIChestSkillSlot : SaiMonoBehaviour, IPointerClickHandler
     {
         if (_icon != null) return;
         _icon = transform.Find("Icon")?.GetComponent<Image>();
-        Debug.Log(transform.name + ": Load Icon", gameObject);
     }
 
     private void LoadNameText()
     {
         if (_nameText != null) return;
         _nameText = transform.Find("Name")?.GetComponent<TextMeshProUGUI>();
-        Debug.Log(transform.name + ": Load NameText", gameObject);
     }
 
     private void LoadDescriptionText()
     {
         if (_descriptionText != null) return;
         _descriptionText = transform.Find("Description")?.GetComponent<TextMeshProUGUI>();
-        Debug.Log(transform.name + ": Load DescriptionText", gameObject);
     }
 
     public void SetSkill(IntrinsicSkillSO skill, UIChestSkillPanel panel)

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChestCtrl : SaiMonoBehaviour
 {
@@ -19,13 +19,11 @@ public class ChestCtrl : SaiMonoBehaviour
     {
         if (_chestData != null) return;
         _chestData = GetComponentInChildren<ChestData>();
-        Debug.Log(transform.name + ": Load ChestData", gameObject);
     }
 
     private void LoadChestModel()
     {
         if (_chestModel != null) return;
         _chestModel = GetComponentInChildren<ChestModel>();
-        Debug.Log(transform.name + ": Load ChestModel", gameObject);
     }
 }

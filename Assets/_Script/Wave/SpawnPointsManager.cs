@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -40,7 +40,6 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_Bat.Add(point);
         }
-        Debug.Log(transform.name + ": Load Points_Bat", gameObject);
     }
     private void LoadPointsMagicMini()
     {
@@ -50,7 +49,6 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_MagicMini.Add(point);
         }
-        Debug.Log(transform.name + ": LoadPointsMagicMini", gameObject);
     }
     private void LoadPointsShooterOnPlatform()
     {
@@ -60,7 +58,6 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_ShooterOnPlatform.Add(point);
         }
-        Debug.Log(transform.name + ": LoadPointsShooterOnPlatform", gameObject);
     }
     private void LoadPointsAirm()
     {
@@ -70,7 +67,6 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_Airm.Add(point);
         }
-        Debug.Log(transform.name + ": LoadPointsAirm", gameObject);
     }
     private void LoadPointsMelee()
     {
@@ -80,7 +76,6 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_Melee.Add(point);
         }
-        Debug.Log(transform.name + ": LoadPointsMelee", gameObject);
     }
     private void LoadPointsSlime()
     {
@@ -90,7 +85,6 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_Slime.Add(point);
         }
-        Debug.Log(transform.name + ": LoadPointsSlime", gameObject);
     }
     private void LoadPointsExplosion()
     {
@@ -100,6 +94,5 @@ public class SpawnPointsManager : SaiMonoBehaviour
         {
             points_Explosion.Add(point);
         }
-        Debug.Log(transform.name + ": LoadPointsExplosion", gameObject);
     }
 }

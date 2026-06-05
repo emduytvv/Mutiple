@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,20 +25,17 @@ public class UIInventorySlot : SaiMonoBehaviour, IBeginDragHandler, IDragHandler
     {
         if (this._icon != null) return;
         this._icon = transform.Find("Icon").GetComponent<Image>();
-        Debug.Log(transform.name + ": Load Icon", gameObject);
     }
 
     private void LoadAmount()
     {
         if (this._amount != null) return;
         this._amount = transform.Find("Amount").GetComponent<TextMeshProUGUI>();
-        Debug.Log(transform.name + ": Load Amount", gameObject);
     }
     private void LoadUIItemDetailManager()
     {
         if (_uIItemDetailInventory != null) return;
         _uIItemDetailInventory = transform.parent.parent.GetComponentInChildren<UIItemDetailInventory>();
-        Debug.Log(transform.name + ": Load UIItemDetailManager", gameObject);
     }
     public void SetItem(ItemInventoryBase item)
     {

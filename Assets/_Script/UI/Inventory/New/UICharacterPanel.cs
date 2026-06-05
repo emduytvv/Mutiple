@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 public class UICharacterPanel : Singleton<UICharacterPanel>
 {
-    // Danh sách 3 UIEquipSlot — tự tìm qua GetComponentsInChildren, không cần gán tay
+    // Danh sÃ¡ch 3 UIEquipSlot â€” tá»± tÃ¬m qua GetComponentsInChildren, khÃ´ng cáº§n gÃ¡n tay
     [SerializeField] private List<UIEquipSlot> _equipSlots = new List<UIEquipSlot>();
 
-    // Text Value của từng chỉ số — tự load từ StatsPanel hierarchy
+    // Text Value cá»§a tá»«ng chá»‰ sá»‘ â€” tá»± load tá»« StatsPanel hierarchy
     [SerializeField] private TextMeshProUGUI _physDamValueText;
     [SerializeField] private TextMeshProUGUI _magDamValueText;
     [SerializeField] private TextMeshProUGUI _hpValueText;
@@ -15,11 +15,11 @@ public class UICharacterPanel : Singleton<UICharacterPanel>
     [SerializeField] private TextMeshProUGUI _critValueText;
     [SerializeField] private TextMeshProUGUI _armorPenValueText;
 
-    // ref tới data thực — không load trong LoadComponents vì player chưa tồn tại lúc Awake
+    // ref tá»›i data thá»±c â€” khÃ´ng load trong LoadComponents vÃ¬ player chÆ°a tá»“n táº¡i lÃºc Awake
     [SerializeField] private PlayerCtrl _playerCtrl;
     [SerializeField] private EquipmentManager _equipmentManager;
     [SerializeField] private InventoryManager _inventoryManager;
-    [SerializeField] private UIInventoryManager _inventoryUI; // cần để gọi Refresh() sau khi equip/unequip
+    [SerializeField] private UIInventoryManager _inventoryUI; // cáº§n Ä‘á»ƒ gá»i Refresh() sau khi equip/unequip
 
     protected override void LoadComponents()
     {
@@ -33,14 +33,12 @@ public class UICharacterPanel : Singleton<UICharacterPanel>
     {
         if (_equipSlots.Count > 0) return;
         _equipSlots.AddRange(GetComponentsInChildren<UIEquipSlot>());
-        Debug.Log(transform.name + ": Load EquipSlots " + _equipSlots.Count, gameObject);
     }
 
     private void LoadInventoryUI()
     {
         if (_inventoryUI != null) return;
         _inventoryUI = transform.parent.GetComponentInChildren<UIInventoryManager>();
-        Debug.Log(transform.name + ": Load UIInventoryManager", gameObject);
     }
 
     private void LoadStatValueTexts()
@@ -123,10 +121,10 @@ public class UICharacterPanel : Singleton<UICharacterPanel>
     //     if (_equipmentManager == null || _inventoryManager == null) return;
 
     //     ItemBase item = _equipmentManager.GetCurrentEquip(slot);
-    //     if (item == null) return; // slot đang trống thì không làm gì
+    //     if (item == null) return; // slot Ä‘ang trá»‘ng thÃ¬ khÃ´ng lÃ m gÃ¬
 
-    //     _equipmentManager.Unequip(slot);          // tháo ra (= Equip null)
-    //     _inventoryManager.FindSlotFirstEmpty(item); // trả item về ô trống đầu tiên trong inventory
+    //     _equipmentManager.Unequip(slot);          // thÃ¡o ra (= Equip null)
+    //     _inventoryManager.FindSlotFirstEmpty(item); // tráº£ item vá» Ã´ trá»‘ng Ä‘áº§u tiÃªn trong inventory
     //     _inventoryUI?.Refresh();
     //     this.Refresh();
     // }

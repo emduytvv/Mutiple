@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using UnityEngine;
 
@@ -20,16 +18,10 @@ public abstract class EnemyCreator : SaiMonoBehaviour
         EnemyCtrl enemy = go.GetComponent<EnemyCtrl>();
         enemy.ApplyStatMultiplier(multiplier);
 
-        SpawnHPBar(enemy);
+        if (_enemyType != EnemyType.Boss)
+            enemy.PhotonView.RPC(nameof(EnemyCtrl.RpcSpawnHPBar), RpcTarget.All);
         OnCreated(enemy);
         return enemy;
-    }
-
-    private void SpawnHPBar(EnemyCtrl enemy)
-    {
-        if (_enemyType == EnemyType.Boss) return;
-        Transform obj = HPBarEnemySpawner.Instance.SpawnHPBar(enemy.transform.position, enemy.transform.rotation);
-        obj.GetComponentInChildren<EnemyHPBar>().SetTarget(enemy.transform);
     }
 
 

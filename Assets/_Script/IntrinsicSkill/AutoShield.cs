@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AutoShield : BaseIntrinsicSkill
 {
@@ -17,12 +17,12 @@ public class AutoShield : BaseIntrinsicSkill
     {
         if (_shield != null) return;
         _shield = transform.Find("Shield");
-        Debug.Log(transform.name + ": Load Shield", gameObject);
     }
 
     protected void Update()
     {
         if (!_isActive) return;
+        if (_player == null || !_player.PhotonView.IsMine) return;
         CheckShieldRecharge();
     }
 

@@ -1,4 +1,4 @@
-using Firebase.Auth;
+﻿using Firebase.Auth;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,25 +27,23 @@ public class SetName : SaiMonoBehaviour
     {
         if (_inputName != null) return;
         _inputName = GetComponentInChildren<TMP_InputField>();
-        Debug.Log(transform.name + ": Load InputName", gameObject);
     }
 
     private void LoadBtnConfirm()
     {
         if (_btnConfirm != null) return;
         _btnConfirm = transform.Find("Confirm").GetComponent<Button>();
-        Debug.Log(transform.name + ": Load BtnConfirm", gameObject);
     }
 
     private void LoadPhotonLogin()
     {
         if (_photonLogin != null) return;
         _photonLogin = transform.parent.GetComponentInChildren<PhotonLogin>();
-        Debug.Log(transform.name + ": Load PhotonLogin", gameObject);
     }
 
     private void OnConfirm()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         string playerName = _inputName.text.Trim();
         if (string.IsNullOrEmpty(playerName)) return;
 

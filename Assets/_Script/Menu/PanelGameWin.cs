@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PanelGameWin : SaiMonoBehaviour
@@ -19,6 +19,7 @@ public class PanelGameWin : SaiMonoBehaviour
 
     private void OnClickHome()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         PhotonPlaying.instance.Leave();
     }
 
@@ -26,6 +27,5 @@ public class PanelGameWin : SaiMonoBehaviour
     {
         if (_btnHome != null) return;
         _btnHome = transform.Find("Home").GetComponent<Button>();
-        Debug.Log(transform.name + ": LoadBtnHome", gameObject);
     }
 }

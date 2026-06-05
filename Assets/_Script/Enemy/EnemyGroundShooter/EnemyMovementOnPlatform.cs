@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyMovementOnPlatform : EnemyMovement<EnemyCtrl>
 {
@@ -17,7 +17,6 @@ public class EnemyMovementOnPlatform : EnemyMovement<EnemyCtrl>
     {
         if (this._groundLayer != 0) return;
         this._groundLayer = LayerMask.GetMask("Ground");
-        Debug.Log(transform.name + ": Load GroundLayer", gameObject);
     }
 
     public void SetMoving(bool moving)

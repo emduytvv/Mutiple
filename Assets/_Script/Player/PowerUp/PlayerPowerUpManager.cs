@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerPowerUpManager : SaiMonoBehaviour
@@ -17,14 +17,12 @@ public class PlayerPowerUpManager : SaiMonoBehaviour
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void LoadEffects()
     {
         if (_effects.Count > 0) return;
         _effects.AddRange(GetComponentsInChildren<BasePowerUpEffect>(true));
-        Debug.Log(transform.name + ": Load Effects x" + _effects.Count, gameObject);
     }
 
     public void Use(int inventoryIndex)

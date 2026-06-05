@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class EnemyAirmCombat : EnemyShooterCombatBase
@@ -18,7 +18,6 @@ public class EnemyAirmCombat : EnemyShooterCombatBase
     {
         if (_lineRenderer != null) return;
         _lineRenderer = GetComponent<LineRenderer>();
-        Debug.Log(transform.name + ": Load LineRenderer", gameObject);
     }
 
     protected override void ResetValue()

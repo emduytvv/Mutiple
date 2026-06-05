@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyDespawn : Despawn
 {
     [SerializeField] private EnemyCtrl _enemyCtrl;
+    private bool _isDespawning;
 
     protected override void LoadComponents()
     {
@@ -17,6 +18,12 @@ public class EnemyDespawn : Despawn
         _enemyCtrl = GetComponentInParent<EnemyCtrl>();
     }
 
+    protected virtual void OnEnable()
+    {
+
+        _isDespawning = false;
+    }
+
     protected override bool CanDespawn()
     {
         return false;
@@ -24,7 +31,9 @@ public class EnemyDespawn : Despawn
 
     public override void DespawnObject()
     {
+        if (_isDespawning) return;
         if (!_enemyCtrl.PhotonView.IsMine) return;
+        _isDespawning = true;
         PhotonNetwork.Destroy(_enemyCtrl.PhotonView.gameObject);
     }
 }

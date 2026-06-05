@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,21 +40,18 @@ public class PlayerMovement : Movement
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void LoadPointGroundCheck()
     {
         if (pointGroundCheck != null) return;
         pointGroundCheck = transform.Find("pointGroundCheck");
-        Debug.Log(transform.name + ": Load PointGroundCheck", gameObject);
     }
 
     private void LoadGroundLayer()
     {
         if (groundLayer != 0) return;
         groundLayer = LayerMask.GetMask("Ground");
-        Debug.Log(transform.name + ": Load GroundLayer", gameObject);
     }
 
     protected override void Start()
@@ -162,11 +159,15 @@ public class PlayerMovement : Movement
     protected override void ResetValue()
     {
         base.ResetValue();
-        SetKeyMove();
-        SetKetJump();
+        SetKeyJump();
+        SetKetMove();
+        if (_playerCtrl == null || _playerCtrl.CharacterData == null) return;
+        _moveSpeed = _playerCtrl.CharacterData.moveSpeed;
+        jumpForce = _playerCtrl.CharacterData.jumpForce;
+        maxJumpCount = _playerCtrl.CharacterData.maxJumpCount;
     }
 
-    private void SetKetJump()
+    private void SetKetMove()
     {
         inputAction = new InputAction("Move");
         inputAction.AddCompositeBinding("2DVector")
@@ -176,7 +177,7 @@ public class PlayerMovement : Movement
             .With("Right", "<Keyboard>/d");
     }
 
-    private void SetKeyMove()
+    private void SetKeyJump()
     {
         _jumpAction = new InputAction("Jump", binding: "<Keyboard>/space");
     }

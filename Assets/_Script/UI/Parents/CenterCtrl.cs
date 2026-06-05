@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CenterCtrl : Singleton<CenterCtrl>
@@ -31,28 +31,24 @@ public class CenterCtrl : Singleton<CenterCtrl>
         if (this._uiInventory != null) return;
         this._uiInventory = transform.Find("UIInventory");
         _uiInventory.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load UIInventory", gameObject);
     }
     private void LoadUIShop()
     {
         if (this._uiShop != null) return;
         this._uiShop = transform.Find("UIShopManager");
         _uiShop.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load UIInventory", gameObject);
     }
     private void LoadUIUpgrade()
     {
         if (this._uiUpgrade != null) return;
         this._uiUpgrade = transform.Find("UIUpgradeManager");
         _uiUpgrade.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load UIInventory", gameObject);
     }
     private void LoadUIChestSkillPanel()
     {
         if (_uiChestSkillPanel != null) return;
         _uiChestSkillPanel = transform.Find("UIChestSkillPanel");
         _uiChestSkillPanel.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load UIChestSkillPanel", gameObject);
     }
     public void OpenInventory()
     {
@@ -76,7 +72,6 @@ public class CenterCtrl : Singleton<CenterCtrl>
         if (_panelSetting != null) return;
         _panelSetting = transform.Find("PanelSetting");
         _panelSetting.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": LoadPanelSetting", gameObject);
     }
 
     private void LoadPanelGameOver()
@@ -84,7 +79,6 @@ public class CenterCtrl : Singleton<CenterCtrl>
         if (_panelGameOver != null) return;
         _panelGameOver = transform.Find("PanelGameOver");
         _panelGameOver.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": LoadPanelGameOver", gameObject);
     }
 
     private void LoadPanelGameWin()
@@ -92,6 +86,5 @@ public class CenterCtrl : Singleton<CenterCtrl>
         if (_panelGameWin != null) return;
         _panelGameWin = transform.Find("PanelGameWin");
         _panelGameWin.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": LoadPanelGameWin", gameObject);
     }
 }

@@ -45,6 +45,7 @@ public class PhotonLogin : MonoBehaviourPunCallbacks
         Debug.Log("Connecting as: " + playerName);
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.NickName = playerName;
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "asia";
         PhotonNetwork.ConnectUsingSettings();
     }
 

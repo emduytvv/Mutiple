@@ -1,13 +1,17 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : Singleton<AudioManager>
 {
-
     [Header("-----------------Audio Source------------------")]
     [SerializeField] protected AudioSource musicSource;
     [SerializeField] protected AudioSource SFXSource;
-    [SerializeField] protected AudioSource UISource;  // thêm cái này
-    [Header("-----------------Audio Clip------------------")] public AudioClip background;
+    [SerializeField] protected AudioSource UISource;
+
+    [Header("-----------------Audio Clip------------------")]
+    public AudioClip BattleBackGround;
+    public AudioClip LobbyBackGround;
+    public AudioClip MenuBackGround;
     [SerializeField] private AudioClip _uIClick;
     public AudioClip UIClick => _uIClick;
     [SerializeField] private AudioClip _shootSFX;
@@ -24,13 +28,17 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip ExplosionSFX => _explosionSFX;
     [SerializeField] private AudioClip _goldPickupSFX;
     public AudioClip GoldPickupSFX => _goldPickupSFX;
+    public void PlayMenuMusic() => PlayMusic(MenuBackGround);
+    public void PlayLobbyMusic() => PlayMusic(LobbyBackGround);
+    public void PlayBattleMusic() => PlayMusic(BattleBackGround);
 
-
-    protected override void Start()
+    public void PlayMusic(AudioClip clip)
     {
-        musicSource.clip = background;
+        if (musicSource.clip == clip) return;
+        musicSource.clip = clip;
         musicSource.Play();
     }
+
     public void PlaySFX(AudioClip clip) => SFXSource.PlayOneShot(clip);
     public void PlayUI(AudioClip clip) => UISource.PlayOneShot(clip);
 }

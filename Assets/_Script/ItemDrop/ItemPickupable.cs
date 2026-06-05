@@ -51,7 +51,7 @@ public class ItemPickupable : SaiMonoBehaviour
     private void Pickup()
     {
         AudioManager.Instance.PlaySFX(AudioManager.Instance.GoldPickupSFX);
-        _targetPlayer.GetComponentInChildren<PlayerGold>().AddGold(10);
+        _targetPlayer.GetComponentInChildren<PlayerGold>().AddGold(20);
         _itemDropCtrl.ItemDropDespawn.DespawnObject();
     }
 }

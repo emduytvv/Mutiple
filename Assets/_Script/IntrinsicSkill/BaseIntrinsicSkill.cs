@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 public abstract class BaseIntrinsicSkill : SaiMonoBehaviour
 {
@@ -15,7 +15,6 @@ public abstract class BaseIntrinsicSkill : SaiMonoBehaviour
     {
         if (_player != null) return;
         _player = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
 

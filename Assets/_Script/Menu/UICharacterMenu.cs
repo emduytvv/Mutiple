@@ -23,6 +23,7 @@ public class UICharacterMenu : SaiMonoBehaviour
     }
     protected virtual void SwitchCharacter(int Num)
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         for (int i = 0; i < listCharacter.Count; i++)
         {
             listCharacter[i].SetActive(false);

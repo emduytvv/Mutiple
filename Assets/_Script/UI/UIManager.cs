@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
@@ -34,13 +34,11 @@ public class UIManager : Singleton<UIManager>
     {
         if (_center != null) return;
         _center = GetComponentInChildren<CenterCtrl>();
-        Debug.Log(transform.name + ": Load CenterCtrl", gameObject);
     }
 
     private void LoadCanvas()
     {
         if (_canvas != null) return;
         _canvas = GetComponent<Canvas>();
-        Debug.Log(transform.name + ": Load Canvas", gameObject);
     }
 }

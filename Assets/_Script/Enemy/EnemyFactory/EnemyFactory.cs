@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFactory : SaiMonoBehaviour
@@ -36,14 +36,13 @@ public class EnemyFactory : SaiMonoBehaviour
         foreach (EnemyCreator creator in _creators)
             foreach (EnemyName name in creator.EnemyNames)
                 _dictionary[name] = creator;
-        Debug.Log(transform.name + ": Load Dictionary", gameObject);
     }
 
     public EnemyType GetEnemyType(EnemyName name)
     {
         if (_dictionary.TryGetValue(name, out EnemyCreator creator))
             return creator.EnemyType;
-        Debug.LogWarning("EnemyFactory: không tìm thấy creator cho " + name);
+        Debug.LogWarning("EnemyFactory: khÃ´ng tÃ¬m tháº¥y creator cho " + name);
         return default;
     }
 
@@ -51,7 +50,7 @@ public class EnemyFactory : SaiMonoBehaviour
     {
         if (!_dictionary.TryGetValue(name, out EnemyCreator creator))
         {
-            Debug.LogWarning("EnemyFactory: không tìm thấy creator cho " + name);
+            Debug.LogWarning("EnemyFactory: khÃ´ng tÃ¬m tháº¥y creator cho " + name);
             return null;
         }
         return creator.Create(name, pos, rot, multiplier);

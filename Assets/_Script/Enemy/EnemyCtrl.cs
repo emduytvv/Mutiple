@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using Photon.Pun;
 using UnityEngine;
@@ -40,7 +40,6 @@ public class EnemyCtrl : DamageableCtrl
         if (_enemyStatsSO != null) return;
         string path = "EnemyStats/" + transform.name;
         _enemyStatsSO = Resources.Load<EnemyStatsSO>(path);
-        Debug.Log(transform.name + ": Load EnemyStatsSO from " + path, gameObject);
     }
 
 
@@ -99,6 +98,9 @@ public class EnemyCtrl : DamageableCtrl
     }
 
     [PunRPC]
+    public void RpcSetAttackTrigger() => _enemyAnimation.PlayAttackAnim();
+
+    [PunRPC]
     public void RpcForceKill()
     {
         _damageReceiver.SetIsDead(true);
@@ -108,5 +110,12 @@ public class EnemyCtrl : DamageableCtrl
     public void RpcSpawnItemDrop(string prefabName, int amount, Vector3 pos)
     {
         _enemyItemDropper.SpawnItemDrop(prefabName, amount, pos);
+    }
+
+    [PunRPC]
+    public void RpcSpawnHPBar()
+    {
+        Transform obj = HPBarEnemySpawner.Instance.SpawnHPBar(transform.position, transform.rotation);
+        obj.GetComponentInChildren<EnemyHPBar>().SetTarget(transform);
     }
 }

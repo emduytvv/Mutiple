@@ -7,7 +7,9 @@ public class EquipmentManager : SaiMonoBehaviour
     [SerializeField] private ItemInventoryBase[] _equipped;
     protected override void Awake()
     {
-        _equipped = new ItemInventoryBase[3];
+        base.Awake();
+        if (_equipped == null || _equipped.Length == 0)
+            _equipped = new ItemInventoryBase[3];
         AddWeaponBasic();
     }
     private void AddWeaponBasic()

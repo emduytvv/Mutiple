@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Photon.Pun;
 using TMPro;
 using Unity.VectorGraphics;
@@ -30,6 +30,8 @@ public class MainMenu : Singleton<MainMenu>
     }
 
 
+    private void OnEnable() => AudioManager.Instance.PlayMenuMusic();
+
     protected override void Start()
     {
         base.Start();
@@ -41,20 +43,32 @@ public class MainMenu : Singleton<MainMenu>
     }
     private void OnClickCreateRoom()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         CenterMenuCtrl.Instance.PanelCreateRoom.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
     private void OnClickJoinRoom()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         CenterMenuCtrl.Instance.PanelJoinRoom.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 
-    private void OnClickMusic() { }
+    private void OnClickMusic()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+        PanelMusic.Instance.Show();
+        gameObject.SetActive(false);
+    }
 
-    private void OnClickExit() { }
+    private void OnClickExit()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+        Application.Quit();
+    }
     private void OnClickLogout()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         Debug.Log(transform.name + ": Logout ");
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("Login");
@@ -63,33 +77,28 @@ public class MainMenu : Singleton<MainMenu>
     {
         if (_btnCreateRoom != null) return;
         _btnCreateRoom = transform.Find("Menu").Find("CreateRoom").GetComponent<Button>();
-        Debug.Log(transform.name + ": Load BtnCreateRoom", gameObject);
     }
 
     private void LoadBtnJoinRoom()
     {
         if (_btnJoinRoom != null) return;
         _btnJoinRoom = transform.Find("Menu").Find("JoinRoom").GetComponent<Button>();
-        Debug.Log(transform.name + ": Load BtnJoinRoom", gameObject);
     }
 
     private void LoadBtnMusic()
     {
         if (_btnMusic != null) return;
         _btnMusic = transform.Find("Menu").Find("Music").GetComponent<Button>();
-        Debug.Log(transform.name + ": Load BtnMusic", gameObject);
     }
     private void LoadBtnLogout()
     {
         if (_btnLogout != null) return;
         _btnLogout = transform.Find("Menu").Find("Logout").GetComponent<Button>();
-        Debug.Log(transform.name + ": LoadBtnLogout", gameObject);
     }
 
     private void LoadBtnExit()
     {
         if (_btnExit != null) return;
         _btnExit = transform.Find("Menu").Find("Exit").GetComponent<Button>();
-        Debug.Log(transform.name + ": Load BtnExit", gameObject);
     }
 }

@@ -6,11 +6,12 @@ Assets/
 │   ├── SaiMonoBehaviour.cs
 │   ├── Parents/            ← base classes, singletons, GameEvents, DamageableCtrl
 │   ├── Player/
-│   │   └── Shoot/          ← IShootStrategy + implementations (Strategy pattern)
+│   │   ├── Shoot/          ← IShootStrategy + implementations (Strategy pattern)
+│   │   └── PowerUp/        ← BasePowerUpEffect + implementations (Strategy pattern)
 │   ├── Enemy/
 │   │   ├── EnemyBat/       ← EnemyBatCtrl + BatCombat + EnemyFlyMovement
 │   │   ├── EnemyExplosion/ ← EnemyExplosionCtrl + Combat/Animation/Movement/DamageReceiver
-│   │   ├── EnemyMelee/     ← EnemyMeleeCtrl + Animation/Combat/Movement
+│   │   ├── EnemyMelee/     ← EnemyMeleeCtrl + Combat/Movement
 │   │   ├── EnemySlime/     ← SlimeCtrl + variants (Blue/Carrot/Green)
 │   │   ├── EnemyFactory/   ← Factory pattern (EnemyFactory, creators, enums)
 │   │   ├── EnemyGroundShooter/ ← EnemyShooterCtrl + Airm + OnPlatform variants
@@ -19,7 +20,6 @@ Assets/
 │   │       ├── SkillBossSpawner/
 │   │       └── Devil/
 │   │           ├── Skill/
-│   │           │   └── DevilExplosion/
 │   │           ├── Strategy/
 │   │           └── UI/
 │   ├── Arrow/              ← ArrowCtrl + Movement/DamageSender hierarchy
@@ -38,7 +38,8 @@ Assets/
 │   ├── Inventory/
 │   │   └── Weapon/         ← WeaponDataSO, WeaponSkillSO, WeaponLevelData, enums
 │   ├── NPCShop/            ← NPCShopManager, NPCShopData, UIItemShopManager, UIItemDetailBase hierarchy
-│   └── NPCUpgrade/         ← NPCUpgradeManager, NPCUpgradeInteract, UI upgrade panels
+│   ├── NPCUpgrade/         ← NPCUpgradeManager, NPCUpgradeInteract, UI upgrade panels
+│   └── Firebase/           ← FirebaseLoginManager, FirebaseDatabaseManager
 ├── _Assets/
 │   ├── IMPORTANT/AssetResources/Character/AddressableResource/
 │   │   ├── _Velvet/        ← Cung Thủ 1 (DPS)
@@ -72,6 +73,8 @@ Parents/
   GameManager                  ← singleton persistent: _sceneOrder[], stat multipliers per map, LoadNextScene() (MasterClient only)
   AudioManager                 ← singleton persistent: musicSource/SFXSource/UISource, PlaySFX/PlayUI, clips: shoot/dash/jump/hit/aim/explosion/gold
   GateReady                    ← khi OnAllWavesCleared → hiện gate, track players bước vào (RPC) → đủ tất cả → GameManager.LoadNextScene()
+
+Firebase/
   FirebaseDatabaseManager      ← Firebase RTDB: WriteDatabase/ReadDatabase (stub/test)
   FirebaseLoginManager         ← Firebase Auth: register + login form UI, SwitchForm()
 
@@ -88,6 +91,8 @@ Player/
   PlayerPickup                 ← OnTriggerEnter2D → nhặt ItemDrop, gọi PlayerGold hoặc InventoryManager
   PlayerItemTransfer           ← ReceiveItem(json) → ItemTransferData.Deserialize → InventoryManager.AddItem, spawn text "Inventory full!"
   PlayerHPBar                  ← world-space HP slider, subscribe PlayerDamageReceiver
+  PlayerHPBarMine              ← HP bar của local player (screen-space hoặc màu khác)
+  PlayerHPBarPartner           ← HP bar của đồng đội (screen-space)
   PlayerShootChargeBar         ← world-space charge bar khi hold shoot
   PlayerProfile                ← data: nickName
   PhotonPlaying                ← spawn player (Raidon) theo actor number, assign camera
@@ -102,6 +107,17 @@ Player/
     DoubleArrow                ← 2 mũi tên song song cùng lúc
     TripleArrow                ← 3 mũi tên song song cùng lúc
 
+  PowerUp/
+    BasePowerUpEffect          ← abstract: Activate(PlayerCtrl), PowerUpEffectName
+    PlayerPowerUpManager       ← quản lý active power-up effects trên player
+    PowerUpEffectName (enum)   ← tên các loại power-up effect
+    PowerUpPhysAttackRare/Epic ← buff physical attack (2 tier)
+    PowerUpMagicAttackRare/Epic← buff magical attack (2 tier)
+    PowerUpPhysDefenseRare/Epic← buff physical defense (2 tier)
+    PowerUpMagicDefenseRare/Epic← buff magical defense (2 tier)
+    PowerUpCritBoostRare/Epic  ← buff crit rate (2 tier)
+    PowerUpHealRare/Epic       ← heal HP (2 tier)
+
 Enemy/ (base classes dùng chung)
   EnemyCtrl                   ← root hub (extends DamageableCtrl): expose DamageReceiver, Animation, Rigidbody2D, Despawn
   EnemyDamageReceiver         ← HP từ EnemyStatsSO, OnEnemyDied event, trigger hurt animation
@@ -115,6 +131,7 @@ Enemy/ (base classes dùng chung)
   EnemyRotate                 ← flip sprite theo velocity.x
   EnemyDespawn                ← PhotonNetwork.Destroy qua ctrl.PhotonView
   EnemyItemDropper            ← subscribe OnEnemyDied → spawn item theo TableItemDrop trong EnemyStatsSO
+  EnemyHPBar                  ← world-space HP bar trên đầu enemy
   EnemyStatsSO                ← ScriptableObject: baseMaxHP, physicalDefense, magicalDefense, List<TableItemDrop>
   EnemySpawner                ← singleton pool
 
@@ -125,7 +142,6 @@ Enemy/ (base classes dùng chung)
 
   EnemyMelee/
     EnemyMeleeCtrl            ← extends EnemyCtrl
-    EnemyMeleeAnimation       ← extends EnemyAnimation
     EnemyMeleeCombat          ← extends EnemyCombat<EnemyMeleeCtrl>
     EnemyMeleeMovement        ← extends EnemyMovementToTarget<EnemyMeleeCtrl>
 
@@ -154,6 +170,7 @@ Enemy/ (base classes dùng chung)
     ExplosionCreator          ← tạo enemy explosion
     AirmCreator               ← tạo enemy air shooter
     ShooterOnPlatformCreator  ← tạo WandererMagican
+    HPBarEnemySpawner         ← spawn HP bar khi enemy được tạo
     EnemyType (enum)          ← Bat, MagicMini, ShooterOnPlatform, Melee, Slime, Explosion, Airm
     EnemyName (enum)          ← BatOrange, MagicMini_Pink, WandererMagican, ...
 
@@ -163,7 +180,6 @@ Enemy/ (base classes dùng chung)
     EnemyShooterCombatBase    ← abstract (extends EnemyCombat<EnemyShooterCtrl>): PointShoot, detect(r=10/12), prepare → shoot → SpawnBullet()
     EnemyShooterCombat        ← extends EnemyShooterCombatBase: detect(r=10) → prepare(0.7s) → shoot → cooldown(5s)
     MagicMiniCombat           ← extends EnemyShooterCombat: bulletName=Bullet_Fire
-    EnemyShooterAnimation     ← extends EnemyAnimation
     EnemyAirmCombat           ← combat variant cho enemy bắn trên không
     EnemyMovementOnPlatform   ← patrol trên platform
 
@@ -193,6 +209,7 @@ Enemy/ (base classes dùng chung)
       DevilDamageSender       ← extends BossDamageSender
       DevilMovement           ← extends BossMovement
       DevilRotate             ← extends BossRotate
+      BaseBossAbility         ← abstract: load _devilCtrl, SetTargets(), Execute()
 
       Strategy/
         IBossPhaseStrategy    ← interface: Execute()
@@ -201,7 +218,6 @@ Enemy/ (base classes dùng chung)
         DevilPhase2Strategy   ← extends BossPhaseStrategy: chọn ngẫu nhiên ability phase 2
 
       Skill/
-        BaseBossAbility       ← abstract: load _devilCtrl, SetTargets(), Execute()
         NameSkillBoss (enum)  ← BulletVolley, ShootHorizantal, ShootVertical, SpikeBurst, Summon, VoidZone
         BulletVolleyAbility   ← abstract: bắn N viên đạn từ ChildLeft+ChildRight về 2 player, interval giữa mỗi viên
           BulletVolleyPhase1  ← BulletCount ít hơn
@@ -216,16 +232,15 @@ Enemy/ (base classes dùng chung)
           SummonPhase1 / Phase2
         VoidZoneAbility       ← abstract: tạo vùng damage theo thời gian
           VoidZonePhase1 / Phase2
-
-        DevilExplosion/
-          DevilExplosionCtrl            ← hub
-          DevilExplosionAnimation       ← animation nổ
-          DevilExplosionDamageSender    ← AoE damage khi nổ
-          DevilExplosionDespawn         ← despawn sau khi animation kết thúc
+        DevilExplosionCtrl            ← hub cho projectile nổ của Devil
+        DevilExplosionAnimation       ← animation nổ
+        DevilExplosionDamageSender    ← AoE damage khi nổ
+        DevilExplosionDespawn         ← despawn sau khi animation kết thúc
 
       UI/
         DevilPhysHPBar        ← thanh HP vật lý của Devil
         DevilMagHPBar         ← thanh HP phép của Devil
+        DevilHPBar            ← thanh HP tổng / world-space bar
 
 Wave/
   WaveManager                ← singleton: load WaveDataSO per scene, spawn per wave, track alive, OnAllWavesCleared
@@ -272,6 +287,7 @@ ItemDrop/
   TableItemDrop              ← [Serializable]: ItemDropSO + _rate (xác suất drop)
   ItemPickupable             ← OnTriggerEnter2D → gọi PlayerPickup.Pickup(this)
   ItemDropMove               ← animation arc khi drop (nhảy lên sau đó rơi)
+  GoldMovement               ← movement riêng cho gold drop (có thể hút về phía player)
   ItemDropDespawn            ← extends DespawnByTime, tự despawn sau N giây
   ItemDropSpawner            ← singleton pool max 200
   NameItemDrop (enum)        ← tên prefab item drop
@@ -319,19 +335,30 @@ Spawner/
 
 Menu/
   PhotonLogin                ← connect + set nickname
-  PhotonLogout               ← disconnect
   PhotonRoom                 ← tạo/join room, lobby list UI
   PhotonRoomAuto             ← auto create/join (test only)
   PhotonStatus               ← hiện connection state
   RoomProfile                ← data: room name
   UIRoomProfile              ← room list item UI, click to select
+  MainMenu                   ← màn hình chính (Play/Quit/Settings)
+  CenterMenuCtrl             ← quản lý panels trong menu scene
+  UILobby                    ← lobby panel UI
+  PanelCreateRoom            ← panel tạo phòng mới
+  PanelJoinRoom              ← panel tham gia phòng theo tên
+  UICharacterMenu            ← panel chọn nhân vật trong menu
+  SetName                    ← input nickname (thay thế phần trong PhotonLogin cũ)
+  BtnSetting                 ← nút mở settings panel
+  PanelSetting               ← settings panel (âm lượng, resolution, ...)
+  PanelGameWin               ← panel WIN khi hoàn thành map
+  PanelGameOver              ← panel GAME OVER khi cả 2 chết
 
 UI/
   CenterCtrl                 ← singleton: quản lý panels chính (OpenShop, ...)
+  UIManager                  ← quản lý trạng thái UI in-game (show/hide panels)
   FollowPlayer               ← world-space UI facing camera (LateUpdate)
   PlayerHPSlider             ← HP bar theo PlayerDamageReceiver
   UIEventSystem              ← singleton persistent (EventSystem wrapper)
-  Parents/ BaseBtn, BaseSlider, BaseText  ← abstract UI bases
+  Parents/ BaseBtn, BaseSlider, BaseText, CenterCtrl  ← abstract UI bases
 
   Inventory/ (cũ — sẽ refactor)
     DragController           ← singleton: drag icon giữa slots

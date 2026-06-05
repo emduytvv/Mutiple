@@ -9,8 +9,6 @@ using UnityEngine.SceneManagement;
 public class PhotonPlaying : MonoBehaviourPunCallbacks
 {
     public static PhotonPlaying instance;
-    public string ModelName1 = "Raidon";
-    public string ModelName2 = "Raidon";
     private CinemachineCamera _cinemachineCamera;
 
     public List<PlayerProfile> players = new List<PlayerProfile>();
@@ -101,8 +99,12 @@ public class PhotonPlaying : MonoBehaviourPunCallbacks
     protected virtual void LoadPlayerPrefab()
     {
         int playerIndex = GetLocalPlayerIndex();
-        string prefabName = playerIndex == 0 ? ModelName1 : ModelName2;
+        string key = playerIndex == 0 ? UILobby.KEY_CHAR1 : UILobby.KEY_CHAR2;
+        var props = PhotonNetwork.CurrentRoom.CustomProperties;
+        string prefabName = (string)props[key];
+
         GameObject player = PhotonNetwork.Instantiate(prefabName, PlayerSpawnPoint.Get(), Quaternion.identity);
+
         if (player.GetComponent<PhotonView>().IsMine)
             _cinemachineCamera.Target.TrackingTarget = player.transform;
     }

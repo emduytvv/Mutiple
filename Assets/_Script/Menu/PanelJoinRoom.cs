@@ -36,11 +36,13 @@ public class PanelJoinRoom : SaiMonoBehaviour
     }
     private void Join()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         if (_inputRoomName == "NoRoom") return;
         PhotonRoom.instance.Join(_inputRoomName);
     }
     private void Back()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         _mainMenu.gameObject.SetActive(true);
         transform.gameObject.SetActive(false);
     }

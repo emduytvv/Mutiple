@@ -20,17 +20,16 @@ public class BulletDamageSender : DamageSender
     public void SetDamage(float physDamage, float magDamage)
     {
         basePhysicalDamage = physDamage;
-        baseMagicalDamage  = magDamage;
+        baseMagicalDamage = magDamage;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerCtrl player = collision.GetComponentInParent<PlayerCtrl>();
-
+        PlayerDamageReceiver player = collision.GetComponent<PlayerDamageReceiver>();
         if (player == null) return;
         if (!_bulletCtrl.PhotonView.IsMine) return;
-
-        player.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage);
+        PlayerCtrl playerCtrl = player.GetComponentInParent<PlayerCtrl>();
+        playerCtrl.PhotonView.RPC("RpcReceive", RpcTarget.All, basePhysicalDamage, baseMagicalDamage);
         _bulletCtrl.BulletDespawn.DespawnObject();
     }
 }

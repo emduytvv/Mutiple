@@ -17,11 +17,20 @@ public class BossDespawn : Despawn
         _bossCtrl = GetComponentInParent<BossCtrl>();
     }
 
+    private bool _isDespawning;
+
+    protected virtual void OnEnable()
+    {
+        _isDespawning = false;
+    }
+
     protected override bool CanDespawn() => false;
 
     public override void DespawnObject()
     {
+        if (_isDespawning) return;
         if (!_bossCtrl.PhotonView.IsMine) return;
+        _isDespawning = true;
         PhotonNetwork.Destroy(_bossCtrl.PhotonView.gameObject);
     }
 }

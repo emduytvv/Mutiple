@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyBatCtrl : EnemyCtrl
 {
@@ -15,6 +15,5 @@ public class EnemyBatCtrl : EnemyCtrl
     {
         if (_flyMovement != null) return;
         _flyMovement = GetComponentInChildren<EnemyFlyMovement>();
-        Debug.Log(transform.name + ": Load FlyMovement", gameObject);
     }
 }

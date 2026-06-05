@@ -22,6 +22,8 @@ public class EnemyExplosionCombat : EnemyCombat<EnemyExplosionCtrl>
     {
         Collider2D hit = Physics2D.OverlapCircle(transform.position, _explodeRange, _playerLayer);
         if (hit == null) return;
+        PlayerCtrl player = hit.GetComponentInParent<PlayerCtrl>();
+        if (player == null || player.PlayerDamageReceiver.isDead) return;
         Explode();
     }
 
@@ -37,7 +39,7 @@ public class EnemyExplosionCombat : EnemyCombat<EnemyExplosionCtrl>
         foreach (Collider2D hit in hits)
         {
             PlayerCtrl player = hit.GetComponentInParent<PlayerCtrl>();
-            if (player == null) continue;
+            if (player == null || player.PlayerDamageReceiver.isDead) continue;
             _enemyCtrl.EnemyDamageSender.Send(player);
         }
     }

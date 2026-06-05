@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -19,14 +19,12 @@ public class EnemyMeleeCtrl : EnemyCtrl
     {
         if (this._meleeCombat != null) return;
         this._meleeCombat = transform.GetComponentInChildren<EnemyMeleeCombat>();
-        Debug.Log(transform.name + ": Load MeleeCombat", gameObject);
     }
 
     private void LoadMeleeMovement()
     {
         if (this._meleeMovement != null) return;
         this._meleeMovement = transform.GetComponentInChildren<EnemyMeleeMovement>();
-        Debug.Log(transform.name + ": Load MeleeMovement", gameObject);
     }
 
 }

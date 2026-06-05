@@ -8,7 +8,15 @@ public class EnemyMeleeCombat : EnemyMeleeCombatBase<EnemyMeleeCtrl>
     {
         Vector2 startPoint = (Vector2)transform.position + Vector2.up * 0.5f + Vector2.left * _detectionLength;
         RaycastHit2D hit = Physics2D.Raycast(startPoint, Vector2.right, _detectionLength * 2, _playerLayer);
-        _target = hit.transform != null ? hit.transform : null;
+        if (hit.transform != null)
+        {
+            PlayerCtrl player = hit.transform.GetComponentInParent<PlayerCtrl>();
+            _target = (player != null && !player.PlayerDamageReceiver.isDead) ? hit.transform : null;
+        }
+        else
+        {
+            _target = null;
+        }
         _enemyCtrl.MeleeMovement.SetTarget(_target);
     }
 

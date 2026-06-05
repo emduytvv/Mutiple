@@ -41,6 +41,13 @@ public class PlayerDamageSender : DamageSender
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
     }
+    protected override void ResetValue()
+    {
+        base.ResetValue();
+        if (_playerCtrl == null || _playerCtrl.CharacterData == null) return;
+        basePhysicalDamage = _playerCtrl.CharacterData.basePhysicalDamage;
+        baseMagicalDamage = _playerCtrl.CharacterData.baseMagicalDamage;
+    }
     protected void OnEnable()
     {
         CaculateTotalStats();
@@ -50,7 +57,7 @@ public class PlayerDamageSender : DamageSender
             GameEvents.OnWeaponUpgraded += UpdateWeaponStats;
         }
     }
-    protected void OnDestroy()
+    protected void OnDisable()
     {
         GameEvents.OnEquipmentChanged -= UpdateWeaponStats;
         GameEvents.OnWeaponUpgraded -= UpdateWeaponStats;

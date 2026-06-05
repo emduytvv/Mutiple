@@ -42,6 +42,7 @@ public class FirebaseLoginManager : SaiMonoBehaviour
 
     public void RegisterAccount()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         string email = ipRegisterEmail.text;
         string password = ipRegisterPassword.text;
 
@@ -62,6 +63,7 @@ public class FirebaseLoginManager : SaiMonoBehaviour
     }
     public void LoginAccount()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         string email = ipLoginEmail.text;
         string password = ipLoginPassword.text;
 
@@ -85,6 +87,7 @@ public class FirebaseLoginManager : SaiMonoBehaviour
     }
     public void SwitchForm()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         loginForm.SetActive(!loginForm.activeSelf);
         registerForm.SetActive(!registerForm.activeSelf);
     }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class EnemyMeleeCombatBase<TCtrl> : EnemyCombat<TCtrl> where TCtrl : EnemyCtrl
 {
@@ -19,7 +19,6 @@ public abstract class EnemyMeleeCombatBase<TCtrl> : EnemyCombat<TCtrl> where TCt
     {
         if (_pointAttack != null) return;
         _pointAttack = transform.Find("PointAttack");
-        Debug.Log(transform.name + ": Load PointAttack", gameObject);
     }
 
     private void Update()
@@ -71,6 +70,7 @@ public abstract class EnemyMeleeCombatBase<TCtrl> : EnemyCombat<TCtrl> where TCt
         {
             if (!collider.GetComponent<PlayerDamageReceiver>()) continue;
             PlayerCtrl player = collider.GetComponentInParent<PlayerCtrl>();
+            if (player == null || player.PlayerDamageReceiver.isDead) continue;
             _enemyCtrl.EnemyDamageSender.Send(player);
         }
     }

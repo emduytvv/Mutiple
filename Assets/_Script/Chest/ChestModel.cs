@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChestModel : SaiMonoBehaviour
 {
@@ -16,14 +16,12 @@ public class ChestModel : SaiMonoBehaviour
     {
         if (_chestClosing != null) return;
         _chestClosing = transform.Find("ChestClosing");
-        Debug.Log(transform.name + ": Load ChestClosing", gameObject);
     }
 
     private void LoadChestOpening()
     {
         if (_chestOpening != null) return;
         _chestOpening = transform.Find("ChestOpening");
-        Debug.Log(transform.name + ": Load ChestOpening", gameObject);
     }
 
     public void PlayOpen()

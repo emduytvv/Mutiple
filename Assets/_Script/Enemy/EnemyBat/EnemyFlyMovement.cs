@@ -5,6 +5,8 @@ public class EnemyFlyMovement : EnemyMovementToTarget<EnemyCtrl>
     protected override void Move()
     {
         if (_target == null) return;
+        TryRefreshTarget();
+        if (_target == null) return;
         UpdateDistance();
         if (!CanMove())
         {
@@ -12,6 +14,14 @@ public class EnemyFlyMovement : EnemyMovementToTarget<EnemyCtrl>
             return;
         }
         _enemyCtrl.Rigidbody2D.linearVelocity = _direction.normalized * _moveSpeed;
+    }
+
+    private void TryRefreshTarget()
+    {
+        PlayerCtrl current = _target.GetComponent<PlayerCtrl>();
+        if (current == null || !current.PlayerDamageReceiver.isDead) return;
+        PlayerCtrl alive = PlayerCtrl.AllPlayers.Find(p => !p.PlayerDamageReceiver.isDead);
+        _target = alive != null ? alive.transform : null;
     }
 
     private void UpdateDistance()

@@ -1,36 +1,45 @@
-using Photon.Pun;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class PlayerReviveHelper : SaiMonoBehaviour
 {
     [SerializeField] private PlayerCtrl _playerCtrl;
     [SerializeField] private float _reviveTime = 5f;
+    [SerializeField] private float _reviveRadius = 4f;
     [SerializeField] private float _timer = 0f;
-
+    public float Timer => _timer;
+    public float ReviveTime => _reviveTime;
+    [SerializeField] public bool IsNearDeadPlayer = false;
+    protected PlayerCtrl _playerOther;
+    public PlayerCtrl PlayerOther => _playerOther;
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadPlayerCtrl();
+        LoadPlayerCtrl();
     }
 
     private void LoadPlayerCtrl()
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()
     {
         if (!_playerCtrl.PhotonView.IsMine) return;
-        PlayerCtrl other = collision.GetComponentInParent<PlayerCtrl>();
-        if (other == null) return;
-        if (!other.PlayerDamageReceiver.isDead) return;
-        if (other.PhotonView == _playerCtrl.PhotonView) return;
-
-        Help(other);
+        foreach (PlayerCtrl other in PlayerCtrl.AllPlayers)
+        {
+            if (other.PhotonView == _playerCtrl.PhotonView) continue;
+            if (!other.PlayerDamageReceiver.isDead) continue;
+            if (Vector2.Distance(transform.position, other.transform.position) > _reviveRadius) continue;
+            _playerOther = other;
+            IsNearDeadPlayer = true;
+            Help(other);
+            return;
+        }
+        IsNearDeadPlayer = false;
     }
-
     private void Help(PlayerCtrl other)
     {
         if (!CanHelp()) return;

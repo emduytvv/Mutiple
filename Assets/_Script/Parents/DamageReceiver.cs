@@ -36,8 +36,8 @@ public abstract class DamageReceiver : SaiMonoBehaviour
     public virtual void Receiver(float physDamage, float magDamage, float armorPen = 0f)
     {
         if (_isDead) return;
-        float effectivePhys = CalculateDamagePhys(physDamage, armorPen);
-        float effectiveMag = CalculateDamageMagic(magDamage, armorPen);
+        float effectivePhys = Mathf.Round(CalculateDamagePhys(physDamage, armorPen));
+        float effectiveMag = Mathf.Round(CalculateDamageMagic(magDamage, armorPen));
         SpawnTextDamage(effectivePhys, effectiveMag);
         Reduce(effectivePhys + effectiveMag);
     }

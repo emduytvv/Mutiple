@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,7 +38,6 @@ public class PlayerShoot : SaiMonoBehaviour
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void BuildStrategyMap()
@@ -58,8 +57,15 @@ public class PlayerShoot : SaiMonoBehaviour
     private void OnEnable() => GameEvents.OnEquipmentChanged += RefreshStrategy;
     private void OnDisable() => GameEvents.OnEquipmentChanged -= RefreshStrategy;
 
+    protected override void Start()
+    {
+        base.Start();
+        if (_playerCtrl.PhotonView.IsMine) RefreshStrategy();
+    }
+
     private void RefreshStrategy()
     {
+        if (!_playerCtrl.PhotonView.IsMine) return;
         _iShoot.Clear();
 
         var item = _playerCtrl.EquipmentManager.GetCurrentEquip(EquipType.Weapon);
@@ -67,7 +73,7 @@ public class PlayerShoot : SaiMonoBehaviour
         var weapon = item?._info as WeaponDataSO;
         foreach (var skill in weapon._skills)
             if (_strategyMap.TryGetValue(skill._name, out var s))
-            { _iShoot.Add(s); Debug.Log(skill._name); }
+            { _iShoot.Add(s); }
 
         if (_iShoot.Count == 0)
             _iShoot.Add(_strategyMap[WeaponSkillName.SingleShot]);
@@ -77,7 +83,7 @@ public class PlayerShoot : SaiMonoBehaviour
     private void RefreshArrow(WeaponDataSO weapon)
     {
         if (_arrowPrefabMap.TryGetValue(weapon._arrowType, out var name))
-            _arrowPrefabName = name; Debug.Log(name);
+            _arrowPrefabName = name;
     }
 
 

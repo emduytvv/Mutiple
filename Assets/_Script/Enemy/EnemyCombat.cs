@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyCombat<TCtrl> : EnemyCombatBase where TCtrl : EnemyCtrl
 {
@@ -25,13 +25,11 @@ public class EnemyCombat<TCtrl> : EnemyCombatBase where TCtrl : EnemyCtrl
     {
         if (_enemyCtrl != null) return;
         _enemyCtrl = GetComponentInParent<TCtrl>();
-        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
     private void LoadPlayerLayer()
     {
         if (this._playerLayer != 0) return;
         this._playerLayer = LayerMask.GetMask("Player");
-        Debug.Log(transform.name + ": Load PlayerLayer", gameObject);
     }
 }

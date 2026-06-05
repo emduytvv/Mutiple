@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,13 +20,11 @@ public class UIEquipSlot : SaiMonoBehaviour, IPointerClickHandler
     {
         if (_uIItemDetailInventory != null) return;
         _uIItemDetailInventory = transform.parent.parent.parent.GetComponentInChildren<UIItemDetailInventory>();
-        Debug.Log(transform.name + ": Load UIItemDetailManager", gameObject);
     }
     private void LoadIcon()
     {
         if (_icon != null) return;
         _icon = transform.Find("Icon").GetComponent<Image>();
-        Debug.Log(transform.name + ": Load Icon", gameObject);
     }
     public void SetItem(ItemInventoryBase item)
     {

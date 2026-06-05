@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyExplosionCtrl : EnemyCtrl
 {
@@ -19,12 +19,10 @@ public class EnemyExplosionCtrl : EnemyCtrl
     {
         if (_explosionMovement != null) return;
         _explosionMovement = GetComponentInChildren<EnemyExplosionMovement>();
-        Debug.Log(transform.name + ": Load ExplosionMovement", gameObject);
     }
     private void LoadExplosionCombat()
     {
         if (_explosionCombat != null) return;
         _explosionCombat = GetComponentInChildren<EnemyExplosionCombat>();
-        Debug.Log(transform.name + ": Load ExplosionCombat", gameObject);
     }
 }

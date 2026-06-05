@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 public class ArrowExplosiveDamageSender : ArrowDamageSender
@@ -16,7 +16,6 @@ public class ArrowExplosiveDamageSender : ArrowDamageSender
     {
         if (_enemyLayer != 0) return;
         _enemyLayer = LayerMask.GetMask("Enemy");
-        Debug.Log(transform.name + ": Load EnemyLayer", gameObject);
     }
 
     protected override void OnHitTarget(DamageableCtrl target, Collider2D collision)

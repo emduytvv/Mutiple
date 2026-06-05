@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PanelSetting : SaiMonoBehaviour
@@ -18,31 +18,45 @@ public class PanelSetting : SaiMonoBehaviour
     protected override void Start()
     {
         base.Start();
-        _btnHome.onClick.AddListener(() => PhotonPlaying.instance.Leave());
+        _btnHome.onClick.AddListener(OnClickHome);
         _btnMusic.onClick.AddListener(OnClickMusic);
-        _btnExit.onClick.AddListener(Application.Quit);
+        _btnExit.onClick.AddListener(OnClickExit);
     }
 
-    private void OnClickMusic() { }
+    private void OnClickHome()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+        PhotonPlaying.instance.Leave();
+    }
+
+    private void OnClickMusic()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+        PanelMusic.Instance.Show();
+        transform.parent.gameObject.SetActive(false);
+    }
+
+    private void OnClickExit()
+    {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
+        Application.Quit();
+    }
 
     private void LoadBtnHome()
     {
         if (_btnHome != null) return;
         _btnHome = transform.Find("Home").GetComponent<Button>();
-        Debug.Log(transform.name + ": LoadBtnHome", gameObject);
     }
 
     private void LoadBtnMusic()
     {
         if (_btnMusic != null) return;
         _btnMusic = transform.Find("Music").GetComponent<Button>();
-        Debug.Log(transform.name + ": LoadBtnMusic", gameObject);
     }
 
     private void LoadBtnExit()
     {
         if (_btnExit != null) return;
         _btnExit = transform.Find("Exit").GetComponent<Button>();
-        Debug.Log(transform.name + ": LoadBtnExit", gameObject);
     }
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class EnemyMovement<TCtrl> : Movement where TCtrl : EnemyCtrl
 {
@@ -14,7 +14,6 @@ public abstract class EnemyMovement<TCtrl> : Movement where TCtrl : EnemyCtrl
     {
         if (_enemyCtrl != null) return;
         _enemyCtrl = GetComponentInParent<TCtrl>();
-        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
     public override void ApplyMultiplier(float multiplier)

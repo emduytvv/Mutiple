@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyShooterCtrl : EnemyCtrl
 {
@@ -15,6 +15,5 @@ public class EnemyShooterCtrl : EnemyCtrl
     {
         if (_shooterMovement != null) return;
         _shooterMovement = GetComponentInChildren<EnemyMovementOnPlatform>();
-        Debug.Log(transform.name + ": Load ShooterMovement", gameObject);
     }
 }

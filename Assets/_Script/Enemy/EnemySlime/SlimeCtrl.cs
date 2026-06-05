@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SlimeCtrl : EnemyCtrl
 {
@@ -15,6 +15,5 @@ public class SlimeCtrl : EnemyCtrl
     {
         if (_slimeCombat != null) return;
         _slimeCombat = GetComponentInChildren<SlimeCombat>();
-        Debug.Log(transform.name + ": Load SlimeCombat", gameObject);
     }
 }

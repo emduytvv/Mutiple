@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
 using UnityEngine;
@@ -14,7 +14,13 @@ public class WaveManager : SaiMonoBehaviour
     [SerializeField] private int _aliveCount = 0;
     [SerializeField] private bool _allWavesCleared = false;
     [SerializeField] private SpawnPointsManager _spawnPointsManager;
-
+    [SerializeField] private bool test = false;
+    protected void Update()
+    {
+        if (!test) return;
+        test = false;
+        GameEvents.OnAllWavesCleared?.Invoke();
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -32,13 +38,11 @@ public class WaveManager : SaiMonoBehaviour
         if (_waves.Count > 0) return;
         string mapFolder = "WaveData/" + SceneManager.GetActiveScene().name + "/Waves";
         _waves = Resources.LoadAll<WaveDataSO>(mapFolder).ToList();
-        Debug.Log(transform.name + ": Load WaveDataSO from " + mapFolder, gameObject);
     }
     private void LoadSpawnPointsManager()
     {
         if (_spawnPointsManager != null) return;
         _spawnPointsManager = GetComponentInChildren<SpawnPointsManager>();
-        Debug.Log(transform.name + ": Load SpawnPointsManager", gameObject);
     }
     protected override void Start()
     {
@@ -115,7 +119,7 @@ public class WaveManager : SaiMonoBehaviour
             case EnemyType.Explosion:
                 return _spawnPointsManager.Points_Explosion[index % _spawnPointsManager.Points_Explosion.Count].position;
         }
-        Debug.LogWarning("WaveManager: không tìm thấy spawn point cho " + type);
+        Debug.LogWarning("WaveManager: khÃ´ng tÃ¬m tháº¥y spawn point cho " + type);
         return Vector3.zero;
     }
 }

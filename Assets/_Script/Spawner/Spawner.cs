@@ -69,11 +69,12 @@ public class Spawner : SaiMonoBehaviour
 
     protected virtual Transform GetObjectFromPool(Transform prefab)
     {
-        foreach (Transform pool in pools)
+        for (int i = 0; i < pools.Count; i++)
         {
-            if (pool.name != prefab.name) continue;
-            pools.Remove(pool);
-            return pool;
+            if (pools[i].name != prefab.name) continue;
+            Transform obj = pools[i];
+            pools.RemoveAt(i);
+            return obj;
         }
         Transform prefabClone = Instantiate(prefab, Holder);
         prefabClone.name = prefab.name;

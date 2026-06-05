@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class ChestInteract : BaseInteract
@@ -14,7 +14,6 @@ public class ChestInteract : BaseInteract
     {
         if (_chestCtrl != null) return;
         _chestCtrl = GetComponentInParent<ChestCtrl>();
-        Debug.Log(transform.name + ": Load ChestCtrl", gameObject);
     }
 
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NPCShopManager : Singleton<NPCShopManager>
 {
@@ -15,6 +15,5 @@ public class NPCShopManager : Singleton<NPCShopManager>
     {
         if (_npcShopData != null) return;
         _npcShopData = GetComponentInChildren<NPCShopData>();
-        Debug.Log(transform.name + ": Load NPCShopData", gameObject);
     }
 }

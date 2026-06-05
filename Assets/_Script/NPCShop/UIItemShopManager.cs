@@ -21,6 +21,7 @@ public class UIItemShopManager : Singleton<UIItemShopManager>
     }
     protected override void LoadComponents()
     {
+        base.LoadComponents();
         LoadSlot();
     }
 

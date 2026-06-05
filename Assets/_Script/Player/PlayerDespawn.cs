@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerDespawn : Despawn
 {
     [SerializeField] private PlayerCtrl _playerCtrl;
-    [SerializeField] private float _timeToDespawn = 40f;
+    [SerializeField] private float _timeToDespawn = 30f;
     [SerializeField] private float _timer = 0f;
 
     protected override void LoadComponents()

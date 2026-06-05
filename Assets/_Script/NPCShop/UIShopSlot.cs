@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
@@ -29,19 +29,16 @@ public class UIShopSlot : SaiMonoBehaviour, IPointerClickHandler
         if (_lockIcon != null) return;
         _lockIcon = transform.Find("LockIcon").GetComponent<Image>();
         _lockIcon.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load LockIcon", gameObject);
     }
     private void LoadUIItemDetailManager()
     {
         if (_uIItemDetailShop != null) return;
         _uIItemDetailShop = transform.parent.parent.GetComponentInChildren<UIItemDetailShop>();
-        Debug.Log(transform.name + ": Load UIItemDetailManager", gameObject);
     }
     private void LoadUIShopManager()
     {
         if (_uIShopManager != null) return;
         _uIShopManager = transform.parent.GetComponent<UIItemShopManager>();
-        Debug.Log(transform.name + ": LoadUIShopManager", gameObject);
     }
 
 
@@ -49,7 +46,6 @@ public class UIShopSlot : SaiMonoBehaviour, IPointerClickHandler
     {
         if (this._icon != null) return;
         this._icon = transform.Find("Icon").GetComponent<Image>();
-        Debug.Log(transform.name + ": Load Icon", gameObject);
     }
     public void SetItem(ItemInventoryBase item)
     {

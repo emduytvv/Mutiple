@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 public enum PlayerState { Idle, Run, Jump, Drop, Land, Aim, Shoot, Dash, Die }
@@ -35,14 +35,12 @@ public class PlayerAnimation : SaiMonoBehaviour
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void LoadAnimator()
     {
         if (_animator != null) return;
         _animator = GetComponent<Animator>();
-        Debug.Log(transform.name + ": Load Animator", gameObject);
     }
 
     protected override void Start()

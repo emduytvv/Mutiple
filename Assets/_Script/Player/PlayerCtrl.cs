@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
@@ -35,6 +35,9 @@ public class PlayerCtrl : SaiMonoBehaviour
     public PlayerItemTransfer PlayerItemTransfer => _playerItemTransfer;
     [SerializeField] protected PlayerItemTransfer _playerItemTransfer;
 
+    public CharacterDataSO CharacterData => _characterData;
+    [SerializeField] protected CharacterDataSO _characterData;
+
     public TextMeshPro TextMeshPro => _textMeshPro;
     [SerializeField] protected TextMeshPro _textMeshPro;
     private static List<PlayerCtrl> _allPlayers = new();
@@ -64,53 +67,54 @@ public class PlayerCtrl : SaiMonoBehaviour
         this.LoadInventoryManager();
         this.LoadPlayerPowerUpManager();
         this.LoadPlayerItemTransfer();
+        this.LoadCharacterData();
+    }
+
+    private void LoadCharacterData()
+    {
+        if (_characterData != null) return;
+        string _path = "CharacterData/" + transform.name;
+        _characterData = Resources.Load<CharacterDataSO>(_path);
     }
 
     private void LoadPhotonView()
     {
         if (_photonView != null) return;
         _photonView = GetComponent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
     }
 
     private void LoadRigidbody2D()
     {
         if (_rigidbody2D != null) return;
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        Debug.Log(transform.name + ": Load Rigidbody2D", gameObject);
     }
 
     private void LoadPlayerMovement()
     {
         if (_playerMovement != null) return;
         _playerMovement = GetComponentInChildren<PlayerMovement>();
-        Debug.Log(transform.name + ": Load PlayerMovement", gameObject);
     }
 
     private void LoadPlayerAnimation()
     {
         if (_playerAnimation != null) return;
         _playerAnimation = GetComponentInChildren<PlayerAnimation>();
-        Debug.Log(transform.name + ": Load PlayerAnimation", gameObject);
     }
 
     private void LoadPlayerDamageReceiver()
     {
         if (_playerDamageReceiver != null) return;
         _playerDamageReceiver = GetComponentInChildren<PlayerDamageReceiver>();
-        Debug.Log(transform.name + ": Load PlayerDamageReceiver", gameObject);
     }
     private void LoadPlayerDamageSender()
     {
         if (_playerDamageSender != null) return;
         _playerDamageSender = GetComponentInChildren<PlayerDamageSender>();
-        Debug.Log(transform.name + ": LoadPlayerDamageSender", gameObject);
     }
     private void LoadEquipmentManager()
     {
         if (_equipmentManager != null) return;
         _equipmentManager = GetComponentInChildren<EquipmentManager>();
-        Debug.Log(transform.name + ": LoadEquipmentManager", gameObject);
     }
 
     private void LoadPlayerPickup()
@@ -129,35 +133,30 @@ public class PlayerCtrl : SaiMonoBehaviour
     {
         if (_inventoryManager != null) return;
         _inventoryManager = GetComponentInChildren<InventoryManager>();
-        Debug.Log(transform.name + ": Load InventoryManager", gameObject);
     }
 
     private void LoadPlayerPowerUpManager()
     {
         if (_playerPowerUpManager != null) return;
         _playerPowerUpManager = GetComponentInChildren<PlayerPowerUpManager>();
-        Debug.Log(transform.name + ": Load PlayerPowerUpManager", gameObject);
     }
 
     private void LoadPlayerItemTransfer()
     {
         if (_playerItemTransfer != null) return;
         _playerItemTransfer = GetComponentInChildren<PlayerItemTransfer>();
-        Debug.Log(transform.name + ": Load PlayerItemTransfer", gameObject);
     }
 
     private void LoadPlayerDespawn()
     {
         if (_playerDespawn != null) return;
         _playerDespawn = GetComponentInChildren<PlayerDespawn>();
-        Debug.Log(transform.name + ": Load PlayerDespawn", gameObject);
     }
 
     private void LoadTextMeshPro()
     {
         if (_textMeshPro != null) return;
         _textMeshPro = GetComponentInChildren<TextMeshPro>();
-        Debug.Log(transform.name + ": Load TextMeshPro", gameObject);
     }
 
     [PunRPC]
@@ -166,7 +165,6 @@ public class PlayerCtrl : SaiMonoBehaviour
         _playerDamageReceiver.Receiver(physDamage, magDamage);
     }
 
-    [PunRPC]
     private void SyncAnimState(PlayerState state)
     {
         switch (state)
@@ -230,6 +228,9 @@ public class PlayerCtrl : SaiMonoBehaviour
     {
         _autoShield.SetActiveShield(isActive);
     }
+
+    [PunRPC]
+    private void RpcBuff(float amount) => _playerDamageReceiver.Buff(amount);
 
     [PunRPC]
     private void RpcAddMaxHP(float amount) => _playerDamageReceiver.AddMaxHP(amount);

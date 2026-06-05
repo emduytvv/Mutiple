@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
@@ -19,14 +19,12 @@ public class GateReady : SaiMonoBehaviour
     {
         if (_gate != null) return;
         _gate = transform.Find("Gate");
-        Debug.Log(transform.name + ": Load Gate", gameObject);
     }
 
     private void LoadPhotonView()
     {
         if (_photonView != null) return;
         _photonView = GetComponent<PhotonView>();
-        Debug.Log(transform.name + ": Load PhotonView", gameObject);
     }
     protected void OnEnable()
     {
@@ -35,12 +33,18 @@ public class GateReady : SaiMonoBehaviour
         GameEvents.OnAllWavesCleared += OnAllWavesCleared;
     }
 
-    protected void OnDestroy()
+    protected void OnDisable()
     {
         GameEvents.OnAllWavesCleared -= OnAllWavesCleared;
     }
 
     private void OnAllWavesCleared()
+    {
+        _photonView.RPC(nameof(RpcAllWavesCleared), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RpcAllWavesCleared()
     {
         Debug.Log(transform.name + ": OnAllWavesCleared", gameObject);
         _gate.gameObject.SetActive(true);

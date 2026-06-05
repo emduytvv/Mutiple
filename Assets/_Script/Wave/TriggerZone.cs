@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,7 +30,6 @@ public class TriggerZone : SaiMonoBehaviour
         if (_spawnPoints.Count > 0) return;
         foreach (Transform point in transform)
             _spawnPoints.Add(point);
-        Debug.Log(transform.name + ": Load SpawnPoints", gameObject);
     }
 
     protected override void Start()

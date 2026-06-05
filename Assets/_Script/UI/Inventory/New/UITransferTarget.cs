@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-// Drop zone màu vàng trong inventory panel — kéo item vào đây để chuyển cho teammate
+// Drop zone mÃ u vÃ ng trong inventory panel â€” kÃ©o item vÃ o Ä‘Ã¢y Ä‘á»ƒ chuyá»ƒn cho teammate
 public class UITransferTarget : SaiMonoBehaviour
 {
     [SerializeField] private CanvasGroup _canvasGroup;
@@ -16,7 +16,6 @@ public class UITransferTarget : SaiMonoBehaviour
     {
         if (_canvasGroup != null) return;
         _canvasGroup = GetComponent<CanvasGroup>();
-        Debug.Log(transform.name + ": Load CanvasGroup", gameObject);
     }
 
     private void FixedUpdate()

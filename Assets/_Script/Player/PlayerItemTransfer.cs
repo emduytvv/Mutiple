@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerItemTransfer : SaiMonoBehaviour
 {
@@ -14,7 +14,6 @@ public class PlayerItemTransfer : SaiMonoBehaviour
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     public void ReceiveItem(string json)

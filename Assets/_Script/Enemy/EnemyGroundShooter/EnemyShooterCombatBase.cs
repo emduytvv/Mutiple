@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 public abstract class EnemyShooterCombatBase : EnemyCombat<EnemyShooterCtrl>
@@ -22,7 +22,6 @@ public abstract class EnemyShooterCombatBase : EnemyCombat<EnemyShooterCtrl>
     {
         if (_pointShoot != null) return;
         _pointShoot = transform.Find("PointShoot");
-        Debug.Log(transform.name + ": Load PointShoot", gameObject);
     }
 
     private void Update()
@@ -37,18 +36,23 @@ public abstract class EnemyShooterCombatBase : EnemyCombat<EnemyShooterCtrl>
     {
         if (_target != null)
         {
-            if (Vector2.Distance(transform.position, _target.position) > _detectionRadiusExit)
+            PlayerCtrl current = _target.GetComponent<PlayerCtrl>();
+            bool isDead = current != null && current.PlayerDamageReceiver.isDead;
+            bool outOfRange = Vector2.Distance(transform.position, _target.position) > _detectionRadiusExit;
+            if (isDead || outOfRange)
             {
                 ResetCombat();
                 _target = null;
             }
-            return;
+            else return;
         }
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _detectionRadiusIn, _playerLayer);
         foreach (Collider2D hit in hits)
         {
             if (!hit.GetComponent<PlayerDamageReceiver>()) continue;
+            PlayerCtrl player = hit.transform.parent.GetComponent<PlayerCtrl>();
+            if (player == null || player.PlayerDamageReceiver.isDead) continue;
             _target = hit.transform.parent;
             break;
         }

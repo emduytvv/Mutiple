@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyRotate : SaiMonoBehaviour
@@ -16,7 +16,6 @@ public class EnemyRotate : SaiMonoBehaviour
     {
         if (_enemyCtrl != null) return;
         _enemyCtrl = GetComponentInParent<EnemyCtrl>();
-        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
     protected void Update()

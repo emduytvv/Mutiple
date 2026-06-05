@@ -89,7 +89,7 @@ public class DevilDamageReceiver : BossDamageReceiver
     protected override void ResetValue()
     {
         base.ResetValue();
-        _basePhysMaxHP = 5;
-        _baseMagMaxHP = 5;
+        _basePhysMaxHP = 15000;
+        _baseMagMaxHP = 15000;
     }
 }

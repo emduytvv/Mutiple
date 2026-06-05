@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyMeleeMovement : EnemyMovementToTarget<EnemyMeleeCtrl>
 {
@@ -15,7 +15,6 @@ public class EnemyMeleeMovement : EnemyMovementToTarget<EnemyMeleeCtrl>
     {
         if (this._groundLayer != 0) return;
         this._groundLayer = LayerMask.GetMask("Ground");
-        Debug.Log(transform.name + ": Load GroundLayer", gameObject);
     }
     protected override void Move()
     {

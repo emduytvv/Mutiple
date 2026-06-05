@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -28,7 +28,7 @@ public class PlayerDamageReceiver : DamageReceiver
         if (_playerCtrl != null && _playerCtrl.PhotonView.IsMine)
             GameEvents.OnEquipmentChanged += UpdateEquipmentStats;
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         GameEvents.OnPlayerRevived -= OnRevived;
         GameEvents.OnEquipmentChanged -= UpdateEquipmentStats;
@@ -44,19 +44,20 @@ public class PlayerDamageReceiver : DamageReceiver
     {
         if (_playerCtrl != null) return;
         _playerCtrl = GetComponentInParent<PlayerCtrl>();
-        Debug.Log(transform.name + ": Load PlayerCtrl", gameObject);
     }
 
     private void LoadAutoShield()
     {
         if (_autoShield != null) return;
         _autoShield = transform.parent.GetComponentInChildren<AutoShield>();
-        Debug.Log(transform.name + ": Load AutoShield", gameObject);
     }
     protected override void ResetValue()
     {
         base.ResetValue();
-        baseMaxHP = 1000f;
+        if (_playerCtrl == null || _playerCtrl.CharacterData == null) return;
+        baseMaxHP = _playerCtrl.CharacterData.baseMaxHP;
+        basePhysicalDefense = _playerCtrl.CharacterData.basePhysicalDefense;
+        baseMagicalDefense = _playerCtrl.CharacterData.baseMagicalDefense;
     }
     private void OnRevived(int viewId)
     {
@@ -115,7 +116,7 @@ public class PlayerDamageReceiver : DamageReceiver
     public float PhysicalDefenseTotal => physicalDefenseTotal;
     public float MagicalDefenseTotal => magicalDefenseTotal;
     public float GetCurrrentHPPercent() => currentHp / maxHP;
-    //Gọi đi change trang bí trong EquipmentManager
+    //GoÌ£i Ä‘i change trang bÃ­ trong EquipmentManager
     private void UpdateEquipmentStats()
     {
         var armor = _playerCtrl.EquipmentManager.GetCurrentEquip(EquipType.Armor)?._info as EquipmentDataSO;

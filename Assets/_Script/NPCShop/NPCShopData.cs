@@ -1,4 +1,4 @@
-
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,28 +25,24 @@ public class NPCShopData : SaiMonoBehaviour
         if (_powerUps.Count > 0) return;
         string path = "ItemData/PowerUpData";
         _powerUps.AddRange(Resources.LoadAll<PowerUpDataSO>(path));
-        Debug.Log(transform.name + ": Load PowerUpDataSO from " + path, gameObject);
     }
     private void LoadWeaponSkillSO()
     {
         if (_skills.Count > 0) return;
         string path = "WeaponSkill";
         _skills.AddRange(Resources.LoadAll<WeaponSkillSO>(path));
-        Debug.Log(transform.name + ": Load WeaponSkillSO from " + path, gameObject);
     }
     private void LoadWeaponDataSO()
     {
         if (_weapons.Count > 0) return;
         string path = "ItemData/WeaponData";
         _weapons.AddRange(Resources.LoadAll<WeaponDataSO>(path));
-        Debug.Log(transform.name + ": Load WeaponDataSO from " + path, gameObject);
     }
     private void LoadEquipmentDataSO()
     {
         if (_equipments.Count > 0) return;
         string path = "ItemData/EquipmentData";
         _equipments.AddRange(Resources.LoadAll<EquipmentDataSO>(path));
-        Debug.Log(transform.name + ": Load EquipmentDataSO from " + path, gameObject);
     }
     protected override void Start()
     {

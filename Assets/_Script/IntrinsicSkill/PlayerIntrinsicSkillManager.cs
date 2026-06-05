@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 public class PlayerIntrinsicSkillManager : SaiMonoBehaviour
 {
@@ -15,11 +15,16 @@ public class PlayerIntrinsicSkillManager : SaiMonoBehaviour
     {
         if (_skills.Count > 0) return;
         _skills.AddRange(GetComponentsInChildren<BaseIntrinsicSkill>(true));
-        Debug.Log(transform.name + ": Load slots x" + _skills.Count, gameObject);
     }
 
     public void AddSkill(IntrinsicSkillSO skill)
     {
-        _skills.Find(s => s.transform.name == skill._name.ToString()).Activate(skill);
+        var found = _skills.Find(s => s.transform.name == skill._name.ToString());
+        if (found == null)
+        {
+            Debug.LogWarning($"{transform.name}: Skill slot '{skill._name}' not found", gameObject);
+            return;
+        }
+        found.Activate(skill);
     }
 }

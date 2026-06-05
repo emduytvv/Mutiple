@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// Popup nhỏ hiện khi chuột phải vào item trong inventory
-// Singleton: toàn UI chỉ có 1 popup dùng chung cho mọi slot
+// Popup nhá» hiá»‡n khi chuá»™t pháº£i vÃ o item trong inventory
+// Singleton: toÃ n UI chá»‰ cÃ³ 1 popup dÃ¹ng chung cho má»i slot
 public class UIItemContextMenu : Singleton<UIItemContextMenu>
 {
     [SerializeField] private Button _btnUse;
@@ -24,21 +24,18 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
     {
         if (_btnUse != null) return;
         _btnUse = transform.Find("BtnEquip").GetComponent<Button>();
-        Debug.Log(transform.name + ": Load BtnUse", gameObject);
     }
 
     private void LoadCanvasRect()
     {
         if (_canvasRect != null) return;
         _canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-        Debug.Log(transform.name + ": Load CanvasRect", gameObject);
     }
 
     private void LoadUIInventoryManager()
     {
         if (_uiInventoryManager != null) return;
         _uiInventoryManager = transform.parent.GetComponentInChildren<UIInventoryManager>();
-        Debug.Log(transform.name + ": Load UIInventoryManager", gameObject);
     }
 
     protected override void Start()
@@ -87,6 +84,7 @@ public class UIItemContextMenu : Singleton<UIItemContextMenu>
 
     private void OnClickUse()
     {
+        AudioManager.Instance.PlayUI(AudioManager.Instance.UIClick);
         if (_itemType == TypeItem.PowerUp)
         {
             var localPlayer = PlayerCtrl.AllPlayers.Find(p => p.PhotonView.IsMine);

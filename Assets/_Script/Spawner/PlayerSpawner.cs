@@ -12,8 +12,4 @@ public class PlayerSpawner : Spawner
         _instance = this;
     }
 
-    protected override void Loadprefabs()
-    {
-        return;
-    }
 }

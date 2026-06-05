@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class BaseBtn : SaiMonoBehaviour
@@ -32,6 +32,5 @@ public abstract class BaseBtn : SaiMonoBehaviour
     {
         if (this.button != null) return;
         this.button = GetComponent<Button>();
-        Debug.Log(transform.name + ": LoadButton", gameObject);
     }
 }

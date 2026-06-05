@@ -19,8 +19,6 @@ namespace AssetRipperPatches.Editor
 	{
 		private static readonly Type AudioMixerEffectControllerType;
 		private static readonly MethodInfo PreallocateGUIDsMethod;
-		private static readonly MethodInfo GetAudioEffectNamesMethod;
-
 		static AudioMixerPostprocessor()
 		{
 			Assembly editorAssembly = typeof(AssetPostprocessor).Assembly;
@@ -30,16 +28,11 @@ namespace AssetRipperPatches.Editor
 			{
 				Debug.LogError("AudioMixerEffectController.PreallocateGUIDs() method is missing in this version of Unity. Audio effect parameter values will be reset to default.");
 			}
-
-			Type mixerEffectDefinitionsType = editorAssembly.GetType("UnityEditor.Audio.MixerEffectDefinitions", true);
-			GetAudioEffectNamesMethod = mixerEffectDefinitionsType.GetMethod("GetAudioEffectNames", BindingFlags.Public | BindingFlags.Static);
 		}
 
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
 		{
 			if (PreallocateGUIDsMethod == null) return;
-
-			bool printEffectNames = GetAudioEffectNamesMethod != null;
 
 			foreach (string importedAsset in importedAssets)
 			{
@@ -49,14 +42,7 @@ namespace AssetRipperPatches.Editor
 					{
 						if (asset.GetType() == AudioMixerEffectControllerType)
 						{
-							if (printEffectNames)
-							{
-								printEffectNames = false;
-								string[] effectNames = (string[])GetAudioEffectNamesMethod.Invoke(null, new object[0]);
-								Debug.LogFormat("MixerEffectDefinitions.GetAudioEffectNames returns [{0}]", String.Join(", ", effectNames));
-							}
 							PreallocateGUIDsMethod.Invoke(asset, new object[0]);
-							Debug.LogFormat("AudioMixerEffectController.PreallocateGUIDs has been called on {0}", asset);
 							EditorUtility.SetDirty(asset);
 						}
 					}

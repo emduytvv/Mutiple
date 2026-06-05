@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -17,7 +17,6 @@ public abstract class BaseInteract : SaiMonoBehaviour
         if (_iconKeyE != null) return;
         _iconKeyE = transform.Find("IconKeyE");
         _iconKeyE.gameObject.SetActive(false);
-        Debug.Log(transform.name + ": Load IconKeyE", gameObject);
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {

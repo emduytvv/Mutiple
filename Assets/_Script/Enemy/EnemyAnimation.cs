@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimation : SaiMonoBehaviour
@@ -22,14 +22,12 @@ public class EnemyAnimation : SaiMonoBehaviour
     {
         if (_enemyCtrl != null) return;
         _enemyCtrl = GetComponentInParent<EnemyCtrl>();
-        Debug.Log(transform.name + ": Load EnemyCtrl", gameObject);
     }
 
     private void LoadAnimator()
     {
         if (_animator != null) return;
         _animator = GetComponent<Animator>();
-        Debug.Log(transform.name + ": Load Animator", gameObject);
     }
 
     protected void OnEnable()
@@ -38,12 +36,14 @@ public class EnemyAnimation : SaiMonoBehaviour
     }
     public void SetAttackTrigger()
     {
-        _animator.SetTrigger(HashAttack);
+        if (!_enemyCtrl.PhotonView.IsMine) return;
+        _enemyCtrl.PhotonView.RPC(nameof(EnemyCtrl.RpcSetAttackTrigger), Photon.Pun.RpcTarget.All);
     }
+
+    public void PlayAttackAnim() => _animator.SetTrigger(HashAttack);
 
     public void SetHurtTrigger()
     {
-        if (!_enemyCtrl.PhotonView.IsMine) return;
         if (_enemyCtrl.DamageReceiver.isDead) return;
         _animator.SetTrigger(HashHurt);
     }

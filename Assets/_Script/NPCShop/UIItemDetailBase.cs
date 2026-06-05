@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,13 +22,11 @@ public class UIItemDetailBase : SaiMonoBehaviour
     {
         if (_nameItem != null) return;
         _nameItem = transform.Find("NameItem").GetComponent<TextMeshProUGUI>();
-        Debug.Log(transform.name + ": Load NameItem", gameObject);
     }
     protected void LoadAvatar()
     {
         if (_avatar != null) return;
         _avatar = transform.Find("Avatar").Find("Icon").GetComponent<Image>();
-        Debug.Log(transform.name + ": Load Avatar", gameObject);
     }
 
     protected void LoadStatRows()
